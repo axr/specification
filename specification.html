@@ -219,7 +219,7 @@
 </div>
 
 <h1><span>1</span> Arbitrary XML Rendering Specification</h1>
-#TODO add a table of content + use ordered LIs instead of raw numbers
+#TODO add a table of content
 <section id="hss_syntax">
 	<h2><span>1</span> The syntax of HSS</h2>
 	<section class="introduction">
@@ -238,9 +238,10 @@
 	<span class="property">property definitions</span> ;
 }</pre>
 
-		<h4><span>1.2.2</span> Selectors</h4>
+		<h4><span>1.2.2</span> Selector basic principles</h4>
 		<p>Selectors are used to point to a certain element(s) of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if their properties match the defined conditions. If so, the property definitions are applied.</p>
 		<p>Simple selectors are the element name or universal selector, combined with any filter applied to it. A series of simple selectors joined by combinators is called the selector chain or simply selector.</p>
+#TODO link "Selectors", "filter", "universal selector" and "combinators"
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
 <span class="selector">document</span> { }
@@ -269,6 +270,7 @@
 <span class="comment">//in this example the semicolon was ommitted, since it is the
 //last element in the block</span>
 <span class="selector">document</span> { <span class="property">alignX</span>: <span class="number">50%</span> }</pre>
+#TODO add something about global properties (inherit etc) + link 1.8 Properties + <a href="https://github.com/AXR/Specification/issues/10">Issue 10</a>
 
 		<h4><span>1.2.4</span> Objects</h4>
 		<p>Objects represent values that are more complex in their nature. Similar to rules, objects have properties which accept values, defined inside a block. Notice the object sign <code>@</code> in front of the object type;</p>
@@ -284,6 +286,7 @@
         <span class="property">color</span>: <span class="number">#000</span>;
     };
 }</pre>
+#TODO link 1.10 Objects
 	</section>
 	
 	<section class="selectors">
@@ -328,15 +331,16 @@
 {
 &#160;&#160;&#160; <span class="selector">*</span> { }
 }</pre>
+#TODO link "child" to 1.4.1 (confusion with descendants!)
 
 		<p><em>Note:</em> Since the initial scope is restricted to the root element, using simply the universal selector in the outermost rule set would only select the note element on the example XML code above, unlike what would happen in CSS. To select all elements that are descendants of another you need to use the descendant combinator, and to select all elements altogether you need to start the selector chain with the descendant combinator.</p>
 <pre><span class="comment">//matches only the note element</span>
 <span class="selector">*</span> { }
-<span class="comment">//matches all elements, except the note element</span>
+<span class="comment">//matches all elements under the note element</span>
 <span class="selector">*</span> <span class="combinator">..</span> <span class="selector">*</span> { }
 <span class="comment">//matches all elements</span>
 <span class="combinator">..</span> <span class="selector">*</span> { }</pre>
-#TODO the first time you encounter a combinator which wasn't already introduced: link it (internal anchor with title attribute)
+#TODO the first time you encounter a <em>new</em> HSS combinator (in this case "descendant combinator") which wasn't already introduced: link it (internal anchor)
 <p>If the universal selector is not the only part of the selector, like when it has an attribute expression, property expression or a filter (all explained in further chapters), it can be omitted. It may be omitted as well if placed between any combinator other than the child combinator (whitespace), the closest descendants combinator <span class="combinator">.</span>&#160;and the descendants combinator <span class="combinator">..</span>. These are explained in further chapters as well.</p><pre><span class="comment">//the following statements are equivalent</span>
 <span class="selector">*</span><span class="filter">:first</span> { }
 <span class="filter">:first</span> { }
@@ -345,17 +349,24 @@
 <span class="selector">*</span> <span class="combinator">&gt;&gt;</span> <span class="selector">*</span> { }</pre>
 		
 		<h4><span>1.3.6</span> Negating a selector</h4>
-		<p>You can negate any selector by use of the negator <span class="combinator">!</span>, and any of its parts, in the selector chain, meaning that all elements that don’t match the selector will be selected. The name is negated by placing the negator in front of it.</p>
+		<p>You can negate any selector in the selector chain by prefixing the negator <span class="modifier">!</span> to any of its parts, meaning that all elements that don’t match the selector will be selected.</p>
 <pre><span class="comment">//this selects the elements which are not note</span>
-		<span class="combinator">!</span><span class="selector">note</span> { }</pre><p>Any filter is negated by placing the negator in front of it. The filters are explained in a further chapter.</p><pre><span class="comment">//this selects any note element which is not the first one</span>
-		<span class="selector">note</span><span class="combinator">!</span><span class="filter">:first</span> { }
-		<span class="comment">//this selects any note element which is not the first one
-		//and does not</span><span class="comment"> have a blue background</span>
-		<span class="selector">note</span><span class="combinator">!</span><span class="filter">:first</span><span class="combinator">!</span>(<span class="property">background</span>.<span class="property">color</span> = blue) { }</pre><p>If you wanted to negate the entire selector, you place a negator in front of it, but leave a whitespace in between. Only elements in the scope of the last simple selector will be searched.</p><pre><span class="comment">//this matches all elements except the last note</span>
-		<span class="combinator">!</span> <span class="selector">note</span><span class="filter">:last</span> {}</pre>
+<span class="modifier">!</span><span class="selector">note</span> { }</pre>
+<p>Any filter is negated by placing the negator in front of it.</p><pre><span class="comment">//this selects any note element which is not the first one</span>
+<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
+<span class="comment">//this selects any note element which is not the first one
+//and does not</span><span class="comment"> have a blue background</span>
+<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span>.<span class="property">color</span> = <span class="value">blue</class>) { }</pre>
+<p>To negate an entire selector you have to use the alternate <span class="modifier">!()</span> notation.</p>
+<pre><span class="comment">//this matches all elements except the last note</span>
+<span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
 		
-		<p class="notice"><strong>FIXME</strong> the syntax for selecting the entire selector is not optimal, I think. <a href="https://github.com/AXR/Specification/issues/4">Issue #4</a></p>
-#TODO change the note element to something else + add new syntax
+#TODO change the note element to something else + add something about the scope + link "filter"
+		<h4><span>1.3.7</span> Selecting the subject</h4>
+		<p>description of the <span class="modifier">$</span> modifier goes here</p>
+<pre><span class="comment">//matches a note element when the mouse hovers on an important element (which is a descendant of that note element)</span>
+<span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">:hover</span> { }</pre>
+#TODO description
 	</section>
 </section>
 <div class="view text chapter_body">
@@ -363,7 +374,9 @@
 <span class="number">1.4</span> Combinators</h2><div class="inner">
 <p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” an element and style one that is inside it instead. It is more convenient to use a combinator than to use hierarchy, in the case of child combinators. In other cases, the combinator is needed because with hierarchy alone the same effect could not be achieved.</p><pre><span class="comment">//matches every subject element which is a child of message,
 //which itself is a child of note</span>
-<span class="selector">note</span> <span class="selector">message</span> <span class="selector">subject</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p></div></div><div class="view text section">
+<span class="selector">note</span> <span class="selector">message</span> <span class="selector">subject</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p></div></div>
+#TODO add this example: .. note message subject { }
+<div class="view text section">
 <h3 class="title">
 <span class="number">1.4.1</span> Child combinator</h3><div class="inner">
 <p>Children may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different to CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p><pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre></div></div><div class="view text section">
@@ -376,7 +389,9 @@
 <p>Sibling elements can be accessed via the sibling combinator <span class="combinator">=</span>:</p><pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre></div></div><div class="view text section">
 <h3 class="title">
 <span class="number">1.4.4</span> Next and previous siblings</h3><div class="inner">
-<p>Use the next siblings combinator <span class="combinator">+</span> if you want to access siblings only after the message element in the tree order, and the previous siblings combinator <span class="combinator">-</span> to match the ones before it:</p><pre><span class="comment">//this will match the message element if it follows from</span><br><span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }<br><span class="comment">//this will match the subject element if it precedes message</span><br><span class="selector">message</span> <span class="combinator">-</span> <span class="selector">subject</span> { }</pre><p><em>Note:</em> Read the Filters chapter to get information about how to select only the first following or preceding element.</p></div></div></div>
+<p>Use the next siblings combinator <span class="combinator">+</span> if you want to access siblings only after the message element in the tree order, and the previous siblings combinator <span class="combinator">-</span> to match the ones before it:</p><pre><span class="comment">//this will match the message element if it follows from</span><br><span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }<br><span class="comment">//this will match the subject element if it precedes message</span><br><span class="selector">message</span> <span class="combinator">-</span> <span class="selector">subject</span> { }</pre>
+<p><em>Note:</em> Read the position filters chapter to get information about how to select only the first following or preceding element.</p></div></div></div>
+#TODO link 1.5.1
 <div class="view text chapter_body">
 <h2 class="title">
 <span class="number">1.4.5</span> Accessing elements laid out in lines</h2><div class="inner">
@@ -458,15 +473,42 @@
 <h2 class="title">
 <span class="number">1.5.2</span> Hierarchy Filters</h2><div class="inner">
 <p>You can filter elements by their relationship in the current document tree.</p><p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p><pre><span class="comment">//this matches the note and message elements</span>
-<span class="filter">:parent</span> { }</pre><p>The <strong>parentOf filter</strong> matches every element of which at least one child matches the specified selector. If a number or a condition is given, the amount of children is compared.</p><pre><span class="comment">//this matches only elements that are parent of a message element</span>
-<span class="filter">:parentOf</span>(<span class="selector">message</span>) { }
-<span class="comment">//this matches only elements that are 3 children</span>
-<span class="filter">:parentOf</span>(<span class="number">3</span>) { }</pre><p>The <strong>ancestorOf filter</strong> matches every element of which at least one descendant matches the specified selector. If a number or a condition is given, the amount of ancestors is compared.</p><pre><span class="comment">//this matches only element that are an ancestor of an
+<span class="filter">:parent</span> { }</pre><p>The <strong>has filter</strong> matches every element of which at least one child matches the specified selector. If a number or a condition is given, the amount of children is compared.</p><pre><span class="comment">//this matches only elements that are parent of a message element</span>
+<span class="filter">:has</span>(<span class="selector">message</span>) { }
+<span class="comment">//this matches only elements that have exactly 3 children</span>
+<span class="filter">:has</span>(<span class="number">3</span>) { }</pre>
+<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of ancestors is compared.</p><pre><span class="comment">//this matches only element that are an ancestor of an
 //important element</span>
-<span class="filter">:ancestorOf</span>(<span class="selector">important</span>) { }
+<span class="filter">:has</span>(<span class="selector">.. important</span>) { }
 <span class="comment">//this matches only element that have 4 or more ancestors</span>
-<span class="filter">:ancestorOf</span>(&gt;= <span class="number">4</span>) { }</pre></div></div>
-#TODO issue #2 + 1.5.2 twice
+<span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }
+<span class="comment">//or</span>
+<span class="filter">:has</span>(.. ≥ <span class="number">4</span>) { }</pre></div></div>
+<div class="view text chapter_body">
+<h2 class="title">
+<span class="number">1.5.3</span> Interaction Filters</h2><div class="inner">
+<p>You usually want to provide some feedback to the user when he/she is using your site. Targeting elements using interaction filters is an easy way to add interactivity to the site, to create a compelling user experience.</p><p>The <strong>hover filter</strong> targets only elements that are lying under the mouse pointer.</p><pre><span class="comment">//matches every element which has the mouse over it
+//(even nested ones)</span>
+<span class="filter">:hover</span> { }</pre>
+<p>The <strong>press filter</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during a long-press event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
+<span class="filter">:press</span> { }</pre>
+<p>The <strong>drag filter</strong> targets only elements which are being dragged (multiple elements can be dragged at the same time using a multi-touch interface device).</p><pre><span class="comment">//matches every element that is being dragged</span>
+<span class="filter">:drag</span> { }</pre>
+<p>The <strong>target filter</strong> targets elements which are a potential landing point for the currently dragged element(s).</p><pre><span class="comment">//matches every element that is a dragging destination of the</span>
+<span class="comment">//currently dragged element</span>
+<span class="filter">:target</span> { }</pre>
+<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the </strong>hover filter</strong>.</p>
+<pre><span class="comment">//matches every element where a dragged element is over and it
+//is the dragging destination</span>
+<span class="filter">:target:hover</span> { }</pre>
+<p>The <strong>focus filter</strong> matches elements that are currently the element that receives user input (such as from the keyboard).</p><pre><span class="comment">//matches every element which receives user input</span>
+<span class="filter">:focus</span> { }</pre><p>The <strong>blur filter</strong> matches elements that are not focused while some element in the document is focused.</p><pre><span class="comment">//matches every element that does not receive user input, while
+//another is focused</span><span class="filter">
+:blur</span> { }</pre><p>You can write the blur filter in functional notation as well, passing a selector as a parameter. It is matched when one the defined elements is focused. The scope of the selector is the same as the element on which the filter was applied.</p><pre><span class="comment">//matches every element which is not focused, when one of the
+//children of the note element receives user input</span>
+<span class="filter">:blur</span>(<span class="selector">note *</span>) { }</pre><p><em>Note:</em> the scope of the selector passed to the function is that of the current selection. If you need to access elements outside of the scope or the descendant elements then you can use the <span class="object">@root</span> and <span class="object">@parent</span> objects to construct the selector, as explained in chapter //FIXME and //FIXME.</p>
+<p>The <strong>animated filter</strong> selects elements that are currently being animated. //FIXME: tie in to the explanation of animation</p><pre><span class="comment">//this matches all animated elements</span>
+<span class="filter">:animated</span> { }</pre></div></div>
 
 </body>
 </html>
