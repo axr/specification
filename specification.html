@@ -45,9 +45,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2011/11/25
+      Last changed: 2011/11/28
       HSS version: 1.0
-      Revision: 1
+      Revision: 1.m4
 
 
 -->
@@ -160,6 +160,16 @@
 	{
 		color: #fd2716;
 	}
+	
+	.value
+	{
+
+	}
+	
+	.modifier
+	{
+
+	}
 
 	pre .highlighted
 	{
@@ -210,6 +220,31 @@
 		color: #666666;
 	}
 	
+	nav li {list-style:none;font-size:small}
+        nav li li {font-size:smaller}
+	
+	nav
+        {
+                counter-reset:section;
+        }
+
+        nav > ul > li
+        {
+                counter-reset:subsection;
+        }
+        
+        nav > ul > li:before
+        {
+                counter-increment:section;
+                content:"1." counter(section) " ";
+        }
+        
+        nav ul ul > li:before 
+        {
+                counter-increment:subsection;
+                content:"1." counter(section) "." counter(subsection) " ";
+        }
+	
 	</style>
 </head>
 <body>
@@ -219,7 +254,48 @@
 </div>
 
 <h1><span>1</span> Arbitrary XML Rendering Specification</h1>
-#TODO add a table of content
+<nav>
+<ul>
+<li>Introduction</li>
+<li>The primary building blocks
+	<ul>
+	     <li>Rules</li>
+	     <li>Selector basic principles</li>
+	     <li>Properties</li>
+	     <li>Objects</li>
+	</ul>
+</li>
+<li>Selectors
+	<ul>
+	     <li>A simple selector</li>
+	     <li>Hierarchy</li>
+	     <li>Scope</li>
+	     <li>Grouping</li>
+	     <li>The universal selector</li>
+	     <li>Negating a selector</li>
+	     <li>Selecting the subject</li>
+	</ul>
+</li>
+<li>Combinator
+	<ul>
+	     <li>Child combinator</li>
+	     <li>Descendant combinator</li>
+	     <li>Sibling combinator</li>
+	     <li>Next and previous siblings</li>
+	     <li>Accessing elements laid out in lines</li>
+	     <li>Accessing the content text</li>
+	</ul>
+</li>
+<li>Filters
+	<ul>
+	     <li>Position filters</li>
+	     <li>Hierarchy Filters</li>
+	     <li>Interaction Filters</li>
+	</ul>
+</li>
+</ul>
+</nav>
+#TODO link the headers to the table of contents
 <section id="hss_syntax">
 	<h2><span>1</span> The syntax of HSS</h2>
 	<section class="introduction">
@@ -241,15 +317,15 @@
 		<h4><span>1.2.2</span> Selector basic principles</h4>
 		<p>Selectors are used to point to a certain element(s) of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if their properties match the defined conditions. If so, the property definitions are applied.</p>
 		<p>Simple selectors are the element name or universal selector, combined with any filter applied to it. A series of simple selectors joined by combinators is called the selector chain or simply selector.</p>
-#TODO link "Selectors", "filter", "universal selector" and "combinators"
+#TODO link "Selectors", "Simple selectors", "universal selector", "filter" and "combinators"
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
 <span class="selector">document</span> { }
 <span class="comment">//select the first element with name “book”</span>
 <span class="selector">book</span><span class="filter">:first</span> { }
 <span class="comment">//select the elements with name “content” that occur after “title”
-//elements, which are descendants of “book” elements, which itself
-//is a child of “books”</span>
+//elements, which are descendants of “book” elements, which themselves
+//are direct children of “books” elements</span>
 <span class="selector">books book</span> <span class="combinator">..</span> <span class="selector">title</span> <span class="combinator">+</span><span class="combinator"></span> <span class="selector">content</span> { }</pre>
 
 		<h4><span>1.2.3</span> Properties</h4>
@@ -315,6 +391,7 @@
 	<span class="selector">subject</span> { }
 }</pre>
 
+#TODO confusion between descendants and children +  <a href="https://github.com/AXR/Specification/issues/12">Issue 12</a>
 		<h4><span>1.3.3</span> Scope</h4>
 		<p>The scope refers to what elements you are targeting by the selector. In the example above, only a subject element that is child of note can be selected, because its scope is restricted to the children of the note element.</p>
 		<p>The scope is also reduced using combinators and expanded using grouping.</p>
@@ -350,10 +427,11 @@
 		
 		<h4><span>1.3.6</span> Negating a selector</h4>
 		<p>You can negate any selector in the selector chain by prefixing the negator <span class="modifier">!</span> to any of its parts, meaning that all elements that don’t match the selector will be selected.</p>
-<pre><span class="comment">//this selects the elements which are not note</span>
-<span class="modifier">!</span><span class="selector">note</span> { }</pre>
-<p>Any filter is negated by placing the negator in front of it.</p><pre><span class="comment">//this selects any note element which is not the first one</span>
-<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
+<pre><span class="comment">//this selects the children of note which are not message elements</span>
+<span class="selector">note</span><span class="combinator"> </span><span class="modifier">!</span><span class="selector">message</span> { }</pre>
+<p>Any filter is negated by placing the negator in front of it.</p>
+<pre><span class="comment">//this selects any note element which is not the first one</span>
+</span><span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not the first one
 //and does not</span><span class="comment"> have a blue background</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span>.<span class="property">color</span> = <span class="value">blue</class>) { }</pre>
@@ -361,12 +439,15 @@
 <pre><span class="comment">//this matches all elements except the last note</span>
 <span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
 		
-#TODO change the note element to something else + add something about the scope + link "filter"
+#TODO add something about the scope + link "filter"
 		<h4><span>1.3.7</span> Selecting the subject</h4>
-		<p>description of the <span class="modifier">$</span> modifier goes here</p>
-<pre><span class="comment">//matches a note element when the mouse hovers on an important element (which is a descendant of that note element)</span>
-<span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">:hover</span> { }</pre>
-#TODO description
+		<p>You can match an element which isn't the last one in the selector chain using the subject modifier <span class="modifier">$</span>.</p>
+<pre><span class="comment">//matches a note element when the mouse hovers on an
+//important element which is his descendant</span>
+<span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">:hover</span> { }
+<span class="comment">//matches all note elements which have at least one comment
+//element as a child</span>
+<span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }</pre>
 	</section>
 </section>
 <div class="view text chapter_body">
@@ -379,8 +460,8 @@
 <div class="view text section">
 <h3 class="title">
 <span class="number">1.4.1</span> Child combinator</h3><div class="inner">
-<p>Children may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different to CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p><pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre></div></div><div class="view text section">
-#TODO add something about first level
+<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different to CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
+<pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre></div></div><div class="view text section">
 <h3 class="title">
 <span class="number">1.4.2</span> Descendant combinator</h3><div class="inner">
 <p>If you want to select elements which are descendants (could be child of a child of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p><pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre></div></div><div class="view text section">
