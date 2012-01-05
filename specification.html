@@ -45,9 +45,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2011/12/12
+      Last changed: 2012/01/05
       HSS version: 1.0
-      Revision: 1.m6
+      Revision: 1.m7
 
 
 -->
@@ -62,9 +62,9 @@
 	
 	body
 	{
-		min-width: 720px;
+		width: 720px;
 		font-family: "Century Gothic", "Futura", "Verdana", sans-serif;
-		padding: 30px 150px;
+		margin: 30px auto;
 		color: #666;
 	}
 	
@@ -123,7 +123,7 @@
 	
 	p code
 	{
-		padding: 0 2px 2px;
+		padding: 0 2px;
 	}
 
 	.comment
@@ -172,6 +172,11 @@
 	}
 	
 	.modifier
+	{
+
+	}
+        
+        .instruction
 	{
 
 	}
@@ -282,10 +287,11 @@
 <li><a href="#1.1">Introduction</a></li>
 <li><a href="#1.2">The primary building blocks</a>
 	<ul>
-	     <li><a href="#1.2.1">Rules</a></li>
-	     <li><a href="#1.2.2">Selector basic principles</a></li>
-	     <li><a href="#1.2.3">Properties</a></li>
-	     <li><a href="#1.2.4">Objects</a></li>
+             <li><a href="#1.2.1">Rules</a></li>
+             <li><a href="#1.2.2">Selector basic principles</a></li>
+             <li><a href="#1.2.3">Properties</a></li>
+             <li><a href="#1.2.4">Objects</a></li>
+             <li><a href="#1.2.5">Instructions</a></li>
 	</ul>
 </li>
 <li><a href="#1.3">Selectors</a>
@@ -313,16 +319,16 @@
 	     <li><a href="#1.5.1">Position filters</a></li>
 	     <li><a href="#1.5.2">Hierarchy filters</a></li>
 	     <li><a href="#1.5.3">Interaction filters</a></li>
-             <li><a href="#1.5.4">Text matching filters</a></li>
-             <li><a href="#1.5.5">Extending the available filters</a></li>
-             <li><a href="#1.5.6">Property filters</a></li>
+	     <li><a href="#1.5.4">The attribute filter</a></li>
+	     <li><a href="#1.5.5">Text matching filters</a></li>
+	     <li><a href="#1.5.6">Property filters</a></li>
+	     <li><a href="#1.5.7">Custom filters</a></li>            
 	</ul>
 </li>
 <li><a href="#1.6">Properties</a>
 </li>
 </ul>
 </nav>
-<div id="btt"><a href="#toc">table of contents</a></div>
 <section id="hss_syntax">
 	<h2><span>1</span> The syntax of HSS</h2>
 	<section class="introduction">
@@ -388,6 +394,8 @@
         <span class="property">color</span>: <span class="number">#000</span>;
     };
 }</pre>
+		<h4><span><a name="1.2.5">1.2.5</a></span> Instructions</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/27">Issue 27</a>
 	</section>
 	
 	<section class="selectors">
@@ -432,7 +440,22 @@
 		<p>You can group multiple selectors together which is convenient when they share the same properties (or rules).</p>
 <pre><span class="comment">//match every subject element and every message element</span>
 <span class="selector">subject</span>, <span class="selector">message</span> { }</pre>
-
+                <p>In nested notation it helps getting rid of unnecessary repetition.</p>
+<pre>
+note {
+        child1, child2 {
+                        element1, element2 { }
+        }
+}  
+<span class="comment">//which is equivalent to</span>
+note { }
+note child1 { }
+note child2 { }
+note child1 element1 { }
+note child1 element2 { }
+note child2 element1 { }
+note child2 element2 { }
+</pre>
 		<h4><span><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
 		<p>The universal selector <span class="selector">*</span> matches every element in the current scope:</p>
 <pre><span class="comment">//matches every element that is a child of &lsquo;note&rsquo;</span>
@@ -488,7 +511,7 @@
 <div class="view text section">
 <h4 class="title"><span class="number"><a name="1.4.1">1.4.1</a></span> Child combinator</h4>
 <div class="inner">
-<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different to CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
+<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre></div></div><div class="view text section">
 <h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
 <div class="inner">
@@ -591,16 +614,25 @@
 <p>This selects the first element of each and every single note's children. So in this example amongst the children of note only the second <em>message</em> element wouldn't be selected. If you want to select the first element of the <em>combined</em> collection of all note's children, you will need to use the <span class="filter">:first</span> filter twice:</p>
 <pre><span class="comment">//this matches the "to" element in the example above</span>
 <span class="selector">note<span class="combinator"> </span>*</span><span class="filter">:first</span><span class="filter">:first</span> { }</pre>
-<p>The <strong><a name="f_first">first filter</a></strong> matches the first element of the current selection.</p><pre><span class="comment">//this matches the first element</span>
-<span class="filter">:first</span> { }</pre><p>The <strong><a name="f_last">last filter</a></strong> matches the last element of the selection.</p><pre><span class="comment">//this matches the last element</span>
-<span class="filter">:last</span> { }</pre><p>The <strong><a name="f_even">even filter</a></strong> selects elements whose index in the current selection is even (the count starts with 1).</p><pre><span class="comment">//this matches the second, fourth, sixth, etc element</span>
-<span class="filter">:even</span> { }</pre><p>The <strong><a name="f_odd">odd filter</a></strong> selects elements whose index in the current selection is odd (the count starts with 1).</p><pre><span class="comment">//this matches the first, third, fifth, etc element</span>
-<span class="filter">:odd</span> { }</pre><p>The <strong><a name="f_index">index filter</a></strong> selects elements whose index in the current selection meets the given number or condition (the count starts with 1).</p><pre><span class="comment">//this matches only elements whose index is greater than or
+<p>The <strong><a name="f_first">first filter</a></strong> matches the first element(s).</p>
+<pre><span class="filter">:first</span> { }</pre>
+<p>The <strong><a name="f_last">last filter</a></strong> matches the last element(s).</p>
+<pre><span class="filter">:last</span> { }</pre>
+<p>The <strong><a name="f_even">even filter</a></strong> selects elements whose index is even (the count starts with 1).</p>
+<pre><span class="comment">//this matches the second, fourth, sixth, etc elements</span>
+<span class="filter">:even</span> { }</pre>
+<p>The <strong><a name="f_odd">odd filter</a></strong> selects elements whose index is odd (the count starts with 1).</p>
+<pre><span class="comment">//this matches the first, third, fifth, etc elements</span>
+<span class="filter">:odd</span> { }</pre>
+<p>The <strong><a name="f_index">index filter</a></strong> selects elements which index (starts with 1) meets a condition or matches a given number.</p><pre><span class="comment">//this matches only elements whose index is greater than or
 //equal to 3</span>
-<span class="filter">:index</span>(&gt;= <span class="number">3</span>) { }</pre><p>The <strong><a name="f_range">range filter</a></strong> selects elements in a given range in the current selection, starting with 1. Ranges are always written in pairs, with the first value representing the start index and the second one the end index.</p><pre><span class="comment">//this matches only elements whose index is 1, 2 or 3</span>
+<span class="filter">:index</span>(&gt;= <span class="number">3</span>) { }</pre>
+<p>The <strong><a name="f_range">range filter</a></strong> selects elements in a given range, starting with 1. Ranges are always written in pairs, with the first value representing the start index and the second one the end index.</p><pre><span class="comment">//this matches only elements whose index is 1, 2 or 3</span>
 <span class="filter">:range</span>(<span class="number">1</span>, <span class="number">3</span>) { }
-<span class="comment">//this matches only elements whose index is 1, 2 3, 8, 9 or 10</span>
-<span class="filter">:range</span>(<span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">10</span>) { }</pre><p>The <strong><a name="f_nth">nth filter</a></strong> selects elements by comparing its index in the current selection against an equation (the n is the multiple).</p><pre><span class="comment">//this matches the element after every third one</span>
+<span class="comment">//this matches elements whose index is 1, 2, 3 or &ge; 8 
+//the last one</span>
+<span class="filter">:range</span>(<span class="number">1</span>, <span class="number">3</span> | <span class="number">8</span>, <span class="number">*</span>) { }</pre>
+<p>The <strong><a name="f_nth">nth filter</a></strong> selects elements by comparing its index against an equation (the n is the multiple).</p><pre><span class="comment">//this matches the element after every third one</span>
 <span class="filter">:nth</span>(<span class="number">3n</span> + <span class="number">1</span>) { }</pre></div></div>
 <div class="view text chapter_body">
 <h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
@@ -629,8 +661,8 @@
 <span class="comment">//currently dragged element</span>
 <span class="filter">:target</span> { }</pre>
 <p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the </strong>hover filter</strong>.</p>
-<pre><span class="comment">//matches every element where a dragged element is over and it
-//is the dragging destination</span>
+<pre><span class="comment">//matches every dragging destination elements when a dragged
+//element is over it</span>
 <span class="filter">:target:hover</span> { }</pre>
 <p>The <strong>focus filter</strong> matches elements that are currently the element that receives user input (through tabbing for example).</p><pre><span class="comment">//matches every element which receives user input</span>
 <span class="filter">:focus</span> { }</pre><p>The <strong>blur filter</strong> matches elements that are not focused while some element in the document is focused.</p><pre><span class="comment">//matches every element that does not receive user input, while
@@ -640,29 +672,50 @@
 <span class="filter">:blur</span>(<span class="selector">note *</span>) { }</pre><p><em>Note:</em> Since the current selection shares its scope with the selector passed to the function, in order to access elements earlier in the tree you will have to use <a href="#">hierarchy objects</a> in the selector.</p>
 <p>The <strong>animated filter</strong> selects elements that are currently being animated. //FIXME: tie in to the explanation of animation</p><pre><span class="comment">//this matches all animated elements</span>
 <span class="filter">:animated</span> { }</pre></div></div>
+<h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> The attribute filter</h4>
+<pre>
+<span class="comment">//matches elements which have a title attribute</span>
+:[title] { }                          
+<span class="comment">//matches elements which have a title AND an href attribute</span>
+:[title]:[href] { }
+<span class="comment">//a grouping shorthand is also available when several attributes
+//filters share the same element;
+//matches elements which have a title OR an href attribute</span>
+:[title, href] { }
+<span class="comment">//which is equivalent to</span>
+:[title], :[href] { }</pre>
+
+#TODO definition
 <div class="view text chapter_body">
-<h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> Text matching filters</h4>
+<h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Text matching filters</h4>
 <div class="inner">
-<p>These collection of filters select elements based on matching a given string to a piece of text associated with the element, like its content text, or the value of an attribute.</p><p>Most of them are written in the functional notation of a filter, with the first parameter being the string to match, and an optional second parameter with a string containing the name of an attribute, in case that you want to use its value instead of the content text.</p>
-#TODO <a href="https://github.com/AXR/Specification/issues/1">Issue 1</a> and <a href="https://github.com/AXR/Specification/issues/7">7</a>
-<p>The <strong>match filter</strong> uses a regular expression to match an element, using the same syntax that JavaScript uses.</p><pre><span class="comment">//matches every element whose content text starts with a number</span>
-<span class="filter">:match</span>(<span class="string">“^[0-9]”</span>) { }
-<span class="comment">//matches every element whose title attribute starts with a number</span>
-<span class="filter">:match</span>(<span class="string">“^[0-9]”, "title"</span>) { }</pre><p>The <strong>empty filter </strong>matches all elements where the text is an empty string. You can write it in keyword notation or a functional notation using the attribute name as a parameter. If you do so and the element has no attribute with that name, it will be selected.</p><pre><span class="comment">//matches every element which has no content text
-//in this case it matches none, since no element in the example
-//is empty</span>
+<p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string. You can use the sensitive argument to enable the case sensitivity.</p>
+<p>The <strong>contains filter</strong> matches elements that contain a given string in the text.</p>
+<pre><span class="comment">//matches every element whose content text contains “Reminder”</span>
+<span class="filter">:contains</span>(<span class="string">"reminder"</span><span class="string"></span>) { }
+<span class="comment">//matches every element whose content text exactly contains “Reminder”</span>
+<span class="filter">:contains</span>(<span class="string">"Reminder"</span><span class="string"></span>, sensitive) { }
+<span class="comment">//matches every element whose title attribute contains “reminder”</span>
+:[title<span class="filter">:contains</span>(<span class="string">"Reminder"</span>)] { }</pre>
+<p>The <strong>equals filter</strong> matches elements if the text is equal to a given string.</p>
+<pre><span class="comment">//matches every element whose content text is equal to “reminder”</span>
+<span class="filter">:equals</span>(<span class="string">“Reminder”</span>) { }</pre>
+<p>The <strong>startsWith filter</strong> matches elements if the text starts with a given string.</p><pre><span class="comment">//matches every element whose content text starts with “reminder”</span>
+<span class="filter">:startsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
+<p>The <strong>endsWith filter</strong> matches elements if the text ends with a given string.</p><pre><span class="comment">//matches every element whose content text ends with “reminder”</span>
+<span class="filter">:endsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
+<p>The <strong>match filter</strong> uses a regular expression to match elements.</p>
+<pre><span class="comment">//matches every element whose content text starts with a number</span>
+<span class="filter">:match</span>(<span class="string">"^[0-9]"</span>) { }</pre>
+<p>The <strong>empty filter</strong> matches elements which have no content text.</p>
+<pre><span class="comment">//matches elements which contain no text</span>
 <span class="filter">:empty</span> { }
-<span class="comment">//mathes every element whose title attribute is empty or inexistent</span>
-<span class="filter">:empty</span>(<span class="string">“title”</span>) { }</pre><p>The <strong>length filter</strong> compares the length of the text against a given condition.</p><pre><span class="comment">//matches every element whose content text’s length is greater
+<span class="comment">//matches every element whose title attribute is empty or inexistent</span>
+:[title<span class="filter">:empty</span>] { }</pre>
+<p><em>Reminder:</em> You can select elements which have no children using <code>!:parent</code>.</p>
+<p>The <strong>length filter</strong> compares the length of the text against a given condition.</p><pre><span class="comment">//matches every element whose content text’s length is greater
 //than 3 characters</span>
-<span class="filter">:length</span>(&gt; <span class="number">3</span>) { }
-<span class="comment">//matches every element whose title attribute exactly 3
-//characters long</span>
-<span class="filter">:length</span>(&lt; <span class="number">3</span>, <span class="string">“title”</span>) { }</pre></div></div>
-<div class="view text chapter_body">
-<h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Extending the available filters</h4>
-<div class="inner"></div>
-</div>
+<span class="filter">:length</span>(&gt; <span class="number">3</span>) { }</pre></div></div>
 <div class="view text chapter_body">
 <h4 class="title"><span class="number"><a name="1.5.6">1.5.6</a></span> Property filters</h4>
 <div class="inner">
@@ -671,12 +724,33 @@
 <pre><span class="comment">//match all elements which are in flow</span>
 <span class="selector">*</span>(<span class="property">flow</span> = yes) { }
 <span class="comment">//match all elements whose background color is not blue</span>
-<span class="selector">*</span>(<span class="property">background</span>.<span class="property">color</span> != blue) { }
-<span class="comment">//match all elements that are taller than 300</span>
-<span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span>) { }</pre>
-<p><em>Notes:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the values will be returned only once.</p>   
-#TODO add syntax of multi property filters and same condition distribution
+<span class="selector">*</span>(<span class="property">background</span> != blue) { }
+<span class="comment">//match all elements that are taller than 300 and not wider than 400</span>
+<span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }</pre>
+<p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 </div>
+<div class="view text chapter_body">
+<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters</h4>
+<div class="inner">
+<p>In HSS it is possible to extend the available filters with your own using the <span class="instruction">#filter</span> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
+<pre>
+#filter firstBlue { (background = blue):first }
+<span class="comment">//this is equivalent to :startsWith()</span>
+#filter sw(myArg1) { $ >> :first:contains(myArg1) }
+<span class="comment">//filter which selects the first or the last element</span>
+#filter limit { :first, :last }
+<span class="comment">//you must define custom filters before applying them:
+//limit's definition must precede wideLimit's one</span>
+#filter wideLimit { (width > length):limit }
+
+<span class="filter">:firstBlue</span> { }
+<span class="filter">:sw</span>("foo") { }
+<span class="filter">:limit</span> { }
+<span class="filter">:wideLimit</span> { }
+</pre>
+</div>
+</div>
+<div id="btt"><a href="#toc">table of contents</a></div>
 </body>
 </html>
