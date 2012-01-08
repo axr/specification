@@ -1,31 +1,9 @@
 <!DOCTYPE html>
-<!--
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
 
-             a  A                                                        
-            AM\/MA                                                         
-           (MA:MMD                                                         
-            :: VD
-           ::  º                                                         
-          ::                                                              
-         ::   **      .A$MMMMND   AMMMD     AMMM6    MMMM  MMMM6             
-       6::Z. TMMM    MMMMMMMMMDA   VMMMD   AMMM6     MMMMMMMMM6            
-      6M:AMMJMMOD     V     MMMA    VMMMD AMMM6      MMMMMMM6              
-      ::  TMMTMC         ___MMMM     VMMMMMMM6       MMMM                   
-     MMM  TMMMTTM,     AMMMMMMMM      VMMMMM6        MMMM                  
-    :: MM TMMTMMMD    MMMMMMMMMM       MMMMMM        MMMM                   
-   ::   MMMTTMMM6    MMMMMMMMMMM      AMMMMMMD       MMMM                   
-  :.     MMMMMM6    MMMM    MMMM     AMMMMMMMMD      MMMM                   
-         TTMMT      MMMM    MMMM    AMMM6  MMMMD     MMMM                   
-        TMMMM8       MMMMMMMMMMM   AMMM6    MMMMD    MMMM                   
-       TMMMMMM$       MMMM6 MMMM  AMMM6      MMMMD   MMMM                   
-      TMMM MMMM                                                           
-     TMMM  .MMM                                         
-     TMM   .MMD       ARBITRARY·······XML········RENDERING                           
-     TMM    MMA       ====================================                              
-     TMN    MM                               
-      MN    ZM                       
-            MM,
-
+<!--***************************************************************
  
       AUTHORS: Miro Keller and collaborators
       
@@ -45,17 +23,12 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/01/05
+      Last changed: 2012/01/08
       HSS version: 1.0
-      Revision: 1.m7
+      Revision: 1.m8
 
+****************************************************************-->
 
--->
-
-
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>The AXR Specification</title>
 	<meta name="author" content="Miro Keller, Marc G.">
 	<style>
@@ -272,7 +245,6 @@
 		right:5px;
 		font-size:xx-small;
 	}
-	
 	</style>
 </head>
 <body>
@@ -282,8 +254,8 @@
 </div>
 
 <h1>Arbitrary XML Rendering Specification</h1>
-<nav>
-<ul><a name="toc"></a>
+<nav><a name="toc"></a>
+<ul>
 <li><a href="#1.1">Introduction</a></li>
 <li><a href="#1.2">The primary building blocks</a>
 	<ul>
@@ -297,7 +269,7 @@
 <li><a href="#1.3">Selectors</a>
 	<ul>
 	     <li><a href="#1.3.1">A simple selector</a></li>
-	     <li><a href="#1.3.2">Hierarchy & Scope</a></li>
+	     <li><a href="#1.3.2">Hierarchy &amp; Scope</a></li>
 	     <li><a href="#1.3.3">Grouping</a></li>
 	     <li><a href="#1.3.4">The universal selector</a></li>
 	     <li><a href="#1.3.5">Negating a selector</a></li>
@@ -415,7 +387,7 @@
 //the style rules declared within the block (in this case none)</span>
 <span class="selector">note</span> { }</pre>
 
-		<h4><span><a name="1.3.2">1.3.2</a></span> Hierarchy & Scope</h4>
+		<h4><span><a name="1.3.2">1.3.2</a></span> Hierarchy &amp; Scope</h4>
 		<p>Usually what the HSS author does is following the document tree and applying styles to most elements. Rules can be nested inside other rules which will only match children of the elements matched by the parent selector. This is what gives HSS its name.</p>
 		<p>The scope refers to the elements targeted by the selector. In the following example, only subject elements that are children of note can be selected, because the scope is restricted to the children of the note element(s).</p>
 <pre><span class="comment">//match every note element (in the current scope)</span>
@@ -488,7 +460,7 @@ note child2 element2 { }
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not the first one
 //and does not have a blue background</span>
-<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</class>) { }</pre>
+<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</span>) { }</pre>
 		<p>To negate an entire selector you have to use the alternate <span class="modifier">!()</span> notation.</p>
 <pre><span class="comment">//this matches all elements except the last note</span>
 <span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
@@ -567,7 +539,7 @@ note child2 element2 { }
 &nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:last</span> { }
 &nbsp;&nbsp;&nbsp; <span class="comment">//this is equivalent, since the universal selector can be
 &nbsp;&nbsp;&nbsp; //omitted in this case</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="filter">:last<span> { }
+&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="filter">:last</span> { }
 }</pre>
 <p>You repeat the same pattern again to select a glyph:</p><pre><span class="selector">document</span>
 {
