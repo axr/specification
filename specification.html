@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/01/08
+      Last changed: 2012/04/10
       HSS version: 1.0
-      Revision: 1.m8
+      Revision: 1.m91
 
 ****************************************************************-->
 
@@ -289,6 +289,7 @@
 	     <li><a href="#1.4.4">Next and previous siblings</a></li>
 	     <li><a href="#1.4.5">Accessing elements laid out in lines</a></li>
 	     <li><a href="#1.4.6">Accessing the content text</a></li>
+	     <li><a href="#1.4.7">Combinator negation</a></li>
 	</ul>
 </li>
 <li><a href="#1.5">Filters &amp; Event States</a>
@@ -417,7 +418,7 @@
 		<p>You can group multiple selectors together which is convenient when they share the same properties (or rules).</p>
 <pre><span class="comment">//match every subject element and every message element</span>
 <span class="selector">subject</span>, <span class="selector">message</span> { }</pre>
-                <p>In nested notation it helps getting rid of unnecessary repetition.</p>
+                <p>In nested notation, grouping helps getting rid of unnecessary repetition.</p>
 <pre>
 note {
         child1, child2 {
@@ -426,12 +427,9 @@ note {
 }  
 <span class="comment">//which is equivalent to</span>
 note { }
-note child1 { }
-note child2 { }
-note child1 element1 { }
-note child1 element2 { }
-note child2 element1 { }
-note child2 element2 { }
+note child1, note child2 { }
+note child1 element1, note child1 element2 { }
+note child2 element1, note child2 element2 { }
 </pre>
 		<h4><span><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
 		<p>The universal selector <span class="selector">*</span> matches every element in the current scope:</p>
@@ -468,7 +466,7 @@ note child2 element2 { }
 //and does not have a blue background</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</span>) { }</pre>
 		<p>To negate an entire selector you have to use the alternate <span class="modifier">!()</span> notation.</p>
-<pre><span class="comment">//this matches all elements except the last note</span>
+<pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
 		<h4><span><a name="1.3.6">1.3.6</a></span> Selecting the subject</h4>
 		<p>You can match an element which isn't the last one in the selector chain using the subject modifier <span class="modifier">$</span>.</p>
@@ -495,12 +493,16 @@ note child2 element2 { }
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Sibling combinator</h4>
-		<p>Sibling elements can be accessed via the sibling combinator <span class="combinator">=</span>:</p><pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
+		<p>Sibling elements can be accessed via the sibling combinator <span class="combinator">=</span>:</p>
+<pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element(s)</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.4">1.4.4</a></span> Next and previous siblings</h4>
-		<p>Use the next siblings combinator <span class="combinator">+</span> if you want to access siblings only after the message element in the tree order, and the previous siblings combinator <span class="combinator">-</span> to match the ones before it:</p>
-<pre><span class="comment">//this will match the message element if it follows from</span><br><span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }<br><span class="comment">//this will match the subject element if it precedes message</span><br><span class="selector">message</span> <span class="combinator">-</span> <span class="selector">subject</span> { }</pre>
+		<p>Use the next siblings combinator <span class="combinator">+</span> and previous siblings combinator <span class="combinator">-</span> if you want to access elements following or preceding (in the <em>current</em> tree order) a specified element in the same scope.</p>
+<pre><span class="comment">//this will match the message element(s) following a from sibling</span>
+<span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }
+<span class="comment">//this will match the subject element(s) preceding a message sibling</span>
+<span class="selector">message</span> <span class="combinator">-</span> <span class="selector">subject</span> { }</pre>
 		<p><em>Note:</em> For further instructions on how to select amongst the following or preceding elements read the <a href="#1.5.1">position filters</a> chapter.</p>
 </div>
 <div class="sub">
@@ -568,15 +570,20 @@ note child2 element2 { }
 }</pre>
 		<p>These inline elements are very flexible and they can potentially intersect with each other, depending on the styles that are applied to different selections. So, for example, selecting the string <span class="string">“dummy text. Lorem”</span>, giving it some styles, and then selecting <span class="string">“Lorem ipsum”</span>, and applying styles, would result in three separate blocks: one with content <span class="string">“dummy text. “</span> (notice the whitespace), one with content <br><span class="string">“ ipsum”</span> (also with whitespace), and a third one, with content <span class="string">“Lorem”</span>, whose styles are a mix of the first and second one, with the styles of the rule that has been applied last overriding the first one. If anywhere inside of one of the inline&nbsp;elements text wrapping occurs, it is split into two inline elements, both with the same style.</p>
 </div>
+		<h4 class="title"><span class="number"><a name="1.4.7">1.4.7</a></span> Combinator negation</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/34">Issue 34</a>
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Event States</h3>
 		<p>Filters are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p><p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
 <pre><span class="comment">//this matches the first occurrence of the note element,
 //if it has a child</span>
-<span class="selector">note<span class="filter">:first:parent</span></span> { }</pre><p>Keep in mind that the order of the filters will alter the outcome, so if you put the filters of the previous example in reverse order, it will select the <em>first element that has a child</em>, instead of the <em>first element, but only if it has a child</em>.</p><pre><span class="comment">//this matches the first of the note elements that have a child</span>
+<span class="selector">note<span class="filter">:first:parent</span></span> { }</pre>
+		<p>Keep in mind that the order of the filters will alter the outcome, so if you put the filters of the previous example in reverse order, it will select the <em>first element that has a child</em>, instead of the <em>first element, but only if it has a child</em>.</p>
+<pre><span class="comment">//this matches the first of the note elements that have a child</span>
 <span class="selector">note<span class="filter">:parent:first</span></span> { }</pre>
 <div class="sub">
+#TODO introduce stock event states
 		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
 		<p>The following filters are used to select a subset of elements, depending on their position in the current selection.</p>
 		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <em>Child</em> variant to the children's position <strong>inside their own parent</strong>.</p>
@@ -618,8 +625,12 @@ note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
-		<p>You can filter elements by their relationship in the current document tree.</p><p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p><pre><span class="comment">//this matches the note and message elements</span>
-<span class="filter">:parent</span> { }</pre><p>The <strong>has filter</strong> matches every element of which at least one child matches the specified selector. If a number or a condition is given, the amount of children is compared.</p><pre><span class="comment">//this matches only elements that are parent of a message element</span>
+		<p>You can filter elements by their relationship in the current document tree.</p>
+		<p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p>
+<pre><span class="comment">//this matches childless elements</span>
+!<span class="filter">:parent</span> { }</pre>
+		<p>The <strong>has filter</strong> matches every element of which at least one child matches the specified selector. If a number or a condition is given, the amount of children is compared.</p>
+<pre><span class="comment">//this matches only elements that are parent of a message element</span>
 <span class="filter">:has</span>(<span class="selector">message</span>) { }
 <span class="comment">//this matches only elements that have exactly 3 children</span>
 <span class="filter">:has</span>(<span class="number">3</span>) { }</pre>
@@ -657,19 +668,16 @@ note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> The attribute filter</h4>
+<p>You can filter elements based on their attributes using the <strong>attribute filter</strong>.</p>
 <pre>
 <span class="comment">//matches elements which have a title attribute</span>
 :[title] { }                          
 <span class="comment">//matches elements which have a title AND an href attribute</span>
 :[title]:[href] { }
-<span class="comment">//a grouping shorthand is also available when several attributes
-//filters share the same element;
-//matches elements which have a title OR an href attribute</span>
+<span class="comment">//matches elements which have a title OR an href attribute</span>
 :[title, href] { }
 <span class="comment">//which is equivalent to</span>
 :[title], :[href] { }</pre>
-
-#TODO definition
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Text matching filters</h4>
@@ -691,12 +699,11 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>The <strong>match filter</strong> uses a regular expression to match elements.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
 <span class="filter">:match</span>(<span class="string">"^[0-9]"</span>) { }</pre>
-<p>The <strong>empty filter</strong> matches elements which have no content text.</p>
+<p>The <strong>noText filter</strong> matches elements which have no content text.</p>
 <pre><span class="comment">//matches elements which contain no text</span>
-<span class="filter">:empty</span> { }
+<span class="filter">:noText</span> { }
 <span class="comment">//matches every element whose title attribute is empty or inexistent</span>
-:[title<span class="filter">:empty</span>] { }</pre>
-<p><em>Reminder:</em> You can select elements which have no children using <code>!:parent</code>.</p>
+:[title<span class="filter">:noText</span>] { }</pre>
 <p>The <strong>length filter</strong> compares the length of the text against a given condition.</p><pre><span class="comment">//matches every element whose content text’s length is greater
 //than 3 characters</span>
 <span class="filter">:length</span>(&gt; <span class="number">3</span>) { }</pre>
