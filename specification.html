@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/04/10
+      Last changed: 2012/04/13
       HSS version: 1.0
-      Revision: 1.m91
+      Revision: 1.m92
 
 ****************************************************************-->
 
@@ -158,6 +158,11 @@
 	{
 
 	}
+	
+	.flag
+	{
+
+	}
 
 	pre .highlighted
 	{
@@ -285,22 +290,23 @@
 	<ul>
 	     <li><a href="#1.4.1">Child combinator</a></li>
 	     <li><a href="#1.4.2">Descendant combinator</a></li>
-	     <li><a href="#1.4.3">Sibling combinator</a></li>
-	     <li><a href="#1.4.4">Next and previous siblings</a></li>
+	     <li><a href="#1.4.3">Siblings combinator</a></li>
+	     <li><a href="#1.4.4">Next and previous siblings combinators</a></li>
 	     <li><a href="#1.4.5">Accessing elements laid out in lines</a></li>
 	     <li><a href="#1.4.6">Accessing the content text</a></li>
 	     <li><a href="#1.4.7">Combinator negation</a></li>
 	</ul>
 </li>
-<li><a href="#1.5">Filters &amp; Event States</a>
+<li><a href="#1.5">Filters &amp; Flags</a>
 	<ul>
 	     <li><a href="#1.5.1">Position filters</a></li>
 	     <li><a href="#1.5.2">Hierarchy filters</a></li>
-	     <li><a href="#1.5.3">Event States</a></li>
+	     <li><a href="#1.5.3">System flags</a></li>
 	     <li><a href="#1.5.4">The attribute filter</a></li>
 	     <li><a href="#1.5.5">Text matching filters</a></li>
 	     <li><a href="#1.5.6">Property filters</a></li>
-	     <li><a href="#1.5.7">Custom filters</a></li>            
+	     <li><a href="#1.5.7">Custom filters</a></li>
+	     <li><a href="#1.5.8">User flags</a></li>
 	</ul>
 </li>
 <li><a href="#1.6">Properties</a>
@@ -327,7 +333,9 @@
 
 		<h4><span><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to a certain element(s) of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if their properties match the defined conditions. If so, the property definitions are applied.</p>
-		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#">universal selector</a>, combined with one or several appended <a href="#1.5">filters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
+		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#">universal selector</a>, combined with one or several appended <a href="#1.5">filters or flags</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
+		<p>In order to access elements' parents or the root element you can use <a href="#">hierarchy objects</a>. <a href="#regex">Regular expressions</a> are also available to select elements based on their name.</p>
+#TODO link "hierarchy objects" + <a href="https://github.com/AXR/Specification/issues/35">Issue 35</a>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
 <span class="selector">document</span> { }
@@ -445,8 +453,7 @@ note child2 element1, note child2 element2 { }
 <span class="selector">*</span> <span class="combinator">..</span> <span class="selector">*</span> { }
 <span class="comment">//matches all elements</span>
 <span class="combinator">..</span> <span class="selector">*</span> { }</pre>
-<p>If the universal selector is not the only part of the selector, like when it has a filter, for example, it can be omitted. It may be omitted as well if placed between any combinator other than the child combinator (whitespace), the closest descendants combinator <span class="combinator">.</span>&#160;and the descendants combinator <span class="combinator">..</span>. These are explained in further chapters as well.</p>
-#TODO "closest descendants combinator"
+<p>If the universal selector is not the only part of the selector, like when it has a filter, for example, it can be omitted. It may be omitted as well if placed between matching combinators (except the child combinator, the siblings combinator and the descendants combinator).</p>
 <pre><span class="comment">//the following statements are equivalent</span>
 <span class="selector">*</span><span class="filter">:first</span> { }
 <span class="filter">:first</span> { }
@@ -459,7 +466,7 @@ note child2 element1, note child2 element2 { }
 		<p>You can negate any selector in the selector chain by prefixing the negator <span class="modifier">!</span> to any of its parts, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
 <pre><span class="comment">//this selects the children of note which are not message elements</span>
 <span class="selector">note</span><span class="combinator"> </span><span class="modifier">!</span><span class="selector">message</span> { }</pre>
-		<p>Likewise you can negate all <a href="#1.5">filters</a>.</p>
+		<p>Likewise you can negate <a href="#1.5">filters and flags</a>.</p>
 <pre><span class="comment">//this selects any note element which is not the first one</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not the first one
@@ -473,8 +480,7 @@ note child2 element1, note child2 element2 { }
 <pre><span class="comment">//matches a note element when the mouse hovers on an
 //important element which is his descendant</span>
 <span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">::hover</span> { }
-<span class="comment">//matches all note elements which have at least one comment
-//element as a child</span>
+<span class="comment">//matches all note elements which have at least one comment element as a child</span>
 <span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }</pre>
 </section>
 <section class="chapter">
@@ -492,8 +498,8 @@ note child2 element1, note child2 element2 { }
 		<p>If you want to select elements which are descendants (could be child of a child of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p><pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub">
-		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Sibling combinator</h4>
-		<p>Sibling elements can be accessed via the sibling combinator <span class="combinator">=</span>:</p>
+		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Siblings combinator</h4>
+		<p>Sibling elements can be accessed via the siblings combinator <span class="combinator">=</span>:</p>
 <pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element(s)</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub">
@@ -574,18 +580,19 @@ note child2 element1, note child2 element2 { }
 #TODO <a href="https://github.com/AXR/Specification/issues/34">Issue 34</a>
 </section>
 <section class="chapter">
-		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Event States</h3>
-		<p>Filters are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p><p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
+		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Flags</h3>
+		<p>Filters are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p>
+		<p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
 <pre><span class="comment">//this matches the first occurrence of the note element,
 //if it has a child</span>
 <span class="selector">note<span class="filter">:first:parent</span></span> { }</pre>
 		<p>Keep in mind that the order of the filters will alter the outcome, so if you put the filters of the previous example in reverse order, it will select the <em>first element that has a child</em>, instead of the <em>first element, but only if it has a child</em>.</p>
 <pre><span class="comment">//this matches the first of the note elements that have a child</span>
 <span class="selector">note<span class="filter">:parent:first</span></span> { }</pre>
+#TODO introduce flags
 <div class="sub">
-#TODO introduce stock event states
 		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
-		<p>The following filters are used to select a subset of elements, depending on their position in the current selection.</p>
+		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
 		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <em>Child</em> variant to the children's position <strong>inside their own parent</strong>.</p>
 		<p>This XML example will be used to illustrate the different position filters:</p>
 
@@ -604,25 +611,38 @@ note child2 element1, note child2 element2 { }
 &lt;/<span class="selector">note</span>&gt;</pre>
 
 		<p>The <strong><a name="f_first">first and firstChild filters</a></strong> match the first element(s).</p>
+<pre><span class="comment">//this matches the first <em>to</em> element in our example</span>
+note <span class="filter">:first</span> { }
+<span class="comment">//this matches the first <em>to</em> elements of each <em>note</em> element in our example</span>
+note <span class="filter">:firstChild</span> { }</pre>
 		<p>The <strong><a name="f_last">last and lastChild filters</a></strong> match the last element(s).</p>
+<pre><span class="comment">//this matches the last element in the second <em>note</em> element</span>
+note <span class="filter">:last</span> { }
+<span class="comment">//this matches the last element<u>s</u> of each <em>note</em> element</span>
+note <span class="filter">:lastChild</span> { }</pre>
 		<p>The <strong><a name="f_even">even and evenChild filter</a></strong> select elements whose index is even (the count starts with 1).</p>
+<pre><span class="comment">//this matches the <em>from</em> element in the first <em>note</em> element
+//but not the one in the second <em>note</em> element (7 isn't even)</span>
+note from<span class="filter">:even</span> { }</pre>
 		<p>The <strong><a name="f_odd">odd and oddChild filters</a></strong> select elements whose index is odd (the count starts with 1).</p>
-<pre><span class="comment">//this matches the first "to" element in the example above</span>
+<pre><span class="comment">//this matches the 1st <em>to</em> element in our example</span>
 note to<span class="filter">:odd</span> { }
-<span class="comment">//this matches the first "to" elements of each note element in the example above</span>
+<span class="comment">//this matches the 1st <em>to</em> elements of each <em>note</em> element in our example</span>
 note to<span class="filter">:oddChild</span> { }</pre>
 		<p>The <strong><a name="f_nth">nth and nthChild filters</a></strong> select elements which index matches a number or expression, meets a condition or falls within a given range.</p>
 <pre><span class="comment">//this matches the fourth element in the collection</span>
 <span class="filter">:nth</span>(<span class="number">4</span>) { }
-<span class="comment">//this matches the element after every third one or the fifth one in the collection</span>
-<span class="filter">:nth</span>(<span class="expression">3n + 1</span> | <span class="number">5</span>) { }
+<span class="comment">//if there are at least 6 elements currently in the collection,
+//it matches the element after every 5th one; if not it matches the 5th one</span>
+<span class="filter">:nth</span>(<span class="expression">5n + 1</span> | <span class="number">5</span>) { }
 <span class="comment">//this matches elements whose index is ≥ 3 in the collection</span>
 <span class="filter">:nth</span>(&gt;= <span class="number">3</span>) { }
 <span class="comment">//this matches elements whose index is 5, 10 or 15 in the collection</span>
 <span class="filter">:nth</span>(<span class="expression">5n</span>, <span class="number">15</span>) { }
-<span class="comment">//this matches elements whose index is 1, 2, 3 or &ge; 8 in the collection</span>
-<span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> | <span class="number">8</span>, <span class="number">*</span>) { }</pre>
+<span class="comment">//this matches elements whose index is 1, 2, 3 and &ge; 8 in the collection</span>
+<span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> &amp; <span class="number">8</span>, <span class="number">*</span>) { }</pre>
 </div>
+#TODO JS
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
 		<p>You can filter elements by their relationship in the current document tree.</p>
@@ -641,30 +661,27 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }</pre>
 </div>
 <div class="sub">
-<h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> Event States</h4>
-<p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using event states is an easy way to add interactivity to the site, to create a compelling user experience.</p>
-<p>The <a name="s_hover"><strong>hover state</strong></a> targets only elements that are lying under the mouse pointer.</p><pre><span class="comment">//matches every element which has the mouse over it
+<h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
+<p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using flags is an easy way to add interactivity to the site, to create a compelling user experience.</p>
+<p>The <a name="s_hover"><strong>hover flag</strong></a> targets only elements that are lying under the mouse pointer.</p><pre><span class="comment">//matches every element which has the mouse over it
 //(even nested ones)</span>
-<span class="state">::hover</span> { }</pre>
-<p>The <strong>press state</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during a long-press event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
-<span class="state">::press</span> { }</pre>
-<p>The <strong>drag state</strong> targets only elements which are being dragged (multiple elements can be dragged at the same time using a multi-touch interface device).</p><pre><span class="comment">//matches every element that is being dragged</span>
-<span class="state">::drag</span> { }</pre>
-<p>The <strong>target state</strong> targets elements which are a potential landing point for the currently dragged element(s).</p><pre><span class="comment">//matches every element that is a dragging destination of the
+<span class="flag">::hover</span> { }</pre>
+<p>The <strong>press flag</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during a long-press event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
+<span class="flag">::press</span> { }</pre>
+<p>The <strong>drag flag</strong> targets only elements which are being dragged (multiple elements can be dragged at the same time using a multi-touch interface device).</p><pre><span class="comment">//matches every element that is being dragged</span>
+<span class="flag">::drag</span> { }</pre>
+<p>The <strong>target flag</strong> targets elements which are a potential landing point for the currently dragged element(s).</p><pre><span class="comment">//matches every element that is a dragging destination of the
 //currently dragged element</span>
-<span class="state">::target</span> { }</pre>
-<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the <a href="#s_hover">hover state</a>:</p>
+<span class="flag">::target</span> { }</pre>
+<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the <a href="#s_hover">hover flag</a>:</p>
 <pre><span class="comment">//matches every dragging destination elements when a dragged
 //element is over it</span>
-<span class="state">::target::hover</span> { }</pre>
-<p>The <strong>focus state</strong> matches the element that currently receives user input (through tabbing for example).</p><pre><span class="comment">//matches every element which receives user input</span>
-<span class="state">::focus</span> { }</pre>
-<p>The <strong>blur state</strong> matches elements that are not focused while some element in the document is focused.</p><pre><span class="comment">//matches every element that does not receive user input, while
-//another is focused</span>
-<span class="state">::blur</span> { }</pre><p>You can write the blur state in functional notation as well, passing a selector as a parameter. It is matched when one the defined elements is focused. The scope of the selector is the same as the element on which the state was applied.</p><pre><span class="comment">//matches every element which is not focused, when one of the
-//children of the note element receives user input</span>
-<span class="state">::blur</span>(<span class="selector">note *</span>) { }</pre><p><em>Note:</em> Since the current selection shares its scope with the selector passed to the function, in order to access elements earlier in the tree you will have to use <a href="#">hierarchy objects</a> in the selector.</p>
-#TODO link "hierarchy objects"
+<span class="flag">::target::hover</span> { }</pre>
+<p>The <strong>focus flag</strong> matches the element that currently receives user input (through tabbing for example).</p>
+<pre><span class="comment">//matches every element which receives user input</span>
+<span class="flag">::focus</span> { }
+<span class="comment">//matches every element that does not receive user input</span>
+!<span class="flag">::focus</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> The attribute filter</h4>
@@ -738,6 +755,10 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:limit</span> { }
 <span class="filter">:wideLimit</span> { }
 </pre>
+</div>
+<div class="sub">
+<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> User flags</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
 </section>
 </div>
