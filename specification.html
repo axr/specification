@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/04/13
+      Last changed: 2012/04/15
       HSS version: 1.0
-      Revision: 1.m92
+      Revision: 1.m93
 
 ****************************************************************-->
 
@@ -230,6 +230,13 @@
 		background-color:#f5f7f6;
 		margin:0 auto;
 		padding:20px;
+		-moz-column-count: 2;
+		-moz-column-gap: 1em;
+		-webkit-column-count: 2;
+		-webkit-column-gap: 1em;
+		column-count: 2;
+		column-gap: 1em;
+		height: 550px;
 	}
 	
 	nav > ul > li
@@ -284,6 +291,7 @@
 	     <li><a href="#1.3.4">The universal selector</a></li>
 	     <li><a href="#1.3.5">Negating a selector</a></li>
 	     <li><a href="#1.3.6">Selecting the subject</a></li>
+	     <li><a href="#1.3.7">Regex selector</a></li>
 	</ul>
 </li>
 <li><a href="#1.4">Combinator</a>
@@ -310,6 +318,20 @@
 	</ul>
 </li>
 <li><a href="#1.6">Properties</a>
+	<ul>
+	     <li><a href="#1.6.1">Literal values</a></li>
+	     <li><a href="#1.6.2">Expressions</a></li>
+	     <li><a href="#1.6.3">Functions</a></li>
+	     <li><a href="#1.6.4">Color</a></li>
+	</ul>
+</li>
+<li><a href="#1.7">Objects</a>
+	<ul>
+	     <li><a href="#1.7.1">Hierarchy objects</a></li>
+	     <li><a href="#1.7.2">Support object</a></li>
+	     <li><a href="#1.7.3">Named objects</a></li>
+	     <li><a href="#1.7.4">Anonymous objects</a></li>
+	</ul>
 </li>
 </ul>
 </nav>
@@ -334,8 +356,7 @@
 		<h4><span><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to a certain element(s) of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if their properties match the defined conditions. If so, the property definitions are applied.</p>
 		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#">universal selector</a>, combined with one or several appended <a href="#1.5">filters or flags</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
-		<p>In order to access elements' parents or the root element you can use <a href="#">hierarchy objects</a>. <a href="#regex">Regular expressions</a> are also available to select elements based on their name.</p>
-#TODO link "hierarchy objects" + <a href="https://github.com/AXR/Specification/issues/35">Issue 35</a>
+		<p>In order to access elements' parents or the root element you can use <a href="#1.7.1">hierarchy objects</a>. <a href="#1.3.7">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
 <span class="selector">document</span> { }
@@ -411,7 +432,7 @@
     <span class="selector">subject</span> { }
 }</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/18">Issue 18</a>
-<p>Similarly you can nest filters using the <span class="object">@this</span> object (or its shorthand <span class="object">@</span>).</p>
+<p>Similarly you can nest filters using the <a href="1.7.1.3">@this</a> object (or its shorthand <span class="object">@</span>).</p>
 <pre><span class="selector">note</span><br />{
     <span class="object">@this</span><span class="filter">::hover</span> { }
 }
@@ -421,7 +442,6 @@
 <span class="selector">note</span><br />{
     <span class="object">@</span><span class="filter">::hover</span> { }
 }</pre>
-#TODO link @this object
 		<h4><span><a name="1.3.3">1.3.3</a></span> Grouping</h4>
 		<p>You can group multiple selectors together which is convenient when they share the same properties (or rules).</p>
 <pre><span class="comment">//match every subject element and every message element</span>
@@ -482,6 +502,8 @@ note child2 element1, note child2 element2 { }
 <span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">::hover</span> { }
 <span class="comment">//matches all note elements which have at least one comment element as a child</span>
 <span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }</pre>
+		<h4><span><a name="1.3.7">1.3.7</a></span> Regex selector</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/35">Issue 35</a>
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
@@ -528,7 +550,7 @@ note child2 element1, note child2 element2 { }
 //line of elements</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="selector">*</span> { }</pre>
 #TODO add schema which will illustrate all examples
-		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <span class="object">@parent</span> object will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
+		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="1.7.1.2">@parent</a> object will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.6">1.4.6</a></span> Accessing the content text</h4>
@@ -721,9 +743,14 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:noText</span> { }
 <span class="comment">//matches every element whose title attribute is empty or inexistent</span>
 :[title<span class="filter">:noText</span>] { }</pre>
-<p>The <strong>length filter</strong> compares the length of the text against a given condition.</p><pre><span class="comment">//matches every element whose content text’s length is greater
+<p>The <strong>length filter</strong> use a criterion to match elements or compares the length of the text against a given condition.</p>
+<pre><span class="comment">//matches every element whose content text’s length is greater
 //than 3 characters</span>
-<span class="filter">:length</span>(&gt; <span class="number">3</span>) { }</pre>
+<span class="filter">:length</span>(&gt; <span class="number">3</span>) { }
+<span class="comment">//matches the element(s) whose content text has the most characters</span>
+<span class="filter">:length</span>(max) { }
+<span class="comment">//matches the element(s) whose content text has the less characters</span>
+<span class="filter">:length</span>(min) { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.6">1.5.6</a></span> Property filters</h4>
