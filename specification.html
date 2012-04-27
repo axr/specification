@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/04/15
+      Last changed: 2012/04/27
       HSS version: 1.0
-      Revision: 1.m93
+      Revision: 1.1m1
 
 ****************************************************************-->
 
@@ -236,7 +236,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 550px;
+		height: 565px;
 	}
 	
 	nav > ul > li
@@ -432,7 +432,7 @@
     <span class="selector">subject</span> { }
 }</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/18">Issue 18</a>
-<p>Similarly you can nest filters using the <a href="1.7.1.3">@this</a> object (or its shorthand <span class="object">@</span>).</p>
+<p>Similarly you can nest filters using the <a href="#1.7.1.3">@this</a> object (or its shorthand <span class="object">@</span>).</p>
 <pre><span class="selector">note</span><br />{
     <span class="object">@this</span><span class="filter">::hover</span> { }
 }
@@ -456,7 +456,7 @@ note {
 <span class="comment">//which is equivalent to</span>
 note { }
 note child1, note child2 { }
-note child1 element1, note child1 element2 { }
+note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }
 </pre>
 		<h4><span><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
@@ -512,7 +512,8 @@ note child2 element1, note child2 element2 { }
 <span class="selector">note</span> <span class="selector">message</span> <span class="selector">subject</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.1">1.4.1</a></span> Child combinator</h4>
-		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p><p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
+		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p>
+		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre>
 </div>
 <div class="sub">
@@ -550,7 +551,7 @@ note child2 element1, note child2 element2 { }
 //line of elements</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="selector">*</span> { }</pre>
 #TODO add schema which will illustrate all examples
-		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="1.7.1.2">@parent</a> object will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
+		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="#1.7.1.2">@parent</a> object will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.6">1.4.6</a></span> Accessing the content text</h4>
@@ -603,7 +604,7 @@ note child2 element1, note child2 element2 { }
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Flags</h3>
-		<p>Filters are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p>
+		<p><strong>Filters</strong> are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p>
 		<p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
 <pre><span class="comment">//this matches the first occurrence of the note element,
 //if it has a child</span>
@@ -611,7 +612,8 @@ note child2 element1, note child2 element2 { }
 		<p>Keep in mind that the order of the filters will alter the outcome, so if you put the filters of the previous example in reverse order, it will select the <em>first element that has a child</em>, instead of the <em>first element, but only if it has a child</em>.</p>
 <pre><span class="comment">//this matches the first of the note elements that have a child</span>
 <span class="selector">note<span class="filter">:parent:first</span></span> { }</pre>
-#TODO introduce flags
+		<p>Using <strong>flags</strong> you can apply certain HSS declarations depending on an element's event state. Flags are preceded by <code>::</code> unlike filters which use <code>:</code>.</p>
+		<p><em>Note:</em> <a href="#1.5.3">System flags</a> are automatically activated and deactivated: the user has no control over their default behaviour.</p>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
 		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
@@ -710,7 +712,9 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>You can filter elements based on their attributes using the <strong>attribute filter</strong>.</p>
 <pre>
 <span class="comment">//matches elements which have a title attribute</span>
-:[title] { }                          
+:[title] { }
+<span class="comment">//matches elements which have "AXR" as their title attribute's value</span>
+:[title="AXR"] { }
 <span class="comment">//matches elements which have a title AND an href attribute</span>
 :[title]:[href] { }
 <span class="comment">//matches elements which have a title OR an href attribute</span>
