@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/04/27
+      Last changed: 2012/05/21
       HSS version: 1.0
-      Revision: 1.1m1
+      Revision: 1.1m2
 
 ****************************************************************-->
 
@@ -236,7 +236,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 565px;
+		height: 530px;
 	}
 	
 	nav > ul > li
@@ -281,6 +281,7 @@
 	     <li><a href="#1.2.3">Properties</a></li>
 	     <li><a href="#1.2.4">Objects</a></li>
 	     <li><a href="#1.2.5">Instructions</a></li>
+	     <li><a href="#1.2.6">Negation</a></li>
 	</ul>
 </li>
 <li><a href="#1.3">Selectors</a>
@@ -289,9 +290,8 @@
 	     <li><a href="#1.3.2">Hierarchy &amp; Scope</a></li>
 	     <li><a href="#1.3.3">Grouping</a></li>
 	     <li><a href="#1.3.4">The universal selector</a></li>
-	     <li><a href="#1.3.5">Negating a selector</a></li>
-	     <li><a href="#1.3.6">Selecting the subject</a></li>
-	     <li><a href="#1.3.7">Regex selector</a></li>
+	     <li><a href="#1.3.5">Selecting the subject</a></li>
+	     <li><a href="#1.3.6">Regex selector</a></li>
 	</ul>
 </li>
 <li><a href="#1.4">Combinator</a>
@@ -302,7 +302,6 @@
 	     <li><a href="#1.4.4">Next and previous siblings combinators</a></li>
 	     <li><a href="#1.4.5">Accessing elements laid out in lines</a></li>
 	     <li><a href="#1.4.6">Accessing the content text</a></li>
-	     <li><a href="#1.4.7">Combinator negation</a></li>
 	</ul>
 </li>
 <li><a href="#1.5">Filters &amp; Flags</a>
@@ -323,6 +322,7 @@
 	     <li><a href="#1.6.2">Expressions</a></li>
 	     <li><a href="#1.6.3">Functions</a></li>
 	     <li><a href="#1.6.4">Color</a></li>
+	     <li><a href="#1.6.5">isA</a></li>
 	</ul>
 </li>
 <li><a href="#1.7">Objects</a>
@@ -340,7 +340,7 @@
 <section class="chapter">
 		<h3><span><a name="1.1">1.1</a></span> Introduction</h3>
 		<p>HSS stands for Hierarchical Style Sheets and it is the language used to instruct the AXR renderer how the various elements in the document should look like, how they are laid out and, to some extent, how they behave. The syntax of this language is inspired in CSS, but extending and altering it in various ways, to achieve powerful new ways of creating a web document. Therefore, HSS is not compatible with existing CSS files.</p>
-		<p class="center"><img src="http://axr.vg/resources/axr/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets - Advanced UX Language" /></p>
+		<p class="center"><img src="/sites/default/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
 		<p>HSS inherits the simplicity and clarity of CSSʼ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isnʼt a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
 	
@@ -403,6 +403,24 @@
 }</pre>
 		<h4><span><a name="1.2.5">1.2.5</a></span> Instructions</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/27">Issue 27</a>
+
+		<h4><span><a name="1.2.6">1.2.6</a></span> The negator</h4>
+		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <span class="modifier">!</span>, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
+<pre><span class="comment">//this selects the children of note which are not message elements</span>
+<span class="selector">note</span><span class="combinator"> </span><span class="modifier">!</span><span class="selector">message</span> { }</pre>
+		<p>Likewise you can negate <a href="#1.5">filters and flags</a>.</p>
+<pre><span class="comment">//this selects any note element which is not the first one</span>
+<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
+<span class="comment">//this selects any note element which is not the first one
+//and does not have a blue background</span>
+<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</span>) { }</pre>
+		<p>To negate an entire selector (including its filters or flags) you have to use the alternate <span class="modifier">!()</span> notation.</p>
+<pre><span class="comment">//this matches all elements except the last note(s)</span>
+<span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
+		<p>The siblings combinators <a href="#1.4.3">=</a> <a href="#1.4.4">+ -</a> can be negated too.</p>
+<pre><span class="comment">//this matches <em>message</em> elements which are children of <em>note</em> but don't have a preceding <em>subject</em> sibling</span>
+<span class="selector">note</span> <span class="selector">subject</span> <span class="modifier">!</span><span class="combinator">+</span> <span class="selector">message</span> {}</pre>
+
 </section>
 	
 <section class="chapter">
@@ -482,28 +500,18 @@ note child2 element1, note child2 element2 { }
 <span class="selector">*</span> <span class="combinator">&gt;&gt;</span> <span class="selector">*</span> { }</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/31">Issue 31</a>
 		
-		<h4><span><a name="1.3.5">1.3.5</a></span> Negating a selector</h4>
-		<p>You can negate any selector in the selector chain by prefixing the negator <span class="modifier">!</span> to any of its parts, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
-<pre><span class="comment">//this selects the children of note which are not message elements</span>
-<span class="selector">note</span><span class="combinator"> </span><span class="modifier">!</span><span class="selector">message</span> { }</pre>
-		<p>Likewise you can negate <a href="#1.5">filters and flags</a>.</p>
-<pre><span class="comment">//this selects any note element which is not the first one</span>
-<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
-<span class="comment">//this selects any note element which is not the first one
-//and does not have a blue background</span>
-<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</span>) { }</pre>
-		<p>To negate an entire selector you have to use the alternate <span class="modifier">!()</span> notation.</p>
-<pre><span class="comment">//this matches all elements except the last note(s)</span>
-<span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
-		<h4><span><a name="1.3.6">1.3.6</a></span> Selecting the subject</h4>
-		<p>You can match an element which isn't the last one in the selector chain using the subject modifier <span class="modifier">$</span>.</p>
+		<h4><span><a name="1.3.5">1.3.5</a></span> Selecting the subject</h4>
+		<p>You can match an element which isn't the last one in the selector chain using the subject selector <span class="selector">$</span>.</p>
 <pre><span class="comment">//matches a note element when the mouse hovers on an
 //important element which is his descendant</span>
 <span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">::hover</span> { }
 <span class="comment">//matches all note elements which have at least one comment element as a child</span>
 <span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }</pre>
-		<h4><span><a name="1.3.7">1.3.7</a></span> Regex selector</h4>
-#TODO <a href="https://github.com/AXR/Specification/issues/35">Issue 35</a>
+		<h4><span><a name="1.3.6">1.3.6</a></span> Regex selector</h4>
+		<p>You can use a regular expression to select elements based on their names.</p>
+<pre><span class="comment">//matches every element whose name starts with a number (in the current scope)</span>
+<span class="selector">/^[0-9]/</span> { }
+</pre>
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
@@ -560,10 +568,19 @@ note child2 element1, note child2 element2 { }
     &lt;<span class="selector">paragraph</span>&gt;This is a line of dummy text. Lorem ipsum
     dolor sit amet, consectetur adipiscing elit.&lt;/<span class="selector">paragraph</span>&gt;
 &lt;/<span class="selector">document</span>&gt;</pre>
-		<p>First, we have to understand what happens with the content text when it is rendered. An element is represented by a container, think of it as an amount of space in the rendered document and inside it the content text and the containing elements. The default height of the container is the height of its content.</p><p>This is explained in more detail in the chapters about containers and display objects.</p><p>When the width of the container is not wide enough to accommodate all its content text, wrapping occurs. This means that the text is split in various lines of text, and therefore the height increases. Now there are two or more blocks stacked over each other.</p><p>Conceptually, the text can be further split into elements. Each word is preceded, followed, or surrounded by whitespace. Furthermore, each letter or symbol of that word is a separate glyph you can refer to.</p><p><img alt="Graphic explaining the concept of lines, words and glyps" src="http://axr.vg/resources/axr/images/spec/accessing_content_text.png"></p><p>To select portions of text, the content text combinator is used. This is a special combinator which has a distinct behavior, that’s why it is not listed among the other combinators. After the combinator, you write a string to specify what part of the text you want to select, or an empty string to select the entire content text.</p><p>You select a portion of the text using a string:</p>
+		<p>First, we have to understand what happens with the content text when it is rendered. An element is represented by a container, think of it as an amount of space in the rendered document and inside it the content text and the containing elements. The default height of the container is the height of its content.</p>
+		<p>This is explained in more detail in the chapters about containers and display objects.</p>
+		<p>When the width of the container is not wide enough to accommodate all its content text, wrapping occurs. This means that the text is split in various lines of text, and therefore the height increases. Now there are two or more blocks stacked over each other.</p>
+		<p>Conceptually, the text can be further split into elements. Each word is preceded, followed, or surrounded by whitespace. Furthermore, each letter or symbol of that word is a separate glyph you can refer to.</p>
+		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="/sites/default/images/spec/accessing_content_text.png"></p>
+		<p>To select portions of text, the content text combinator is used. This is a special combinator which has a distinct behavior, that’s why it is not listed among the other combinators. After the combinator, you write a string to specify what part of the text you want to select, or an empty string to select the entire content text.</p>
+		<p>You select a portion of the text using a string:</p>
 <pre><span class="comment">//this will select any occurrence of “dummy text” and set
 //it be 15 points tall</span>
-<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span> { <span class="property">height</span>: <span class="number">15</span> }</pre><p>The entire content text is selected if you use the universal selector (actually just selects all lines):</p><pre><span class="comment">//this will select the entire content text of the snippet element</span>
+<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span> { <span class="property">height</span>: <span class="number">15</span> }
+<span class="comment">//this will only match the first one</span>
+<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span><span class="filter">:first</span> { <span class="property">height</span>: <span class="number">15</span> }</pre>
+		<p>The entire content text is selected if you use the universal selector (actually just selects all lines):</p><pre><span class="comment">//this will select the entire content text of the snippet element</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> { }</pre><p>You can also select elements by its type. This selects content text elements regardless of what characters actually are contained, and allows you to access any line, word or glyph.</p><p>To access a line, the universal selector is used after the content text combinator as well, but you filter them to point to that particular line:</p><pre><span class="comment">//this will select the first line of text</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> {}</pre>
 		<p>The content filter <span class="filter"><a name="cf_each">:each</a></span> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
@@ -578,7 +595,7 @@ note child2 element1, note child2 element2 { }
 &nbsp;&nbsp;&nbsp; //omitted in this case</span>
 &nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="filter">:last</span> { }
 }</pre>
-<p>You repeat the same pattern again to select a glyph:</p><pre><span class="selector">document</span>
+		<p>You repeat the same pattern again to select a glyph:</p><pre><span class="selector">document</span>
 {
 &nbsp;&nbsp;&nbsp; <span class="comment">//this will select the first letter of the content text</span>
 &nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> { }
@@ -599,8 +616,6 @@ note child2 element1, note child2 element2 { }
 }</pre>
 		<p>These inline elements are very flexible and they can potentially intersect with each other, depending on the styles that are applied to different selections. So, for example, selecting the string <span class="string">“dummy text. Lorem”</span>, giving it some styles, and then selecting <span class="string">“Lorem ipsum”</span>, and applying styles, would result in three separate blocks: one with content <span class="string">“dummy text. “</span> (notice the whitespace), one with content <br><span class="string">“ ipsum”</span> (also with whitespace), and a third one, with content <span class="string">“Lorem”</span>, whose styles are a mix of the first and second one, with the styles of the rule that has been applied last overriding the first one. If anywhere inside of one of the inline&nbsp;elements text wrapping occurs, it is split into two inline elements, both with the same style.</p>
 </div>
-		<h4 class="title"><span class="number"><a name="1.4.7">1.4.7</a></span> Combinator negation</h4>
-#TODO <a href="https://github.com/AXR/Specification/issues/34">Issue 34</a>
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Flags</h3>
@@ -669,7 +684,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 #TODO JS
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
-		<p>You can filter elements by their relationship in the current document tree.</p>
+		<p>You can filter elements by their relationship with the other elements in the tree.</p>
 		<p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p>
 <pre><span class="comment">//this matches childless elements</span>
 !<span class="filter">:parent</span> { }</pre>
@@ -678,11 +693,17 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:has</span>(<span class="selector">message</span>) { }
 <span class="comment">//this matches only elements that have exactly 3 children</span>
 <span class="filter">:has</span>(<span class="number">3</span>) { }</pre>
-		<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of ancestors is compared.</p><pre><span class="comment">//this matches only element that are an ancestor of an
+		<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of ancestors is compared.</p>
+<pre><span class="comment">//this matches only element that are an ancestor of an
 //important element</span>
 <span class="filter">:has</span>(<span class="selector">.. important</span>) { }
 <span class="comment">//this matches only element that have 4 or more ancestors</span>
 <span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }</pre>
+		<p>You can also use the <strong>is filter</strong> to select a particular element in the returned collection(s).</p>
+<pre>
+<span class="comment">//this will only match the <strong>first sibling(s)</strong> following the <em>from</em> element(s)
+//<strong>if</strong> it's a <em>message</em> element</span>
+from + <span class="filter">:first</span><span class="filter">:is(<span class="selector">message</span>)</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
@@ -739,7 +760,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:endsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
 <p>The <strong>match filter</strong> uses a regular expression to match elements.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
-<span class="filter">:match</span>(<span class="string">"^[0-9]"</span>) { }</pre>
+<span class="filter">:match</span>(<span class="string">/^[0-9]/</span>) { }</pre>
 <p>The <strong>noText filter</strong> matches elements which have no content text.</p>
 <pre><span class="comment">//matches elements which contain no text</span>
 <span class="filter">:noText</span> { }
