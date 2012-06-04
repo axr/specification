@@ -25,7 +25,7 @@
       =================
       Last changed: 2012/06/04
       HSS version: 1.0
-      Revision: 1.1m5
+      Revision: 1.1m6
 
 ****************************************************************-->
 
@@ -236,7 +236,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 550px;
+		height: 580px;
 	}
 	
 	nav > ul > li
@@ -847,19 +847,20 @@ note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
-	<p>The <a name="f_each"><strong>each filter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text filter, it can be used in association with another collection filter.</p>
+	<p>The <a name="f_each"><strong>each filter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text filter, it can be used in association with sibling combinators or other collection filters.</p>
 	<p>Using the <strong>type filter</strong> you can rearrange the elements of a collection by types.</p>
 <pre><span class="comment">//this will match the children of each <em>note</em> elements
 //which are the second of their type
 //in our example it would select the second <em>message</em> element from the first <em>note</em></span>
 <span class="selector">note</span><span class="filter">:each</span> <span class="filter">:type:nth(<span class="number">2</span>)</span> { }</pre>
 	<p>Its functional notation <span class="filter">:type()</span> lets you filter the returned collection(s) by a particular element type.</p>
-<pre><span class="comment">//this will only match the <strong>first siblings</strong> following the <em>from</em> element(s)
-//<strong>provided that</strong> they are <em>message</em> elements</span>
-<span class="selector">note</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="filter">:firstChild</span><span class="filter">:type(<span class="selector">message</span>)</span> { }
-<span class="comment">//this matches the first <em>message</em> elements which are preceded by a <em>from</em> element
-//these could be positioned anywhere in the siblings' collections</span>
-<span class="selector">note</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:firstChild</span> { }
+<pre><span class="comment">//this will only match the <strong>first siblings</strong> following <em>from</em> elements
+//under each <em>note</em> elements <strong>provided that</strong> these siblings are <em>message</em> elements</span>
+<span class="selector">note</span><span class="filter">:each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="filter">:first</span><span class="filter">:type(<span class="selector">message</span>)</span> { }
+<span class="comment">//this matches, inside each <em>note</em> elements separately,
+//the first <em>message</em> elements following a <em>from</em> element
+//these elements could be positioned <u>anywhere</u> in the siblings' collections</span>
+<span class="selector">note</span><span class="filter">:each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:first</span> { }
 
 <span class="comment">//this matches the fourth element out of the combined collection
 //of notes' children if it's not a <em>message</em> element</span>
