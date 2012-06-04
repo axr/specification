@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/05/28
+      Last changed: 2012/06/04
       HSS version: 1.0
-      Revision: 1.1m4
+      Revision: 1.1m5
 
 ****************************************************************-->
 
@@ -315,6 +315,7 @@
 	     <li><a href="#1.5.6">Property filters</a></li>
 	     <li><a href="#1.5.7">Custom filters</a></li>
 	     <li><a href="#1.5.8">User flags</a></li>
+	     <li><a href="#1.5.9">Collection filters</a></li>
 	</ul>
 </li>
 <li><a href="#1.6">Properties</a>
@@ -341,7 +342,7 @@
 		<h3><span class="number"><a name="1.1">1.1</a></span> Introduction</h3>
 		<p>HSS stands for Hierarchical Style Sheets and it is the language used to instruct the AXR renderer how the various elements in the document should look like, how they are laid out and, to some extent, how they behave. The syntax of this language is inspired in CSS, but extending and altering it in various ways, to achieve powerful new ways of creating a web document. Therefore, HSS is not compatible with existing CSS files.</p>
 		<p class="center"><img src="/images/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
-		<p>HSS inherits the simplicity and clarity of CSSʼ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isnʼt a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
+		<p>HSS inherits the simplicity and clarity of CSS‌’ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
 	
 <section class="chapter">
@@ -354,7 +355,7 @@
 }</pre>
 
 		<h4><span class="number"><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
-		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if their properties match the defined conditions. If so, the property definitions are applied.</p>
+		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
 		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters or flags</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
 		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">hierarchy objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
@@ -495,7 +496,7 @@ note child2 element1, note child2 element2 { }
 <span class="selector">*</span> <span class="combinator">..</span> <span class="selector">*</span> { }
 <span class="comment">//matches all elements</span>
 <span class="combinator">..</span> <span class="selector">*</span> { }</pre>
-<p>If the universal selector is not the only part of the selector, like when it has a filter, for example, it can be omitted. It may be omitted as well if placed between matching combinators (except the child combinator, the siblings combinator and the descendant combinator).</p>
+<p>If the universal selector is not the only part of the selector, like when it has a filter, for example, it can be omitted. It may be omitted as well if placed between matching combinators (except the child and descendant combinators).</p>
 <pre><span class="comment">//the following statements are equivalent</span>
 <span class="selector">*</span><span class="filter">:first</span> { }
 <span class="filter">:first</span> { }
@@ -520,11 +521,19 @@ note child2 element1, note child2 element2 { }
 		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Hierarchy Objects</h4>
 		<p>The <a name="1.3.7.1"><strong>this object</strong></a></p>
 #TODO <a href="https://github.com/AXR/Specification/issues/43">Issue 43</a>
-		<p>The <a name="1.3.7.2"><strong>self object</strong></a></p>
-#TODO <a href="https://github.com/AXR/Specification/issues/42">Issue 42</a>
+		<p>The <a name="1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#1.7.3">anonymous objects</a>.</p>
+<pre><span class="comment">//this would set the pattern's width value to the current
+//pattern's height <em>computed</em> value using the <a href="#">object dot notation</a></span>
+<span class="object">@pattern</span>
+{
+    height: 100%;
+    width: @self.height;
+}
+</pre>
+#TODO object dot notation
 		<p>The <a name="1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
 <pre><span class="comment">//set the messages' width to the same value as the note's width,
-//which is a child of the root element</span>
+//which is a child of the root element, using a <a href="#1.6.3.1">reference</a></span>
 <span class="combinator">..</span> <span class="selector">message</span>
 {
 &nbsp;&nbsp;&nbsp; <span class="property">width</span>: ref(<span class="property">width</span> of <span class="object">@root</span> <span class="selector">note</span>);
@@ -535,7 +544,7 @@ note child2 element1, note child2 element2 { }
 {
     <span class="property">width</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>) / <span class="number">3</span>;
 }
-<span class="comment">//this would return nothing (the root doesn't have a parent)</span>
+<span class="comment">//this reference would return nothing (the root doesn't have a parent)</span>
 <span class="selector">note</span>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span> <span class="object">@parent</span>);
@@ -555,7 +564,7 @@ note child2 element1, note child2 element2 { }
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
-		<p>If you want to select elements which are descendants (could be child of a child of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p><pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
+		<p>If you want to select elements which are descendants (could be direct children of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p><pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Siblings combinator</h4>
@@ -612,7 +621,7 @@ note child2 element1, note child2 element2 { }
 		<p>The entire content text is selected if you use the universal selector (actually just selects all lines):</p><pre><span class="comment">//this will select the entire content text of the snippet element</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> { }</pre><p>You can also select elements by its type. This selects content text elements regardless of what characters actually are contained, and allows you to access any line, word or glyph.</p><p>To access a line, the universal selector is used after the content text combinator as well, but you filter them to point to that particular line:</p><pre><span class="comment">//this will select the first line of text</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> {}</pre>
-		<p>The content filter <span class="filter"><a name="cf_each">:each</a></span> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
+		<p>The <a href="#f_each">each filter</a> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
 <pre><span class="comment">//this will select each line of text and give it vertical margin,
 //increasing the line spacing</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:each</span> { <span class="property">margin</span>: <span class="number">5</span> top, <span class="number">5</span> bottom }</pre>
@@ -658,11 +667,7 @@ note child2 element1, note child2 element2 { }
 <span class="selector">note<span class="filter">:parent:first</span></span> { }</pre>
 		<p>Using <strong>flags</strong> you can apply certain HSS declarations depending on an element's event state. Flags are preceded by <code>::</code> unlike filters which use <code>:</code>.</p>
 		<p><em>Note:</em> <a href="#1.5.3">System flags</a> are automatically activated and deactivated: the user has no control over their default behaviour.</p>
-<div class="sub">
-		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
-		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
-		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <tt>Child</tt> variant to the children's position <strong>inside their own parent</strong>.</p>
-		<p>This XML example will be used to illustrate the different position filters:</p>
+		<p>This XML example will be used to illustrate the different filters' examples:</p>
 
 <pre class="xml">&lt;<span class="selector">note</span>&gt;
 	&lt;<span class="selector">to</span>&gt;Peter&lt;/<span class="selector">to</span>&gt;
@@ -677,6 +682,10 @@ note child2 element1, note child2 element2 { }
 	&lt;<span class="selector">subject</span>&gt;Rendezvous&lt;/<span class="selector">subject</span>&gt;
 	&lt;<span class="selector">message</span>&gt;Meet me at the inn.&lt;/<span class="selector">message</span>&gt;
 &lt;/<span class="selector">note</span>&gt;</pre>
+<div class="sub">
+		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
+		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
+		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <tt>Child</tt> variant to the children's position <strong>inside their own parent</strong>.</p>
 
 		<p>The <strong><a name="f_first">first and firstChild filters</a></strong> match the first element(s).</p>
 <pre><span class="comment">//this matches the first <em>to</em> element in our example</span>
@@ -730,28 +739,11 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:has</span>(<span class="selector">.. important</span>) { }
 <span class="comment">//this matches only element that have 4 or more ancestors</span>
 <span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }</pre>
-		<p>You can also use the <strong>is filter</strong> to select a particular element in the returned collection(s).</p>
-<pre><span class="comment">//this will only match the <strong>first sibling(s)</strong> following the <em>from</em> element(s)
-//<strong>if</strong> it's a <em>message</em> element</span>
-from + <span class="filter">:firstChild</span><span class="filter">:is(<span class="selector">message</span>)</span> { }
-<span class="comment">//this matches the first <em>message</em> elements which are preceded by <em>from</em> elements
-//these could be positioned anywhere in the returned collection</span>
-from + <span class="selector">message</span><span class="filter">:firstChild</span> { }
-
-<span class="comment">//this matches the fourth element out of the combined collection
-//of notes' children if it's not a <em>message</em> element</span>
-<span class="selector">note</span> <span class="filter">:nth(<span class="number">4</span>)</span><span class="filter">!:is(<span class="selector">message</span>)</span> { }
-<span class="comment">//if the <em>message</em> element is either the 1st, 2nd, 3rd or 4th element
-//and then removed from the returned collection (!message)
-//it would have an impact on the position of the remaining elements
-//in these cases the following example wouldn't match the
-//same element(s) than the the previous one</span>
-<span class="selector">note</span> !<span class="selector">message</span><span class="filter">:nth(<span class="number">4</span>)</span> { }</pre>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
 <p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using flags is an easy way to add interactivity to the site, to create a compelling user experience.</p>
-<p>The <a name="s_hover"><strong>hover flag</strong></a> targets only elements that are lying under the mouse pointer.</p><pre><span class="comment">//matches every element which has the mouse over it
+<p>The <a name="f_hover"><strong>hover flag</strong></a> targets only elements that are lying under the mouse pointer.</p><pre><span class="comment">//matches every element which has the mouse over it
 //(even nested ones)</span>
 <span class="flag">::hover</span> { }</pre>
 <p>The <strong>press flag</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during a long-press event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
@@ -761,7 +753,7 @@ from + <span class="selector">message</span><span class="filter">:firstChild</sp
 <p>The <strong>target flag</strong> targets elements which are a potential landing point for the currently dragged element(s).</p><pre><span class="comment">//matches every element that is a dragging destination of the
 //currently dragged element</span>
 <span class="flag">::target</span> { }</pre>
-<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the <a href="#s_hover">hover flag</a>:</p>
+<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the <a href="#f_hover">hover flag</a>:</p>
 <pre><span class="comment">//matches every dragging destination elements when a dragged
 //element is over it</span>
 <span class="flag">::target::hover</span> { }</pre>
@@ -841,7 +833,7 @@ from + <span class="selector">message</span><span class="filter">:firstChild</sp
 #filter limit { :first, :last }
 <span class="comment">//you must define custom filters before applying them:
 //limit's definition must precede wideLimit's one</span>
-#filter wideLimit { (width > length):limit }
+#filter wideLimit { (width > height):limit }
 
 <span class="filter">:firstBlue</span> { }
 <span class="filter">:sw</span>("foo") { }
@@ -852,6 +844,37 @@ from + <span class="selector">message</span><span class="filter">:firstChild</sp
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> User flags</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
+</div>
+<div class="sub">
+<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
+	<p>The <a name="f_each"><strong>each filter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text filter, it can be used in association with another collection filter.</p>
+	<p>Using the <strong>type filter</strong> you can rearrange the elements of a collection by types.</p>
+<pre><span class="comment">//this will match the children of each <em>note</em> elements
+//which are the second of their type
+//in our example it would select the second <em>message</em> element from the first <em>note</em></span>
+<span class="selector">note</span><span class="filter">:each</span> <span class="filter">:type:nth(<span class="number">2</span>)</span> { }</pre>
+	<p>Its functional notation <span class="filter">:type()</span> lets you filter the returned collection(s) by a particular element type.</p>
+<pre><span class="comment">//this will only match the <strong>first siblings</strong> following the <em>from</em> element(s)
+//<strong>provided that</strong> they are <em>message</em> elements</span>
+<span class="selector">note</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="filter">:firstChild</span><span class="filter">:type(<span class="selector">message</span>)</span> { }
+<span class="comment">//this matches the first <em>message</em> elements which are preceded by a <em>from</em> element
+//these could be positioned anywhere in the siblings' collections</span>
+<span class="selector">note</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:firstChild</span> { }
+
+<span class="comment">//this matches the fourth element out of the combined collection
+//of notes' children if it's not a <em>message</em> element</span>
+<span class="selector">note</span> <span class="filter">:nth(<span class="number">4</span>)</span><span class="filter">!:type(<span class="selector">message</span>)</span> { }
+<span class="comment">//if the <em>message</em> element is either the 1st, 2nd, 3rd or 4th element
+//and then removed from the returned collection (!message)
+//it would have an impact on the position of the remaining elements
+//in these cases the following example wouldn't match the
+//same element(s) than the previous example</span>
+<span class="selector">note</span> !<span class="selector">message</span><span class="filter">:nth(<span class="number">4</span>)</span> { }</pre>
+	<p>Using the <strong>oneIs filter</strong> you can match a collection on the condition that it contains a certain element.</p>
+<pre>
+<span class="comment">//this matches the children of the first <em>note</em> element
+//if one of them is a <em>from</em> element</span>
+<span class="selector">note</span><span class="filter">:first</span> <span class="filter">:oneIs(<span class="selector">from</span>)</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
@@ -868,11 +891,27 @@ from + <span class="selector">message</span><span class="filter">:firstChild</sp
 	<div class="sub">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
 	<p>Functions take some parameters and create an output. The result of the function is what is assigned to the property.</p>
-	<p>ref()</p>
-	<p>attr()</p>
-	<p>sel()</p>
-	<p>max() and min()</p>
-	<p>floor(), ceil() and round()</p>
+	<h5><a name="1.6.3.1">References</a></h5>
+	
+	<p>You can take values from other elements to apply them to the properties of the currently selected element(s).&#160; The value returned is always the computed value of that property, not the declared one. The syntax is <span>ref(<span class="property">propertyName</span> of <span class="selector">selector</span>)</span> and can be used anywhere a value is accepted.</p>
+	<p>Consider the following XML snippet:</p>
+<pre class="xml">&lt;<span class="selector">parent</span>&gt;
+    &lt;<span class="selector">child</span>&gt;dynamically generated content text, changes in height&lt;/<span class="selector">child</span>&gt;
+    &lt;<span class="selector">child2</span>&gt;static content text&lt;/<span class="selector">child2</span>&gt;
+&lt;/<span class="selector">parent</span>&gt;</pre>
+<p>Suppose that in your layout each child elements is a column, taking half of the horizontal width. If you wanted the second child element to always have the same height as the first one, since the first changes in height, you could not use any static value. Instead, you would reference the first child from the second one.</p>
+<pre><span class="comment">//this makes both columns the same height</span>
+<span class="selector">parent child2</span>
+{
+&#160;&#160;&#160; <span class="property">height</span>: ref(<span class="property">height</span> of <span class="selector">child</span>)
+}</pre>
+<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
+<p>modifiers: max, min, avg and sum</p>
+#TODO <a href="https://github.com/AXR/Specification/issues/21">Issue 21</a>
+	<h5>attr()</h5>
+	<h5>sel()</h5>
+	<h5>max() and min()</h5>
+	<h5>floor(), ceil() and round()</h5>
 	</div>
 	<div class="sub">
 	<h4 class="title"><span class="number"><a name="1.6.4">1.6.4</a></span> Color</h4>
@@ -885,7 +924,7 @@ from + <span class="selector">message</span><span class="filter">:firstChild</sp
 </section>
 <section class="chapter">
 	<h3 class="title"><span class="number"><a name="1.7">1.7</a></span> Objects</h3>
-	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their owner. This enables great flexibility and modularization of the code.</p>
+	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#1.3.7.5">owner</a>. This enables great flexibility and modularization of the code.</p>
 	<p>Objects can be set to be of a certain type, placing an object type immediately after the at sign, or automatically deriving it from the context. It is followed by whitespace, and optionally an object name and more optional whitespace, followed by a block. Inside the block, its properties are defined.</p>
 	<div class="sub">
 	<h4 class="title"><span class="number"><a name="1.7.1">1.7.1</a></span> The support object</h4>
