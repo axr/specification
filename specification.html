@@ -305,7 +305,7 @@
 	     <li><a href="#1.4.6">Accessing the content text</a></li>
 	</ul>
 </li>
-<li><a href="#1.5">Filters &amp; Flags</a>
+<li><a href="#1.5">Filters, flags and splitters</a>
 	<ul>
 	     <li><a href="#1.5.1">Position filters</a></li>
 	     <li><a href="#1.5.2">Hierarchy filters</a></li>
@@ -313,8 +313,8 @@
 	     <li><a href="#1.5.4">The attribute filter</a></li>
 	     <li><a href="#1.5.5">Text matching filters</a></li>
 	     <li><a href="#1.5.6">Property filters</a></li>
-	     <li><a href="#1.5.7">Custom filters</a></li>
-	     <li><a href="#1.5.8">User flags</a></li>
+	     <li><a href="#1.5.7">Custom filters  &amp; User flags</a></li>
+	     <li><a href="#1.5.8">Splitters</a></li>
 	     <li><a href="#1.5.9">Collection filters</a></li>
 	</ul>
 </li>
@@ -356,7 +356,7 @@
 
 		<h4><span class="number"><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
-		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters or flags</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
+		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
 		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">hierarchy objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
@@ -409,7 +409,7 @@
 		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <span class="modifier">!</span>, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
 <pre><span class="comment">//this selects the children of note which are not message elements</span>
 <span class="selector">note</span><span class="combinator"> </span><span class="modifier">!</span><span class="selector">message</span> { }</pre>
-		<p>Likewise you can negate <a href="#1.5">filters and flags</a>.</p>
+		<p>Likewise you can negate filters and flags.</p>
 <pre><span class="comment">//this selects any note element which is not the first one</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not the first one
@@ -503,7 +503,6 @@ note child2 element1, note child2 element2 { }
 <span class="comment">//and so are these</span>
 <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span> { }
 <span class="selector">*</span> <span class="combinator">&gt;&gt;</span> <span class="selector">*</span> { }</pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/31">Issue 31</a>
 		
 		<h4><span class="number"><a name="1.3.5">1.3.5</a></span> Selecting the subject</h4>
 		<p>You can match an element which isn't the last one in the selector chain using the subject selector <span class="selector">$</span>.</p>
@@ -553,9 +552,10 @@ note child2 element1, note child2 element2 { }
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
-		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” an element and style one that is inside it instead. It is more convenient to use a combinator than to use hierarchy, in the case of child combinators. In other cases, the combinator is needed because with hierarchy alone the same effect could not be achieved.</p><pre><span class="comment">//matches every subject element which is a child of message,
-//which itself is a child of note</span>
-<span class="selector">note</span> <span class="selector">message</span> <span class="selector">subject</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
+		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” an element and style one that is inside it instead. It is more convenient to use a combinator than to use hierarchy, in the case of child combinators. In other cases, the combinator is needed because with hierarchy alone the same effect could not be achieved.</p>
+<pre><span class="comment">//matches every <em>important</em> element which is a child of <em>message</em>,
+//which itself is a child of <em>note</em></span>
+<span class="selector">note</span> <span class="selector">message</span> <span class="selector">important</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.1">1.4.1</a></span> Child combinator</h4>
 		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p>
@@ -578,7 +578,7 @@ note child2 element1, note child2 element2 { }
 <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }
 <span class="comment">//this will match the subject element(s) preceding a message sibling</span>
 <span class="selector">message</span> <span class="combinator">-</span> <span class="selector">subject</span> { }</pre>
-		<p><em>Note:</em> For further instructions on how to select amongst the following or preceding elements read the <a href="#1.5">filters and flags</a> chapter.</p>
+		<p><em>Note:</em> For further instructions on how to select amongst the following or preceding elements read the <a href="#1.5">filters, flags and splitters</a> chapter.</p>
 </div>
 <div class="sub">
 		<h4 class="title"><span class="number"><a name="1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
@@ -621,10 +621,10 @@ note child2 element1, note child2 element2 { }
 		<p>The entire content text is selected if you use the universal selector (actually just selects all lines):</p><pre><span class="comment">//this will select the entire content text of the snippet element</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> { }</pre><p>You can also select elements by its type. This selects content text elements regardless of what characters actually are contained, and allows you to access any line, word or glyph.</p><p>To access a line, the universal selector is used after the content text combinator as well, but you filter them to point to that particular line:</p><pre><span class="comment">//this will select the first line of text</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> {}</pre>
-		<p>The <a href="#f_each">each filter</a> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
+		<p>The <a href="#s_each">each splitter</a> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
 <pre><span class="comment">//this will select each line of text and give it vertical margin,
 //increasing the line spacing</span>
-<span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:each</span> { <span class="property">margin</span>: <span class="number">5</span> top, <span class="number">5</span> bottom }</pre>
+<span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="splitter">/each</span> { <span class="property">margin</span>: <span class="number">5</span> top, <span class="number">5</span> bottom }</pre>
 		<p>To access a word, you use the content text combinator and universal selector again, after selecting a portion of the text:</p><pre><span class="selector">document</span>
 {
 &nbsp;&nbsp;&nbsp; <span class="comment">//this will select the last word of the content text</span>
@@ -640,15 +640,15 @@ note child2 element1, note child2 element2 { }
 &nbsp;&nbsp;&nbsp; <span class="comment">//this is equivalent</span>
 &nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;&gt;</span> <span class="filter">:first</span> { }
 }</pre>
-		<p>What actually happens when you select a portion of the content text is that an inline element is created, by the use of style rules. If the selected text is adjacent, this inline element spans across all the selected text, creating one addressable container per selection, unless the <a href="#cf_each">each filter</a> is used. In that case, or when the selected portions of the text are not contiguous, one inline element is created per matching text element.</p>
+		<p>What actually happens when you select a portion of the content text is that an inline element is created, by the use of style rules. If the selected text is adjacent, this inline element spans across all the selected text, creating one addressable container per selection, unless the <a href="#s_each">each splitter</a> is used. In that case, or when the selected portions of the text are not contiguous, one inline element is created per matching text element.</p>
 <pre><span class="selector">document</span>
 {
 &nbsp;&nbsp;&nbsp; <span class="comment">//this will create one pseudo-element for the first three
     //lines of text</span>
     <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span>) { }
 &nbsp;&nbsp;&nbsp; <span class="comment">//this will create three pseudo-elements, one for each line</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span>)<span class="filter">:each</span> { }
-&nbsp;&nbsp;&nbsp; <span class="comment">//there is no need for the each filter on this one, since
+&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span>)<span class="splitter">/each</span> { }
+&nbsp;&nbsp;&nbsp; <span class="comment">//there is no need for the each splitter on this one, since
     //the lines aren’t adjacent</span>
 &nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="filter">:odd</span> { }
 }</pre>
@@ -656,7 +656,7 @@ note child2 element1, note child2 element2 { }
 </div>
 </section>
 <section class="chapter">
-		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters &amp; Flags</h3>
+		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters, flags and  splitters</h3>
 		<p><strong>Filters</strong> are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p>
 		<p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
 <pre><span class="comment">//this matches the first occurrence of the note element,
@@ -823,7 +823,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub">
-<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters</h4>
+<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters &amp; User flags</h4>
 <p>In HSS it is possible to extend the available filters with your own using the <span class="instruction">#filter</span> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
 #filter firstBlue { (background = blue):first }
@@ -840,31 +840,33 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:limit</span> { }
 <span class="filter">:wideLimit</span> { }
 </pre>
-</div>
-<div class="sub">
-<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> User flags</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
 <div class="sub">
-<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
-	<p>The <a name="f_each"><strong>each filter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text filter, it can be used in association with sibling combinators or other collection filters.</p>
-	<p>Using the <strong>type filter</strong> you can rearrange the elements of a collection by types.</p>
+<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Splitters</h4>
+	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result.</p>
+	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.9">collection filters</a> or other splitters.</p>
+	<p>Using the <strong>type splitter</strong> you can rearrange the elements of a collection by types.</p>
 <pre><span class="comment">//this will match the children of each <em>note</em> elements
 //which are the second of their type
 //in our example it would select the second <em>message</em> element from the first <em>note</em></span>
-<span class="selector">note</span><span class="filter">:each</span> <span class="filter">:type:nth(<span class="number">2</span>)</span> { }</pre>
-	<p>Its functional notation <span class="filter">:type()</span> lets you filter the returned collection(s) by a particular element type.</p>
+<span class="selector">note</span><span class="splitter">/each</span> <span class="splitter">/type</span><span class="filter">:nth(<span class="number">2</span>)</span> { }</pre>
+	<p><em>Note:</em> You can't negate a splitter.</p>
+</div>
+<div class="sub">
+<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
+	<p>The <strong>is filter</strong> lets you filter the returned collection(s) by a particular element type.</p>
 <pre><span class="comment">//this will only match the <strong>first siblings</strong> following <em>from</em> elements
 //under each <em>note</em> elements <strong>provided that</strong> these siblings are <em>message</em> elements</span>
-<span class="selector">note</span><span class="filter">:each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="filter">:first</span><span class="filter">:type(<span class="selector">message</span>)</span> { }
+<span class="selector">note</span><span class="splitter">/each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="filter">:first</span><span class="filter">:is(<span class="selector">message</span>)</span> { }
 <span class="comment">//this matches, inside each <em>note</em> elements separately,
 //the first <em>message</em> elements following a <em>from</em> element
-//these elements could be positioned <u>anywhere</u> in the siblings' collections</span>
-<span class="selector">note</span><span class="filter">:each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:first</span> { }
+//these elements could be positioned <u>anywhere</u> in their siblings' collections</span>
+<span class="selector">note</span><span class="splitter">/each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:first</span> { }
 
 <span class="comment">//this matches the fourth element out of the combined collection
 //of notes' children if it's not a <em>message</em> element</span>
-<span class="selector">note</span> <span class="filter">:nth(<span class="number">4</span>)</span><span class="filter">!:type(<span class="selector">message</span>)</span> { }
+<span class="selector">note</span> <span class="filter">:nth(<span class="number">4</span>)</span><span class="filter">!:is(<span class="selector">message</span>)</span> { }
 <span class="comment">//if the <em>message</em> element is either the 1st, 2nd, 3rd or 4th element
 //and then removed from the returned collection (!message)
 //it would have an impact on the position of the remaining elements
