@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/10
+      Last changed: 2012/06/11
       HSS version: 1.0
-      Revision: 1.1m8
+      Revision: 1.1m9
 
 ****************************************************************-->
 
@@ -286,7 +286,7 @@
 	     <li><a href="#1.2.3">Properties</a></li>
 	     <li><a href="#1.2.4">Objects</a></li>
 	     <li><a href="#1.2.5">Instructions</a></li>
-	     <li><a href="#1.2.6">Negation</a></li>
+	     <li><a href="#1.2.6">The negator</a></li>
 	</ul>
 </li>
 <li><a href="#1.3">Selectors</a>
@@ -297,10 +297,10 @@
 	     <li><a href="#1.3.4">The universal selector</a></li>
 	     <li><a href="#1.3.5">Selecting the subject</a></li>
 	     <li><a href="#1.3.6">Regex selector</a></li>
-	     <li><a href="#1.3.7">Hierarchy objects</a></li>
+	     <li><a href="#1.3.7">Reference objects</a></li>
 	</ul>
 </li>
-<li><a href="#1.4">Combinator</a>
+<li><a href="#1.4">Combinators</a>
 	<ul>
 	     <li><a href="#1.4.1">Child combinator</a></li>
 	     <li><a href="#1.4.2">Descendant combinator</a></li>
@@ -363,7 +363,7 @@
 		<h4><span class="number"><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
 		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain or simply selector.</p>
-		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">hierarchy objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
+		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">reference objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
 <span class="selector">document</span> { }
@@ -424,13 +424,7 @@
 		<p>To negate an entire selector (including its filters or flags) you have to use the alternate <span class="modifier">!()</span> notation.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
-		<p>The siblings combinators <a href="#1.4.3">=</a> <a href="#1.4.4">+ -</a> can be negated too.</p>
-<pre><span class="comment">//this matches children of <em>note</em> elements which are
-//<em>message</em> elements lacking a preceding <em>index</em> sibling</span>
-<span class="selector">note</span> <span class="selector">index</span> <span class="modifier">!</span><span class="combinator">+</span> <span class="selector">message</span> {}
-<span class="comment">//which could also be achieved using the <a href="#1.3.5">subject selector</a></span>
-<span class="selector">note</span> $<span class="selector">message</span> <span class="modifier">!</span><span class="combinator">-</span> <span class="selector">index</span> {}</pre>
-
+#TODO <a href="https://github.com/AXR/Specification/issues/48">Issue 48</a>
 </section>
 	
 <section class="chapter">
@@ -523,7 +517,7 @@ note child2 element1, note child2 element2 { }
 <pre><span class="comment">//matches every element whose name starts with a number (in the current scope)</span>
 <span class="selector">/^[0-9]/</span> { }</pre>
 
-		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Hierarchy Objects</h4>
+		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Reference Objects</h4>
 		<p>The <a name="1.3.7.1"><strong>this object</strong></a> always refers to the current element either from a rule (or a property) directly inside it or through display objects (which are bound to be used inside elements).</p>
 <pre><span class="comment">//using the <a href="#1.7.4">object dot notation</a> and the <a href="#1.6.5">isA property</a>
 //this would set the image's width value to the height value
@@ -550,8 +544,9 @@ note child2 element1, note child2 element2 { }
     <span class="property">width</span>:  @self.height;
 }</pre>
 		<p>The <a name="1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
-<pre><span class="comment">//set the messages' width to the same value as the note's width,
-//which is a child of the root element, using a <a href="#1.6.3.1">reference</a></span>
+<pre><span class="comment">//using a <a href="#1.6.3.1">reference</a>, this sets the messages' width
+//to the same value as the width of the note
+//which is a child of the root element</span>
 <span class="combinator">..</span> <span class="selector">message</span>
 {
 &nbsp;&nbsp;&nbsp; <span class="property">width</span>: ref(<span class="property">width</span> of <span class="object">@root</span> <span class="selector">note</span>);
@@ -571,7 +566,7 @@ note child2 element1, note child2 element2 { }
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
-		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” an element and style one that is inside it instead. It is more convenient to use a combinator than to use hierarchy, in the case of child combinators. In other cases, the combinator is needed because with hierarchy alone the same effect could not be achieved.</p>
+		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” an element and style one that is inside it instead: in the case of parent-child ties, it is more convenient to use the child combinator than to use hierarchy. In other cases, combinators are mandatory regardless.</p>
 <pre><span class="comment">//matches every <em>important</em> element which is a child of <em>message</em>,
 //which itself is a child of <em>note</em></span>
 <span class="selector">note</span> <span class="selector">message</span> <span class="selector">important</span> { }</pre><p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
@@ -872,6 +867,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 //in our example it would select the second <em>message</em> element from the first <em>note</em></span>
 <span class="selector">note</span><span class="splitter">/each</span> <span class="splitter">/type</span><span class="filter">:nth(<span class="number">2</span>)</span> { }</pre>
 	<p><em>Note:</em> You can't negate a splitter.</p>
+#TODO <a href="https://github.com/AXR/Specification/issues/47">47</a> and <a href="https://github.com/AXR/Specification/issues/46">46</a>
 </div>
 <div class="sub">
 <h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
