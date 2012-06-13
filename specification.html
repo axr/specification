@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/13
+      Last changed: 2012/06/14
       HSS version: 1.0
-      Revision: 1.2
+      Revision: 1.21
 
 ****************************************************************-->
 
@@ -481,8 +481,8 @@ note { }
 note child1, note child2 { }
 note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }</pre>
-		<p>Through the use of square brackets, several consecutive parts of a selector chain can be evaluated as one.</p>
-<pre><span class="comment">//inline compartmentation is also available</span>
+		<p>Through the use of grouping brackets, several consecutive parts of a selector chain can be evaluated as one.</p>
+<pre><span class="comment">//inline grouping is also available</span>
 note [child1, child2] [element1, element2] { }
 <span class="comment">//which is equivalent to</span>
 note child1 element1, note child1 element2,
@@ -519,12 +519,12 @@ A + [C - B] { }</pre>
 <span class="selector">*</span> <span class="combinator">&gt;&gt;</span> <span class="selector">*</span> { }</pre>
 		
 		<h4><span class="number"><a name="1.3.5">1.3.5</a></span> Selecting the subject</h4>
-		<p>You can match an element which isn't the last one in the selector chain using the subject selector <span class="selector">$</span>.</p>
-<pre><span class="comment">//matches a note element when the mouse hovers on an
+		<p>Using the subject selector <code>$</code> you can match an element anywhere in the selector chain thus turning everything that follows it into a condition.</p>
+<pre><span class="comment">//matches all note elements which have at least one comment element as a child</span>
+<span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }
+<span class="comment">//matches a note element when the mouse hovers on an
 //important element which is his descendant</span>
-<span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">::hover</span> { }
-<span class="comment">//matches all note elements which have at least one comment element as a child</span>
-<span class="selector">$note</span><span class="combinator"> </span><span class="selector">comment</span> { }</pre>
+<span class="selector">$note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="filter">::hover</span> { }</pre>
 
 		<h4><span class="number"><a name="1.3.6">1.3.6</a></span> Regex selector</h4>
 		<p>You can use a regular expression to select elements based on their names.</p>
@@ -576,7 +576,8 @@ A + [C - B] { }</pre>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span> <span class="object">@parent</span>);
 }</pre>
-		<p>The <a name="1.3.7.5"><strong>owner object</strong></a></p>
+		<p>The <a name="1.3.7.5"><strong>owner object</strong></a> refers to the object which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
+#TODO example
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
