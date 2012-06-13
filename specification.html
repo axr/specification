@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/11
+      Last changed: 2012/06/13
       HSS version: 1.0
-      Revision: 1.1m9
+      Revision: 1.2
 
 ****************************************************************-->
 
@@ -418,12 +418,11 @@
 		<p>Likewise you can negate filters and flags.</p>
 <pre><span class="comment">//this selects any note element which is not the first one</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
-<span class="comment">//this selects any note element which is not the first one
-//and does not have a blue background</span>
-<span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span><span class="modifier">!</span>(<span class="property">background</span> = <span class="value">blue</span>) { }</pre>
-		<p>To negate an entire selector (including its filters or flags) you have to use the alternate <span class="modifier">!()</span> notation.</p>
+<span class="comment">//this selects any note element which is not being hovered</span>
+<span class="selector">note</span><span class="modifier">!</span><span class="flag">::hover</span> { }</pre>
+		<p>To negate an entire selector (including its filters or flags) you have to use the alternate <span class="modifier">![]</span> notation.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
-<span class="modifier">!</span>(<span class="selector">note</span><span class="filter">:last</span>) {}</pre>
+<span class="modifier">!</span>[<span class="selector">note</span><span class="filter">:last</span>] {}</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/48">Issue 48</a>
 </section>
 	
@@ -431,10 +430,10 @@
 		<h3><span class="number"><a name="1.3">1.3</a></span> Selectors</h3>
 		<p>Consider the following XML snippet:</p>
 <pre class="xml">&lt;<span class="selector">note</span>&gt;
-	&lt;<span class="selector">to</span>&gt;Peter&lt;/<span class="selector">to</span>&gt;
-	&lt;<span class="selector">from</span>&gt;James&lt;/<span class="selector">from</span>&gt;
-	&lt;<span class="selector">subject</span>&gt;Reminder&lt;/<span class="selector">subject</span>&gt;
-	&lt;<span class="selector">message</span>&gt;Please don’t forget to bring some &lt;<span class="selector">important</span>&gt;wine&lt;/<span class="selector">important</span>&gt;&#8230;&lt;/<span class="selector">message</span>&gt;
+   &lt;<span class="selector">to</span>&gt;Peter&lt;/<span class="selector">to</span>&gt;
+   &lt;<span class="selector">from</span>&gt;James&lt;/<span class="selector">from</span>&gt;
+   &lt;<span class="selector">subject</span>&gt;Reminder&lt;/<span class="selector">subject</span>&gt;
+   &lt;<span class="selector">message</span>&gt;Please don’t forget to bring some &lt;<span class="selector">important</span>&gt;wine&lt;/<span class="selector">important</span>&gt;&#8230;&lt;/<span class="selector">message</span>&gt;
 &lt;/<span class="selector">note</span>&gt;</pre>
 
 		<p>In the following examples we will be using rules, but without property definitions for clarity.</p>
@@ -469,8 +468,9 @@
 		<p>You can group multiple selectors together which is convenient when they share the same properties (or rules).</p>
 <pre><span class="comment">//match every subject element and every message element</span>
 <span class="selector">subject</span>, <span class="selector">message</span> { }</pre>
-                <p>In nested notation, grouping helps getting rid of unnecessary repetition.</p>
+                <p>Selector grouping helps getting rid of unnecessary repetition.</p>
 <pre>
+<span class="comment">//hierarchical grouping</span>
 note {
         child1, child2 {
                         element1, element2 { }
@@ -480,8 +480,22 @@ note {
 note { }
 note child1, note child2 { }
 note child1 element1, note child1 element2,
+note child2 element1, note child2 element2 { }</pre>
+		<p>Through the use of square brackets, several consecutive parts of a selector chain can be evaluated as one.</p>
+<pre><span class="comment">//inline compartmentation is also available</span>
+note [child1, child2] [element1, element2] { }
+<span class="comment">//which is equivalent to</span>
+note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }
-</pre>
+
+<span class="comment">//this could match B elements which precede A elements
+//(which themselves are followed by C elements)</span>
+[A + C] - B { }
+<span class="comment">//which is equivalent to</span>
+A + C - B { }
+<span class="comment">//this couldn't: the B elements would have to come after an A
+//and before a C</span>
+A + [C - B] { }</pre>
 		<h4><span class="number"><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
 		<p>The universal selector <span class="selector">*</span> matches every element in the current scope:</p>
 <pre><span class="comment">//matches every element that is a child of &lsquo;note&rsquo;</span>
