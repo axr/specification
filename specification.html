@@ -571,7 +571,7 @@ A + [C - B] { }</pre>
 <span class="selector">element</span>
 {
     <span class="property">height</span>: 100;
-    <span class="property">width</span>:  50;
+    <span class="property">width</span>:  80;
     <span class="instruction">#new</span> img { <span class="property">isA</span>: reusable; }
 }</pre>
 		<p>The <a name="1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#1.7.3">anonymous objects</a>.</p>
@@ -798,11 +798,10 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:has</span>(<span class="selector">message</span>) { }
 <span class="comment">//this matches only elements that have exactly 3 children</span>
 <span class="filter">:has</span>(<span class="number">3</span>) { }</pre>
-		<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of ancestors is compared.</p>
-<pre><span class="comment">//this matches only element that are an ancestor of an
-//important element</span>
+		<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of descendants is compared.</p>
+<pre><span class="comment">//this matches elements that are an ancestor of an <em>important</em> element</span>
 <span class="filter">:has</span>(<span class="selector">.. important</span>) { }
-<span class="comment">//this matches only element that have 4 or more ancestors</span>
+<span class="comment">//this matches elements that have 4 or more descendants</span>
 <span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }</pre>
 		<p>Similarly, using the sibling combinators, you can match elements depending on their siblings' existence or number.</p>
 <pre><span class="comment">//this matches elements in the current scope
@@ -884,8 +883,8 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points.</p>
 <pre><span class="comment">//match all elements which are in flow</span>
 <span class="selector">*</span>(<span class="property">flow</span> = true) { }
-<span class="comment">//match all elements whose background color is not blue</span>
-<span class="selector">*</span>(<span class="property">background</span> != blue) { }
+<span class="comment">//match all elements whose background color is not black</span>
+<span class="selector">*</span>(<span class="property">background</span> != black) { }
 <span class="comment">//match all elements that are taller than 300 and not wider than 400</span>
 <span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
@@ -894,7 +893,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters &amp; User flags</h4>
 <p>In HSS it is possible to extend the available filters with your own using the <code>#filter</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
-<span class="instruction">#filter</span> firstBlue { (background = blue):first }
+<span class="instruction">#filter</span> firstBlack { (background = black):first }
 <span class="comment">//this is equivalent to :startsWith()</span>
 <span class="instruction">#filter</span> sw(myArg1) { $ >> :first:contains(myArg1) }
 <span class="comment">//filter which selects the first or the last element</span>
