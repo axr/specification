@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/23
+      Last changed: 2012/06/24
       HSS version: 1.0
-      Revision: 1.23
+      Revision: 1.24
 
 ****************************************************************-->
 
@@ -354,6 +354,13 @@
 	     <li><a href="#1.7.1">Object dot notation</a></li>
 	     <li><a href="#1.7.2">Named objects</a></li>
 	     <li><a href="#1.7.3">Anonymous objects</a></li>
+	     <li><a href="#1.7.4">Shorthand notation</a></li>
+	</ul>
+</li>
+<li><a href="#1.8">Instructions</a>
+	<ul>
+	     <li><a href="#1.8.1">Wrap</a></li>
+	     <li><a href="#1.8.2">New</a></li>
 	</ul>
 </li>
 </ul>
@@ -378,7 +385,7 @@
 
 		<h4><span class="number"><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
-		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector chain (or simply selector) and reads from left to right.</p>
+		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector (or selector chain) and reads from left to right.</p>
 		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">reference objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name “document”</span>
@@ -558,7 +565,7 @@ A + [C - B] { }</pre>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Reference Objects</h4>
 		<p>The <a name="1.3.7.1"><strong>this object</strong></a> always refers to the current element either from a rule (or a property) directly inside it or through display objects (which are bound to be used inside elements).</p>
-<pre><span class="comment">//using the <a href="#1.7.1">object dot notation</a>, the <a href="#1.8.?">new instruction</a> and the <a href="#1.6.5">isA property</a>
+<pre><span class="comment">//using the <a href="#1.7.1">object dot notation</a>, the <a href="#1.8.2">new instruction</a> and the <a href="#1.6.5">isA property</a>
 //this would set the image's width value to the height value
 //divided by 2 of the element which contains that image</span>
 <span class="object">@image</span> reusable
@@ -793,21 +800,13 @@ note to<span class="filter">:oddChild</span> { }</pre>
 		<p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p>
 <pre><span class="comment">//this matches childless elements</span>
 <span class="modifier">!</span><span class="filter">:parent</span> { }</pre>
-		<p>The <strong>has filter</strong> matches every element of which at least one child matches the specified selector. If a number or a condition is given, the amount of children is compared.</p>
-<pre><span class="comment">//this matches only elements that are parent of a message element</span>
+		<p>The <strong>has filter</strong> matches elements which have certain children, descendants or siblings.</p>
+<pre><span class="comment">//this matches elements that are parent of at least one <em>message</em> element</span>
 <span class="filter">:has</span>(<span class="selector">message</span>) { }
-<span class="comment">//this matches only elements that have exactly 3 children</span>
-<span class="filter">:has</span>(<span class="number">3</span>) { }</pre>
-		<p>To match every element of which at least one descendant matches the specified selector you can use the <span class="combinator">..</span> combinator. If a number or a condition is given, the amount of descendants is compared.</p>
-<pre><span class="comment">//this matches elements that are an ancestor of an <em>important</em> element</span>
-<span class="filter">:has</span>(<span class="selector">.. important</span>) { }
-<span class="comment">//this matches elements that have 4 or more descendants</span>
-<span class="filter">:has</span>(.. &gt;= <span class="number">4</span>) { }</pre>
-		<p>Similarly, using the sibling combinators, you can match elements depending on their siblings' existence or number.</p>
-<pre><span class="comment">//this matches elements in the current scope
-//which have at least one <em>message</em> sibling</span>
-<span class="filter">:has</span>(<span class="selector">= message</span>) { }</pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/53">Issue 53</a>
+<span class="comment">//this matches elements that are an ancestor of a <em>message</em> element</span>
+<span class="filter">:has</span>(<span class="selector">.. message</span>) { }
+<span class="comment">//this matches elements which have at least one <em>message</em> sibling preceding them</span>
+<span class="filter">:has</span>(<span class="selector">- message</span>) { }</pre>
 </div>
 <div class="sub part">
 <h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
@@ -902,7 +901,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 //limit's definition must precede wideLimit's one</span>
 <span class="instruction">#filter</span> wideLimit { (width > height):limit }
 
-<span class="filter">:firstBlue</span> { }
+<span class="filter">:firstBlack</span> { }
 <span class="filter">:sw</span>("foo") { }
 <span class="filter">:limit</span> { }
 <span class="filter">:wideLimit</span> { }
@@ -923,6 +922,13 @@ note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
+	<p>The <strong>amount filter</strong> matches elements depending on their current number in the returned collection(s). If a number or a condition is given, the amount of elements is compared.</p>
+<pre><span class="comment">//this matches if the collection contains exactly 3 elements</span>
+<span class="filter">:amount</span>(<span class="number">3</span>) { }
+<span class="comment">//this matches if the collection contains 4 or more elements</span>
+<span class="filter">:amount</span>(&gt;= <span class="number">4</span>) { }
+<span class="comment">//this matches collections of the same type which have exactly 4 elements</span>
+<span class="splitter">/type</span><span class="filter">:amount</span>(<span class="number">4</span>) { }</pre>
 	<p>The <strong>is filter</strong> lets you filter the returned collection(s) by a particular element type.</p>
 <pre><span class="comment">//this will only match the <strong>first siblings</strong> following <em>from</em> elements
 //under each <em>note</em> elements <strong>provided that</strong> these siblings are <em>message</em> elements</span>
@@ -1026,6 +1032,9 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<div class="sub">
 	<h4 class="title"><span class="number"><a name="1.7.1">1.7.1</a></span> Object dot notation</h4>
 	</div>
+</section>
+<section class="chapter">
+	<h3 class="title"><span class="number"><a name="1.8">1.8</a></span> Instructions</h3>
 </section>
 </div>
 <div id="btt"><a href="#toc">table of contents</a></div>
