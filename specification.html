@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/25
+      Last changed: 2012/06/30
       HSS version: 1.0
-      Revision: 1.24
+      Revision: 1.25
 
 ****************************************************************-->
 
@@ -523,6 +523,15 @@ A + C - B { }
 <span class="comment">//this couldn't: the B elements would have to come after an A
 //and before a C</span>
 A + [C - B] { }</pre>
+		<p>You can also apply filters, flags or splitters to the aggregate resulting from the combined collections.</p>
+<pre><span class="comment">//matches the odd element(s) of the collection of A1 and A2 elements</span>
+[A1, A2]:odd { }
+<span class="comment">//matches the odd elements of each collection separately</span>
+A1:odd, A2:odd { }</pre>
+		<p>Grouping brackets can also be used to join collections of a simple selector.</p>
+<pre><span class="comment">//this would join the collections of odd elements of each type
+//and then out of that match the odd ones</span>
+[<span class="selector">*</span><span class="splitter">/type</span><span class="filter">:odd</span>]<span class="filter">:odd</span> { }</pre>
 </div>
 <div class="sub comp">
 		<h4><span class="number"><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
@@ -904,13 +913,13 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Splitters</h4>
 	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result.</p>
 	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.9">collection filters</a> or other splitters.</p>
-	<p>Using the <strong>type splitter</strong> you can rearrange the elements of a collection by types.</p>
+	<p>Using the <a name="s_split"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types.</p>
 <pre><span class="comment">//this will match the children of each <em>note</em> elements
 //which are the second of their type
 //in our example it would select the second <em>message</em> element from the first <em>note</em></span>
 <span class="selector">note</span><span class="splitter">/each</span> <span class="splitter">/type</span><span class="filter">:nth(<span class="number">2</span>)</span> { }</pre>
 	<p><em>Note:</em> You can't negate a splitter.</p>
-#TODO <a href="https://github.com/AXR/Specification/issues/47">47</a> and <a href="https://github.com/AXR/Specification/issues/46">46</a>
+#TODO <a href="https://github.com/AXR/Specification/issues/46">Issue 46</a>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
