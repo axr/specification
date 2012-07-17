@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/06/30
+      Last changed: 2012/07/17
       HSS version: 1.0
-      Revision: 1.25
+      Revision: 1.26
 
 ****************************************************************-->
 
@@ -139,24 +139,14 @@
 		color: #fd2716;
 	}
 	
-	.value
-	{
-
-	}
-	
 	.modifier
 	{
-		color: #16B65E;
+		color: #703010;
 	}
 
 	.instruction
 	{
 		color: #8A0067;
-	}
-	
-	.expression
-	{
-
 	}
 	
 	.flag
@@ -276,8 +266,14 @@
 	{
 		content:" [supported]"
 	}
+
+	h5:before
+	{
+		content: "\2042\00A0"
+	}
 	
-	#btt {
+	#btt
+	{
 		position:fixed;
 		bottom:5px;
 		right:5px;
@@ -347,6 +343,8 @@
 	     <li><a href="#1.6.4">Color</a></li>
 	     <li><a href="#1.6.5">isA</a></li>
 	     <li><a href="#1.6.6">Read-only properties</a></li>
+	     <li><a href="#1.6.7">Grouping</a></li>
+	     <li><a href="#1.6.8">The value selector</a></li>
 	</ul>
 </li>
 <li><a href="#1.7">Objects</a>
@@ -470,7 +468,7 @@
 <div class="sub comp">
 		<h4><span class="number"><a name="1.3.2">1.3.2</a></span> Hierarchy &amp; Scope</h4>
 		<p>Usually what the HSS author does is following the document tree and applying styles to most elements. Rules can be nested inside other rules which will only match children of the elements matched by the parent selector. This is what gives HSS its name.</p>
-		<p>The scope refers to the elements targeted by the selector. In the following example, only subject elements that are children of note can be selected, because the scope is restricted to the children of the note element(s).</p>
+		<p>The scope refers to the elements targeted by the selector. In the following example, only subject elements that are immediate children of note can be selected, because the scope is restricted to the children of the note element(s).</p>
 <pre><span class="comment">//match every note element (in the current scope)</span>
 <span class="selector">note</span><br />{
     <span class="comment">//match every subject element which is a child of the
@@ -787,13 +785,13 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:nth</span>(<span class="number">4</span>) { }
 <span class="comment">//if there are at least 6 elements currently in the collection,
 //it matches the element after every 5th one; if not it matches the 5th one</span>
-<span class="filter">:nth</span>(<span class="expression">5n + 1</span> | <span class="number">5</span>) { }
+<span class="filter">:nth</span>(5n + 1 | <span class="number">5</span>) { }
 <span class="comment">//this matches elements whose index is ≥ 3 in the collection</span>
 <span class="filter">:nth</span>(&gt;= <span class="number">3</span>) { }
 <span class="comment">//this matches elements whose index is 5, 10 or 15 in the collection</span>
-<span class="filter">:nth</span>(<span class="expression">5n</span>, <span class="number">15</span>) { }
+<span class="filter">:nth</span>(5n, <span class="number">15</span>) { }
 <span class="comment">//this matches elements whose index is 1, 2, 3 and &ge; 8 in the collection</span>
-<span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> &amp; <span class="number">8</span>, <span class="number">*</span>) { }</pre>
+<span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> &amp; <span class="number">8</span>, *) { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
@@ -863,11 +861,10 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>The <strong>match filter</strong> uses a regular expression to match elements.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
 <span class="filter">:match</span>(<span class="string">/^[0-9]/</span>) { }</pre>
-<p>The <strong>noText filter</strong> matches elements which have no content text.</p>
-<pre><span class="comment">//matches elements which contain no text</span>
-<span class="filter">:noText</span> { }
-<span class="comment">//matches every element whose title attribute is empty or inexistent</span>
-:[title<span class="filter">:noText</span>] { }</pre>
+<p>The <strong>empty filter</strong> matches elements which have no text <em>nor</em> children or whose attribute's value is empty.</p>
+<pre><span class="comment">//matches elements which have a title attribute set to ""</span>
+:[title<span class="filter">:empty</span>] { }</pre>
+<p><em>Reminder:</em> <code>!:[]</code> is used to match elements which have inexistent attributes.</p>
 <p>The <strong>length filter</strong> use a criterion to match elements or compares the length of the text against a given condition.</p>
 <pre><span class="comment">//matches every element whose content text’s length is greater
 //than 3 characters</span>
@@ -882,7 +879,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>Conditions are used to test whether an element is matched based on its properties.</p>
 <p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points.</p>
 <pre><span class="comment">//match all elements which are in flow</span>
-<span class="selector">*</span>(<span class="property">flow</span> = true) { }
+<span class="selector">*</span>(<span class="property">flow</span> = yes) { }
 <span class="comment">//match all elements whose background color is not black</span>
 <span class="selector">*</span>(<span class="property">background</span> != black) { }
 <span class="comment">//match all elements that are taller than 300 and not wider than 400</span>
@@ -949,8 +946,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 //same element(s) than the previous example</span>
 <span class="selector">note</span> <span class="modifier">!</span><span class="selector">message</span><span class="filter">:nth(<span class="number">4</span>)</span> { }</pre>
 	<p>Using the <strong>oneIs filter</strong> you can match a collection on the condition that it contains a certain element.</p>
-<pre>
-<span class="comment">//this matches the children of the first <em>note</em> element
+<pre><span class="comment">//this matches the children of the first <em>note</em> element
 //if one of them is a <em>from</em> element</span>
 <span class="selector">note</span><span class="filter">:first</span> <span class="filter">:oneIs(<span class="selector">from</span>)</span> { }</pre>
 </div>
@@ -962,10 +958,31 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<h4 class="title"><span class="number"><a name="1.6.1">1.6.1</a></span> Literal values</h4>
 	<p>Literal values are keywords, numbers, strings. As opposed to more complex constructs they just represent one value.</p>
 	<h5>Special keywords</h5>
-	<p>inherit</p>
-	<p>current</p>
-	<p>default</p>
-#TODO <a href="https://github.com/AXR/Specification/issues/51">Issue 51</a>
+	<p>Special keywords are considered valid values for <u>all</u> HSS properties.</p>
+	<p>The <strong>default</strong> value of a property is used to (re)set a value to its default value.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="property">height</span>: 50;
+    <span class="property">width</span>:  100;
+    @<span class="flag">::hover</span>
+    {
+        <span class="comment">//using <a href="#1.6.7">grouping</a> this resets the height and width
+        //to their default values (respectively <em>content</em> and <em>100%</em>)</span>
+        <span class="property">height</span>, <span class="property">width</span>: default;
+    }
+}</pre>
+	<p>The <strong>inherit</strong> value of a given property will correspond to the current value of the element's parent matching property. If the value returned is <em>inherit</em> it will use the parent's property value of the parent, and so on, until it reaches the root's default or a non-inherit value.</p>
+<pre><span class="selector">parent</span>
+{
+    <span class="property">width</span>: content;
+    <span class="comment">//the child inherits the content value (<strong>not its computed value</strong>)</span>
+    <span class="selector">child</span> { <span class="property">width</span>: inherit }
+}</pre>
+	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
+	<p>Using the <strong>current</strong> value you can retrieve the current value of a property whether it has been set earlier or not.</p>
+<pre><span class="comment">//this would dynamically set the height to its current numeric value
+//plus the height of the <em>child</em> element</span>
+<span class="property">height</span>: current + ref(<span class="property">height</span> of <span class="selector">@this child</span>);</pre>
 	</div>
 	<div class="sub comp">
 	<h4 class="title"><span class="number"><a name="1.6.2">1.6.2</a></span> Expressions</h4>
@@ -991,7 +1008,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
 <pre><span class="selector">parent *</span>
 {
-    <span class="comment">//this sets the width of <em>parent</em>s' children
+    <span class="comment">//this sets the width of the <em>parent</em> elements' children
     //to the width of whichever is the widest one</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span>);
     <span class="comment">//which is equivalent to</span>
@@ -1000,8 +1017,8 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
 {
-    <span class="selector">child1</span> { <span class="property">background</span>: <span class="value">#0</span> }
-    <span class="selector">child2</span> { <span class="property">background</span>: <span class="value">#F</span> }
+    <span class="selector">child1</span> { <span class="property">background</span>: #0 }
+    <span class="selector">child2</span> { <span class="property">background</span>: #F }
 
     <span class="comment">//the reference won't return anything</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *</span>);
@@ -1024,6 +1041,32 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<h5>x and y</h5>
 	<h5>level</h5>
 	<h5>children</h5>
+	</div>
+	<div class="sub yet">
+	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
+	<p>You can group two or more properties which share the same value.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="property">width</span>, <span class="property">height</span>: 100%;
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">width</span>: 100%;
+    <span class="property">height</span>: 100%;
+}</pre>
+	</div>
+	<div class="sub yet">
+	<h4 class="title"><span class="number"><a name="1.6.8">1.6.8</a></span> The value selector</h4>
+	<p>Certain properties accept multiple objects as values, in these cases the value selector <code>[]</code> permits to select the objects by name, index or using a filter.</p>
+<pre><span class="selector">element</span> {
+    <span class="comment">//supposing these objects were defined elsewhere</span>
+    <span class="property">isA</span>: objectA, objectX, objectY;
+    <span class="comment">//assuming its object's type accept a width,
+    //this would set objectY's width to 50</span>
+    <span class="property">isA</span>[objectY].<span class="property">width</span>: <span class="number">50</span>;
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">isA</span>[3].<span class="property">width</span>: <span class="number">50</span>;
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">isA</span>[<span class="filter">:last</span>].<span class="property">width</span>: <span class="number">50</span>;
+}</pre>
 	</div>
 </section>
 <section class="chapter">
