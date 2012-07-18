@@ -12,9 +12,9 @@
     content: (own) | <string>;
     direction: (ltr) | rtl | ttb | btt;
     flow: (yes) | no;
-    height: <number> | (content);
+    height: <number> | (content) | max | min | available;
     visible: yes | no;
-    width: <number> | content;
+    width: <number> | content | max | min | (available);
     wrapDirection: (ttb) | btt | rtl | ltr;
     contained: (yes) | no;
 }
@@ -47,7 +47,7 @@
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
     stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
-    size-adjust:;
+    size-adjust: (no) | <number>;
 }
 
 @read {

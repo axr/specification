@@ -21,7 +21,7 @@
     flow: yes;
     height: content;
     visible: inherit;
-    width: 100%;
+    width: available;
     wrapDirection: ttb;
     contained: yes;
 }
@@ -46,17 +46,17 @@
 }
 
 @font {
-    faces:src;
-    src:;
-    size-adjust:;
-    kerning: yes;
-    size: 16;
+    faces: src;
+    src: default;
     color: #0;
+    size: 16;
+    size-adjust: no;
     weight: 400;
     style: no;
     fauxBold: no;
     fauxItalic: no;
     stretch: no;
+    kerning: yes;
 }
 
 @read {
