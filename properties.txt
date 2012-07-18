@@ -1,0 +1,70 @@
+@container {
+    speech: (@read) | no;
+    anchorX: (no) | <number>;
+    anchorY: (no) | <number>;
+    font: <object>;
+    text: <object>;
+    alignX: (auto) | left | right | center/middle | justify | even | <number>;
+    alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
+    background: (no) | …;
+    contentAlignX: left | right | center/middle | justify | even | <number>;
+    contentAlignY: top | bottom | center/middle | justify | even | <number>;
+    content: (own) | <string>;
+    direction: (ltr) | rtl | ttb | btt;
+    flow: (yes) | no;
+    height: <number> | (content);
+    visible: yes | no;
+    width: <number> | content;
+    wrapDirection: (ttb) | btt | rtl | ltr;
+    contained: (yes) | no;
+}
+
+@text {
+    alignX: (start) | end | left | right | center | justify | <number>;
+    alignY: (baseline) | sup | sub | top | bottom | middle | <number>;
+    hangingPunctuation: (no) | first | last | end;
+    tab: <N>;
+    indent: <N>;
+    overflow: (visible) | hidden | @{"", last} | @{"", all};¹
+    wrap: (auto) | breakWord | hyphenate;
+    whitespace: (collapse) | preserve;
+    lineWrap: (break) | noWrap | preserve | preWrap;
+    tracking: <N>;
+    wordSpacing: <N>;
+    decoration: (no) | @line { position: over | through | descender | below; };²
+    transform: (no) | capitalize | uppercase | lowercase;
+    direction: (ltr) | rtl | ttb | btt;
+}
+
+@font {
+    faces: <string>, …;
+    size: <N> | <N>ex;
+    color: <object>;
+    style: (no) | oblique | italic;
+    weight: keyword | weight class;³
+    kerning: (yes) | no;
+    src: <string>;
+    fauxBold: yes | (no);
+    fauxItalic: yes | (no);
+    stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
+    fallback:;
+    size-adjust:;
+}
+
+@read {
+    read: (content) | <string>;
+    mode: (speak) | spell | code | silent;
+    translation: (no) | locale | browser | system | user;
+}
+
+¹
+    overflow: "";
+    //is equivalent to
+    overflow: @{"", last};
+
+²
+    decoration accepts any line object
+
+³
+    keywords: hairline, thin, ultraLight, extraLight, light, book, (normal), medium, semiBold, bold, extraBold, heavy, black, extraBlack, ultraBlack
+    weight classes: 100 (thin), 200 (extralight), 300 (light), 400 (normal), 500 (medium), 600 (semibold), 700 (bold), 800 (heavy), 900 (black)

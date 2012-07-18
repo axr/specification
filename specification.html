@@ -269,7 +269,8 @@
 
 	h5:before
 	{
-		content: "\2042\00A0"
+		content: "\2042\00A0";
+		font-size:14px;
 	}
 	
 	#btt
@@ -975,7 +976,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <pre><span class="selector">parent</span>
 {
     <span class="property">width</span>: content;
-    <span class="comment">//the child inherits the content value (<strong>not its computed value</strong>)</span>
+    <span class="comment">//the child inherits the <em>content</em> value (<strong>not its computed value</strong>)</span>
     <span class="selector">child</span> { <span class="property">width</span>: inherit }
 }</pre>
 	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
@@ -1008,8 +1009,8 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
 <pre><span class="selector">parent *</span>
 {
-    <span class="comment">//this sets the width of the <em>parent</em> elements' children
-    //to the width of whichever is the widest one</span>
+    <span class="comment">//this sets the width of the children of each parent element
+    //to the width of whichever is currently the widest child</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span>);
     <span class="comment">//which is equivalent to</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="object">@this</span>);

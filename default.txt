@@ -1,0 +1,67 @@
+@root {
+    font: @font;
+    text: @text;
+    visible: yes;
+    background: #F;
+}
+
+@container {
+    anchorX: no;
+    anchorY: no;
+    font: inherit;
+    text: inherit;
+    speech: @read;
+    alignX: auto;
+    alignY: auto;
+    background: no;
+    contentAlignX:;
+    contentAlignY:;
+    content: own;
+    direction: ltr;
+    flow: yes;
+    height: content;
+    visible: inherit;
+    width: 100%;
+    wrapDirection: ttb;
+    contained: yes;
+}
+
+@text {
+    alignX: start;
+    alignY: baseline;
+    background: no;
+    hangingPunctuation: no;
+    tab: 8;
+    indent: 0;
+    overflow: visible;
+    wrap: auto;
+    whitespace: collapse;
+    lineWrap: break;
+    tracking: 0;
+    wordSpacing: 0;
+    decoration: no;
+    transform: no;
+    direction: ltr;
+    wrapDirection: ttb;
+}
+
+@font {
+    faces:;
+    fallback:;
+    src:;
+    size-adjust:;
+    kerning: yes;
+    size: 16;
+    color: #0;
+    weight: 400;
+    style: no;
+    fauxBold: no;
+    fauxItalic: no;
+    stretch: no;
+}
+
+@read {
+    read: content;
+    mode: speak;
+    translation: no;
+}
