@@ -6,7 +6,7 @@
     text: <object>;
     alignX: (auto) | left | right | center/middle | justify | even | <number>;
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
-    background: (no) | …;
+    background: (no) | <object>, …;
     contentAlignX: left | right | center/middle | justify | even | <number>;
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
     content: (own) | <string>;
@@ -37,17 +37,16 @@
 }
 
 @font {
-    faces: <string>, …;
+    faces: <string>, src, …;
     size: <N> | <N>ex;
     color: <object>;
     style: (no) | oblique | italic;
     weight: keyword | weight class;³
     kerning: (yes) | no;
-    src: <string>;
+    src: <string>, …;
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
     stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
-    fallback:;
     size-adjust:;
 }
 

@@ -46,8 +46,7 @@
 }
 
 @font {
-    faces:;
-    fallback:;
+    faces:src;
     src:;
     size-adjust:;
     kerning: yes;
