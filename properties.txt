@@ -1,22 +1,24 @@
 @container {
-    speech: (@read) | no;
     anchorX: (no) | <number>;
     anchorY: (no) | <number>;
-    font: <object>;
-    text: <object>;
     alignX: (auto) | left | right | center/middle | justify | even | <number>;
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
     background: (no) | <object>, …;
+    contained: (yes) | no;
+    content: (own) | <string>;
     contentAlignX: left | right | center/middle | justify | even | <number>;
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
-    content: (own) | <string>;
     direction: (ltr) | rtl | ttb | btt;
     flow: (yes) | no;
-    height: <number> | (content) | max | min | available;
+    font: <object>;
+    height: <number> | (content) | available;
+    index: (no) | <N>;
+    speech: (@read) | no;
+    text: <object>;
     visible: yes | no;
-    width: <number> | content | max | min | (available);
+    width: <number> | content | (available);
     wrapDirection: (ttb) | btt | rtl | ltr;
-    contained: (yes) | no;
+    z: <integer>;
 }
 
 @text {
@@ -47,7 +49,7 @@
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
     stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
-    size-adjust: (no) | <number>;
+    sizeAdjust: (no) | <number>;
 }
 
 @read {

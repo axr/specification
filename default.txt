@@ -3,27 +3,30 @@
     text: @text;
     visible: yes;
     background: #F;
+    z: 0;
 }
 
 @container {
-    anchorX: no;
-    anchorY: no;
-    font: inherit;
-    text: inherit;
-    speech: @read;
     alignX: auto;
     alignY: auto;
+    anchorX: no;
+    anchorY: no;
     background: no;
+    contained: yes;
+    content: own;
     contentAlignX:;
     contentAlignY:;
-    content: own;
     direction: ltr;
     flow: yes;
+    font: inherit;
     height: content;
+    index: no;
+    speech: @read;
+    text: inherit;
     visible: inherit;
     width: available;
     wrapDirection: ttb;
-    contained: yes;
+    z: inherit;
 }
 
 @text {
