@@ -959,7 +959,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<h4 class="title"><span class="number"><a name="1.6.1">1.6.1</a></span> Literal values</h4>
 	<p>Literal values are keywords, numbers, strings. As opposed to more complex constructs they just represent one value.</p>
 	<h5>Special keywords</h5>
-	<p>Special keywords are considered valid values for <u>all</u> HSS properties.</p>
+	<p>Special keywords are considered valid values for all HSS properties.</p>
 	<p>The <strong>default</strong> value of a property is used to (re)set a value to its default value.</p>
 <pre><span class="selector">element</span>
 {
@@ -972,22 +972,22 @@ note to<span class="filter">:oddChild</span> { }</pre>
         <span class="property">height</span>, <span class="property">width</span>: default;
     }
 }</pre>
-	<p>The <strong>inherit</strong> value of a given property will correspond to the current value of the element's parent matching property. If the value returned is <em>inherit</em> it will use the parent's property value of the parent, and so on, until it reaches the root's default or a non-inherit value.</p>
+	<p>The <strong>inherit</strong> value of a given property will correspond to the current value of the element's parent matching property. If the value returned is <em>inherit</em> it will use the property of the parent's own parent, and so on, until it reaches the root's default or a non-inherit value.</p>
 <pre><span class="selector">parent</span>
 {
     <span class="property">width</span>: content;
     <span class="comment">//the child inherits the <em>content</em> value (<strong>not its computed value</strong>)</span>
     <span class="selector">child</span> { <span class="property">width</span>: inherit }
 }</pre>
-	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
-	<p>Using the <strong>current</strong> value you can retrieve the current value of a property whether it has been set earlier or not.</p>
+	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. You can't inherit selectively from multi-value properties because their values don't have a fixed order. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
+	<p>Using the <strong>current</strong> value you can retrieve the current value of a property whether it has been explicitly set earlier or not. If a property has multiple values set it will refer them as a whole.</p>
 <pre><span class="comment">//this would dynamically set the height to its current numeric value
 //plus the height of the <em>child</em> element</span>
 <span class="property">height</span>: current + ref(<span class="property">height</span> of <span class="selector">@this child</span>);</pre>
 	</div>
 	<div class="sub comp">
 	<h4 class="title"><span class="number"><a name="1.6.2">1.6.2</a></span> Expressions</h4>
-	<p>You can write an expression anywhere a numerical value is accepted, and it is generally only useful when used with a variable value. If all the values are fixed numbers, the result will be calculated at parse time and it would be interpreted as if the result had been written. The available operations are: sum (+), subtraction (-), multiplication (*) and division (/). You can also use parenthesis to designate the order of the operations, in an inside-out order. Otherwise, multiple operations are executed following the mathematical order (first multiply and divide, then sum and subtract).</p>
+	<p>You can write an expression anywhere a numerical value is accepted, and it is generally only useful when used with a variable value. If all the values are fixed numbers, the result will be calculated at parse time and it would be interpreted as if the result had been written. The available operations are: sum (+), subtraction (&#8722;), multiplication (&#215;) and division (&#8725;). You can also use parentheses to designate the order of the operations, in an inside-out order. Otherwise, multiple operations are executed following the mathematical order (first multiply and divide, then sum and subtract).</p>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
@@ -1020,9 +1020,12 @@ note to<span class="filter">:oddChild</span> { }</pre>
 {
     <span class="selector">child1</span> { <span class="property">background</span>: #0 }
     <span class="selector">child2</span> { <span class="property">background</span>: #F }
+    <span class="selector">child3</span> { <span class="property">background</span>: #0 }
 
-    <span class="comment">//the reference won't return anything</span>
+    <span class="comment">//this reference won't return anything</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *</span>);
+    <span class="comment">//this one returns #0</span>
+    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
 }</pre>
 	<h5>attr()</h5>
 	<h5>sel()</h5>

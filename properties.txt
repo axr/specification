@@ -12,13 +12,14 @@
     flow: (yes) | no;
     font: <object>;
     height: <number> | (content) | available;
-    index: (no) | <N>;
+    focusable: (auto) | yes | no;
     speech: (@read) | no;
+    target: (no) | sel() | return;
     text: <object>;
-    visible: yes | no;
+    visible: (yes) | no;
     width: <number> | content | (available);
     wrapDirection: (ttb) | btt | rtl | ltr;
-    z: <integer>;
+    z: <N> | +<N> | -<N>;
 }
 
 @text {

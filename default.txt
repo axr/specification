@@ -20,8 +20,9 @@
     flow: yes;
     font: inherit;
     height: content;
-    index: no;
+    focusable: auto;
     speech: @read;
+    target: no;
     text: inherit;
     visible: inherit;
     width: available;
