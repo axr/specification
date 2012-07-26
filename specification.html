@@ -957,7 +957,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 		
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.1">1.6.1</a></span> Literal values</h4>
-	<p>Literal values are keywords, numbers, strings. As opposed to more complex constructs they just represent one value.</p>
+	<p>Literal values are keywords, numbers and strings.</p>
 	<h5>Special keywords</h5>
 	<p>Special keywords are considered valid values for all HSS properties.</p>
 	<p>The <strong>default</strong> value of a property is used to (re)set a value to its default value.</p>
@@ -1017,9 +1017,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 {
     <span class="comment">//this sets the width of the children of each parent element
     //to the width of whichever is currently the widest child</span>
-    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span>);
-    <span class="comment">//which is equivalent to</span>
-    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="object">@this</span>);
+    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">*</span>);
 }</pre>
 <p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
@@ -1034,7 +1032,15 @@ note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
 }</pre>
 	<h5 name="1.6.3.2">The attribute function</h5>
-	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, <code>of @this</code> can be omitted. And much in the same way too, the function won't return anything if the elements matched don't share the same attribute's value.</p>
+	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="comment">//this would replace the content text of the element
+    //by the value of its href attribute</span>
+    <span class="property">content</span>: attr(href of <span class="selector">@this</span>);
+    <span class="comment">//would be equivalent to</span>
+    <span class="property">content</span>: attr(href);
+}</pre>
 	<h5 name="1.6.3.3">The selector function</h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
 	<h5>max(), min(), floor(), ceil() and round()</h5>
