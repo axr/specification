@@ -19,10 +19,11 @@
     direction: ltr;
     flow: yes;
     font: inherit;
+    focusable: no;
     height: content;
-    focusable: auto;
+    next: auto;
+    previous: auto;
     speech: @read;
-    target: no;
     text: inherit;
     visible: inherit;
     width: available;

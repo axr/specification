@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/07/17
+      Last changed: 2012/07/26
       HSS version: 1.0
-      Revision: 1.26
+      Revision: 1.27
 
 ****************************************************************-->
 
@@ -968,26 +968,32 @@ note to<span class="filter">:oddChild</span> { }</pre>
     @<span class="flag">::hover</span>
     {
         <span class="comment">//using <a href="#1.6.7">grouping</a> this resets the height and width
-        //to their default values (respectively <em>content</em> and <em>100%</em>)</span>
+        //to their default values (respectively <em>content</em> and <em>available</em>)</span>
         <span class="property">height</span>, <span class="property">width</span>: default;
     }
 }</pre>
-	<p>The <strong>inherit</strong> value of a given property will correspond to the current value of the element's parent matching property. If the value returned is <em>inherit</em> it will use the property of the parent's own parent, and so on, until it reaches the root's default or a non-inherit value.</p>
+	<p>The <strong>inherit</strong> value of a given property will correspond to the current value of the element's parent matching property. If the value returned is <em>inherit</em> it will use the property of the parent's own parent, and so on, until it picks up a non-inherit value.</p>
 <pre><span class="selector">parent</span>
 {
     <span class="property">width</span>: content;
     <span class="comment">//the child inherits the <em>content</em> value (<strong>not its computed value</strong>)</span>
     <span class="selector">child</span> { <span class="property">width</span>: inherit }
 }</pre>
-	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. You can't inherit selectively from multi-value properties because their values don't have a fixed order. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
-	<p>Using the <strong>current</strong> value you can retrieve the current value of a property whether it has been explicitly set earlier or not. If a property has multiple values set it will refer them as a whole.</p>
-<pre><span class="comment">//this would dynamically set the height to its current numeric value
-//plus the height of the <em>child</em> element</span>
-<span class="property">height</span>: current + ref(<span class="property">height</span> of <span class="selector">@this child</span>);</pre>
+	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. You can't selectively inherit one value from multi-value properties because their values don't have a fixed order. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
+	<p>Using the <strong>current</strong> value you can retrieve the current value(s) of a property whether it has been explicitly set earlier or not. If a property has multiple values set it will refer them as a whole.</p>
+<pre><span class="comment">//assuming the background property has currently "object1, object2" as values</span>
+<span class="property">background</span>: current, object3;
+<span class="comment">//would be equivalent to</span>
+<span class="property">background</span>: object1, object2, object3;</pre>
 	</div>
 	<div class="sub comp">
 	<h4 class="title"><span class="number"><a name="1.6.2">1.6.2</a></span> Expressions</h4>
 	<p>You can write an expression anywhere a numerical value is accepted, and it is generally only useful when used with a variable value. If all the values are fixed numbers, the result will be calculated at parse time and it would be interpreted as if the result had been written. The available operations are: sum (+), subtraction (&#8722;), multiplication (&#215;) and division (&#8725;). You can also use parentheses to designate the order of the operations, in an inside-out order. Otherwise, multiple operations are executed following the mathematical order (first multiply and divide, then sum and subtract).</p>
+<pre><span class="comment">//this element will always be twice as wide as its current height</span>
+<span class="selector">element</span> { <span class="property">width</span>: 2 * ref(<span class="property">height</span>); }
+<span class="comment">//using the <a href="#1.6.6.3">children property</a>, this permits to perfectly fit
+//the <em>child</em> element(s) in their parent to prevent wrapping</span>
+<span class="selector">parent child</span> { <span class="property">width</span>: 100% / ref(children of @parent); }</pre>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
@@ -1027,10 +1033,11 @@ note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this one returns #0</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
 }</pre>
-	<h5>attr()</h5>
-	<h5>sel()</h5>
-	<h5>max() and min()</h5>
-	<h5>floor(), ceil() and round()</h5>
+	<h5 name="1.6.3.2">The attribute function</h5>
+	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, <code>of @this</code> can be omitted. And much in the same way too, the function won't return anything if the elements matched don't share the same attribute's value.</p>
+	<h5 name="1.6.3.3">The selector function</h5>
+	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
+	<h5>max(), min(), floor(), ceil() and round()</h5>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.4">1.6.4</a></span> Color</h4>
@@ -1048,7 +1055,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
-	<p>You can group two or more properties which share the same value.</p>
+	<p>You can group two or more properties which share the same value(s).</p>
 <pre><span class="selector">element</span>
 {
     <span class="property">width</span>, <span class="property">height</span>: 100%;

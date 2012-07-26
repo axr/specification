@@ -11,10 +11,11 @@
     direction: (ltr) | rtl | ttb | btt;
     flow: (yes) | no;
     font: <object>;
+    focusable: yes | (no);
     height: <number> | (content) | available;
-    focusable: (auto) | yes | no;
+    next: (auto) | sel() | return;
+    previous: (auto) | sel() | return;
     speech: (@read) | no;
-    target: (no) | sel() | return;
     text: <object>;
     visible: (yes) | no;
     width: <number> | content | (available);
@@ -29,9 +30,9 @@
     tab: <N>;
     indent: <N>;
     overflow: (visible) | hidden | @{"", last} | @{"", all};¹
-    wrap: (auto) | breakWord | hyphenate;
+    wrap: (auto) | breakword | hyphenate;
     whitespace: (collapse) | preserve;
-    lineWrap: (break) | noWrap | preserve | preWrap;
+    lineWrap: (break) | nowrap | preserve | prewrap;
     tracking: <N>;
     wordSpacing: <N>;
     decoration: (no) | @line { position: over | through | descender | below; };²
