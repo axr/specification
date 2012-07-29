@@ -5,7 +5,7 @@
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
     background: (no) | <object>, …;
     contained: (yes) | no;
-    content: (own) | <string>;
+    content: no | sel() | <string>;
     contentAlignX: left | right | center/middle | justify | even | <number>;
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
@@ -15,6 +15,7 @@
     height: <number> | (content) | available;
     next: (auto) | sel() | return;
     previous: (auto) | sel() | return;
+    mask: (no) | shape | @gradient | @image | sel();
     speech: (@read) | no;
     text: <object>;
     visible: (yes) | no;
