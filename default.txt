@@ -27,7 +27,7 @@
     speech: @read;
     text: inherit;
     visible: inherit;
-    width: available;
+    width: 100%;
     wrapDirection: ttb;
     z: inherit;
 }

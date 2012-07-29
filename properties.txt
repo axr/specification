@@ -12,14 +12,14 @@
     flow: (yes) | no;
     font: <object>;
     focusable: yes | (no);
-    height: <number> | (content) | available;
+    height: <number> | (content);
     next: (auto) | sel() | return;
     previous: (auto) | sel() | return;
     mask: (no) | shape | @shape | @gradient | @image | sel();
     speech: (@read) | no;
     text: <object>;
     visible: (yes) | no;
-    width: <number> | content | (available);
+    width: <number> | content;
     wrapDirection: (ttb) | btt | rtl | ltr;
     z: <N> | +<N> | -<N>;
 }
