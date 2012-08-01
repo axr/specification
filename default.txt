@@ -56,7 +56,7 @@
     src: default;
     color: #0;
     size: 16;
-    size-adjust: no;
+    sizeAdjust: no;
     weight: 400;
     style: no;
     fauxBold: no;

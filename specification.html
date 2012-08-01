@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/07/26
+      Last changed: 2012/08/02
       HSS version: 1.0
-      Revision: 1.27
+      Revision: 1.28
 
 ****************************************************************-->
 
@@ -231,7 +231,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 580px;
+		height: 595px;
 	}
 	
 	nav > ul > li
@@ -331,9 +331,10 @@
 	     <li><a href="#1.5.4">The attribute filter</a></li>
 	     <li><a href="#1.5.5">Text matching filters</a></li>
 	     <li><a href="#1.5.6">Property filters</a></li>
-	     <li><a href="#1.5.7">Custom filters  &amp; User flags</a></li>
+	     <li><a href="#1.5.7">Custom filters</a></li>
 	     <li><a href="#1.5.8">Splitters</a></li>
 	     <li><a href="#1.5.9">Collection filters</a></li>
+	     <li><a href="#1.5.10">User flags</a></li>
 	</ul>
 </li>
 <li><a href="#1.6">Properties</a>
@@ -354,12 +355,14 @@
 	     <li><a href="#1.7.2">Named objects</a></li>
 	     <li><a href="#1.7.3">Anonymous objects</a></li>
 	     <li><a href="#1.7.4">Shorthand notation</a></li>
+	     <li><a href="#1.7.5">Grouping and inheritance</a></li>
 	</ul>
 </li>
 <li><a href="#1.8">Instructions</a>
 	<ul>
 	     <li><a href="#1.8.1">Wrap</a></li>
-	     <li><a href="#1.8.2">New</a></li>
+	     <li><a href="#1.8.2">Move</a></li>
+	     <li><a href="#1.8.3">New</a></li>
 	</ul>
 </li>
 </ul>
@@ -754,7 +757,6 @@ A1:odd, A2:odd { }</pre>
 	&lt;<span class="selector">subject</span>&gt;Rendezvous&lt;/<span class="selector">subject</span>&gt;
 	&lt;<span class="selector">message</span>&gt;Meet me at the inn.&lt;/<span class="selector">message</span>&gt;
 &lt;/<span class="selector">note</span>&gt;</pre>
-#TODO JS
 <div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
 		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
@@ -887,8 +889,8 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
-<div class="sub part">
-<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters &amp; User flags</h4>
+<div class="sub yet">
+<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters</h4>
 <p>In HSS it is possible to extend the available filters with your own using the <code>#filter</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
 <span class="instruction">#filter</span> firstBlack { (background = black):first }
@@ -905,7 +907,6 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:limit</span> { }
 <span class="filter">:wideLimit</span> { }
 </pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
 <div class="sub part">
 <h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Splitters</h4>
@@ -951,6 +952,10 @@ note to<span class="filter">:oddChild</span> { }</pre>
 //if one of them is a <em>from</em> element</span>
 <span class="selector">note</span><span class="filter">:first</span> <span class="filter">:oneIs(<span class="selector">from</span>)</span> { }</pre>
 </div>
+<div class="sub part">
+<h4 class="title"><span class="number"><a name="1.5.10">1.5.10</a></span> User flags</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
+</div>
 </section>
 <section class="chapter">
 	<h3 class="title"><span class="number"><a name="1.6">1.6</a></span> Properties</h3>
@@ -968,7 +973,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
     @<span class="flag">::hover</span>
     {
         <span class="comment">//using <a href="#1.6.7">grouping</a> this resets the height and width
-        //to their default values (respectively <em>content</em> and <em>available</em>)</span>
+        //to their default values (respectively <em>content</em> and <em>100%</em>)</span>
         <span class="property">height</span>, <span class="property">width</span>: default;
     }
 }</pre>
@@ -1055,10 +1060,14 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	</div>
 	<div class="sub">
 	<h4 class="title"><span class="number"><a name="1.6.6">1.6.6</a></span> Read-only properties</h4>
-	<h5>x and y</h5>
-	<h5>level</h5>
-	<h5>children</h5>
+	<h5>Coordinates</h5>
+	<p>You can use the <code>x</code> and <code>y</code> properties to retrieve the axis' position of an element relative to the top left corner of the viewport.</p>
+	<h5>Children</h5>
+	<p>The <code>children</code> property is used to retrieve the number of children an element holds.</p>
+	<h5>Stack level</h5>
+	<p>Using the <code>level</code> property you can retrieve the absolute stack level of an element—in other words its z-index relative to the root element.</p>
 	</div>
+#TODO examples
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
 	<p>You can group two or more properties which share the same value(s).</p>
