@@ -27,6 +27,7 @@
 @text {
     alignX: (start) | end | left | right | center | justify | <number>;
     alignY: (baseline) | sup | sub | top | bottom | middle | <number>;
+    background: (no) | <object>, …;
     hangingPunctuation: (no) | first | last | end;
     tab: <N>;
     indent: <N>;
