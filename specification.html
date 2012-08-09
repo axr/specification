@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/08/02
+      Last changed: 2012/08/09
       HSS version: 1.0
-      Revision: 1.28
+      Revision: 1.29
 
 ****************************************************************-->
 
@@ -360,9 +360,10 @@
 </li>
 <li><a href="#1.8">Instructions</a>
 	<ul>
-	     <li><a href="#1.8.1">Wrap</a></li>
-	     <li><a href="#1.8.2">Move</a></li>
-	     <li><a href="#1.8.3">New</a></li>
+	     <li><a href="#1.8.1">Support</a></li>
+	     <li><a href="#1.8.2">Wrap</a></li>
+	     <li><a href="#1.8.3">Move</a></li>
+	     <li><a href="#1.8.4">New</a></li>
 	</ul>
 </li>
 </ul>
@@ -407,7 +408,7 @@
 {
     <span class="comment">//this makes it 150 points wide</span>
     <span class="property">width</span>: <span class="number">150</span>;
-    <span class="comment">//this makes the element 10 points less high as its parent</span>
+    <span class="comment">//this makes the element 10 points less high than its parent's <a href="#1.6.6.3">innerHeight</a></span>
     <span class="property">height</span>: <span class="number">100%</span> - <span class="number">10</span>;
     <span class="comment">//this aligns the element to the center of its parent element</span>
     <span class="property">alignX</span>: <span class="number">50%</span>;
@@ -657,8 +658,8 @@ A1:odd, A2:odd { }</pre>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a name="1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
 		<p><strong>Note:</strong> This section is just the explanation of the very basic idea, and may change soon.</p>
-		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements (see 1.x.x Layout of elements in Flow). You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
-#TODO link "see 1.x.x etc"
+		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements (see Layout of elements in Flow). You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
+#TODO link "Layout of elements in Flow"
 <pre><span class="comment">//this will select all the lines of elements inside of the
 //document element</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="selector">*</span> { }
@@ -671,7 +672,7 @@ A1:odd, A2:odd { }</pre>
 <span class="comment">//this will select all the subjacent lines inside of the first
 //line of elements</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="selector">*</span> { }</pre>
-#TODO add schema which will illustrate all examples
+#TODO <a href="https://github.com/AXR/Specification/issues/37">Issue 37</a>
 		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="#1.3.7.4">parent object</a> will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub yet">
@@ -996,7 +997,8 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<p>You can write an expression anywhere a numerical value is accepted, and it is generally only useful when used with a variable value. If all the values are fixed numbers, the result will be calculated at parse time and it would be interpreted as if the result had been written. The available operations are: sum (+), subtraction (&#8722;), multiplication (&#215;) and division (&#8725;). You can also use parentheses to designate the order of the operations, in an inside-out order. Otherwise, multiple operations are executed following the mathematical order (first multiply and divide, then sum and subtract).</p>
 <pre><span class="comment">//this element will always be twice as wide as its current height</span>
 <span class="selector">element</span> { <span class="property">width</span>: 2 * ref(<span class="property">height</span>); }
-<span class="comment">//using the <a href="#1.6.6.3">children property</a>, this permits to perfectly fit
+
+<span class="comment">//using the <a href="#1.6.6.2">children property</a>, this permits to perfectly fit
 //the <em>child</em> element(s) in their parent to prevent wrapping</span>
 <span class="selector">parent child</span> { <span class="property">width</span>: 100% / ref(children of @parent); }</pre>
 	</div>
@@ -1036,38 +1038,78 @@ note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this one returns #0</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
 }</pre>
-	<h5 name="1.6.3.2">The attribute function</h5>
+	<h5><a name="1.6.3.2">The attribute function</a></h5>
 	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//this would replace the content text of the element
     //by the value of its href attribute</span>
     <span class="property">content</span>: attr(href of <span class="selector">@this</span>);
-    <span class="comment">//would be equivalent to</span>
+    <span class="comment">//which is equivalent to</span>
     <span class="property">content</span>: attr(href);
 }</pre>
-	<h5 name="1.6.3.3">The selector function</h5>
+	<h5><a name="1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
+<pre><span class="selector">element1</span>
+{
+    <span class="comment">//this would dynamically mirror the content of
+    //element2 in its element1 sibling</span>
+    <span class="property">content</span>: sel(<span class="selector">element2</span>);
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">content</span>: ref(<span class="property">content</span> of <span class="selector">element2</span>);
+}</pre>
 	<h5>max(), min(), floor(), ceil() and round()</h5>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.4">1.6.4</a></span> Color</h4>
-	<p></p>
+	<p>For convenience and compatibility with common graphic edition programs, color values in the sRGB color space can be written as <strong>instructions</strong>. It is composed of a hash (number sign) <code>#</code> followed by a number in hexadecimal notation of one to eight digits.</p>
+<pre>
+<span class="comment">//this would set the background to white</span>
+<span class="property">background</span>: #FFFFFF;
+	    <span class="comment">//which can be alternatively be written</span>
+     &#12291;	    #FFF;
+	    <span class="comment">//or</span>
+     &#12291;	    #FF;
+	    <span class="comment">//or</span>
+     &#12291;	    #F;
+
+<span class="comment">//you can also add an alpha channel</span>
+<span class="property">background</span>: #521521CC;
+	    <span class="comment">//which can be alternatively be written</span>
+     &#12291;	    #521521C;
+	    <span class="comment">//or</span>
+     &#12291;	    #521CC;
+	    <span class="comment">//or</span>
+     &#12291;	    #521C;
+</pre>
+	<p>Besides instructions, you can also use <strong>objects</strong> (@rgb, @cmyk and @hsb) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
 	</div>
-	<div class="sub part">
+	<div class="sub comp">
 	<h4 class="title"><span class="number"><a name="1.6.5">1.6.5</a></span> isA</h4>
-#TODO <a href="https://github.com/AXR/Specification/issues/19">Issue 19</a>
+	<p>The <code>isA</code> property permits to apply properties from a <a href="#1.7.2">named object</a> to an object of the <strong>same type</strong>. Keep in mind that the order of the objects matters: the rightmost object is the last in the cascade.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="comment">//assuming these two container objects are defined,
+    //this would apply their properties to <em>element</em></span>
+    <span class="property">isA</span>: object1, object2;
+    <span class="comment">//assuming a font object named <em>fontSet</em> is defined,
+    //this would apply its properties to @font</span>
+    <span class="property">font</span>: @font { isA: fontSet };
+}</pre>
 	</div>
-	<div class="sub">
+	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.6">1.6.6</a></span> Read-only properties</h4>
-	<h5>Coordinates</h5>
-	<p>You can use the <code>x</code> and <code>y</code> properties to retrieve the axis' position of an element relative to the top left corner of the viewport.</p>
-	<h5>Children</h5>
-	<p>The <code>children</code> property is used to retrieve the number of children an element holds.</p>
-	<h5>Stack level</h5>
+	<h5><a name="1.6.6.1">Stack level</a></h5>
 	<p>Using the <code>level</code> property you can retrieve the absolute stack level of an element—in other words its z-index relative to the root element.</p>
+	<h5><a name="1.6.6.2">Children count</a></h5>
+	<p>The <code>children</code> property is used to retrieve the number of children an element holds.</p>
+	<h5><a name="1.6.6.3">Available space</a></h5>
+	<p>You can use the <code>innerHeight</code> and <code>innerWidth</code> properties to retrieve an element's height or width <strong>minus</strong> its padding.</p>
+#TODO add illustration
+	<h5><a name="1.6.6.4">Occupied space</a></h5>
+	<p>You can use the <code>outerHeight</code> and <code>outerWidth</code> properties to retrieve the actual space taken up by an element. It corresponds to the sum of its height or width and its corresponding margins.</p>
+#TODO add illustration
 	</div>
-#TODO examples
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
 	<p>You can group two or more properties which share the same value(s).</p>
@@ -1099,8 +1141,20 @@ note to<span class="filter">:oddChild</span> { }</pre>
 	<h3 class="title"><span class="number"><a name="1.7">1.7</a></span> Objects</h3>
 	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#1.3.7.5">owner</a>. This enables great flexibility and modularization of the code.</p>
 	<p>Objects can be set to be of a certain type, placing an object type immediately after the at sign, or automatically deriving it from the context. It is followed by whitespace, and optionally an object name and more optional whitespace, followed by a block. Inside the block, its properties are defined.</p>
-	<div class="sub">
+	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.7.1">1.7.1</a></span> Object dot notation</h4>
+	</div>
+	<div class="sub comp">
+	<h4 class="title"><span class="number"><a name="1.7.2">1.7.2</a></span> Named objects</h4>
+	</div>
+	<div class="sub comp">
+	<h4 class="title"><span class="number"><a name="1.7.3">1.7.3</a></span> Anonymous objects</h4>
+	</div>
+	<div class="sub comp">
+	<h4 class="title"><span class="number"><a name="1.7.4">1.7.4</a></span> Shorthand notation</h4>
+	</div>
+	<div class="sub comp">
+	<h4 class="title"><span class="number"><a name="1.7.5">1.7.5</a></span> Grouping and inheritance</h4>
 	</div>
 </section>
 <section class="chapter">
