@@ -24,6 +24,7 @@
     next: auto;
     mask: no;
     previous: auto;
+    shape: @rectangle;
     speech: @read;
     text: inherit;
     visible: inherit;

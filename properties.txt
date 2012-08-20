@@ -16,6 +16,7 @@
     next: (auto) | sel() | return;
     previous: (auto) | sel() | return;
     mask: (no) | shape | @shape | @gradient | @image | sel();
+    shape: <object>;
     speech: (@read) | no;
     text: <object>;
     visible: (yes) | no;
@@ -44,7 +45,7 @@
 
 @font {
     faces: <string>, src, …;
-    size: <N> | <N>ex;
+    size: <N>;
     color: <object>;
     style: (no) | oblique | italic;
     weight: keyword | weight class;³
