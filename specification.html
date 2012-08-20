@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/08/09
+      Last changed: 2012/08/20
       HSS version: 1.0
-      Revision: 1.29
+      Revision: 1.3
 
 ****************************************************************-->
 
@@ -331,9 +331,9 @@
 	     <li><a href="#1.5.4">The attribute filter</a></li>
 	     <li><a href="#1.5.5">Text matching filters</a></li>
 	     <li><a href="#1.5.6">Property filters</a></li>
-	     <li><a href="#1.5.7">Custom filters</a></li>
-	     <li><a href="#1.5.8">Splitters</a></li>
-	     <li><a href="#1.5.9">Collection filters</a></li>
+	     <li><a href="#1.5.7">Splitters</a></li>
+	     <li><a href="#1.5.8">Collection filters</a></li>
+	     <li><a href="#1.5.9">Custom macros</a></li>
 	     <li><a href="#1.5.10">User flags</a></li>
 	</ul>
 </li>
@@ -890,29 +890,10 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
-<div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Custom filters</h4>
-<p>In HSS it is possible to extend the available filters with your own using the <code>#filter</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
-<pre>
-<span class="instruction">#filter</span> firstBlack { (background = black):first }
-<span class="comment">//this is equivalent to :startsWith()</span>
-<span class="instruction">#filter</span> sw(myArg1) { $ >> :first:contains(myArg1) }
-<span class="comment">//filter which selects the first or the last element</span>
-<span class="instruction">#filter</span> limit { :first, :last }
-<span class="comment">//you must define custom filters before applying them:
-//limit's definition must precede wideLimit's one</span>
-<span class="instruction">#filter</span> wideLimit { (width > height):limit }
-
-<span class="filter">:firstBlack</span> { }
-<span class="filter">:sw</span>("foo") { }
-<span class="filter">:limit</span> { }
-<span class="filter">:wideLimit</span> { }
-</pre>
-</div>
 <div class="sub part">
-<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Splitters</h4>
+<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Splitters</h4>
 	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result.</p>
-	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.9">collection filters</a> or other splitters.</p>
+	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.8">collection filters</a> or other splitters.</p>
 	<p>Using the <a name="s_split"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types.</p>
 <pre><span class="comment">//this will match the children of each <em>note</em> elements
 //which are the second of their type
@@ -922,7 +903,7 @@ note to<span class="filter">:oddChild</span> { }</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/46">Issue 46</a>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Collection Filters</h4>
+<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Collection Filters</h4>
 	<p>The <strong>amount filter</strong> matches elements depending on their current number in the returned collection(s). If a number or a condition is given, the amount of elements is compared.</p>
 <pre><span class="comment">//this matches if the collection contains exactly 3 elements</span>
 <span class="filter">:amount</span>(<span class="number">3</span>) { }
@@ -952,6 +933,28 @@ note to<span class="filter">:oddChild</span> { }</pre>
 <pre><span class="comment">//this matches the children of the first <em>note</em> element
 //if one of them is a <em>from</em> element</span>
 <span class="selector">note</span><span class="filter">:first</span> <span class="filter">:oneIs(<span class="selector">from</span>)</span> { }</pre>
+</div>
+<div class="sub yet">
+<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Custom macros</h4>
+<p>In HSS it is possible to create your own set of macros using the <code>#macro</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
+<pre>
+<span class="comment">//used to style the first element out of the ones which have a black background</span>
+<span class="instruction">#macro</span> firstBlack { (background = black):first }
+<span class="comment">//this creates an alias for :startsWith()</span>
+<span class="instruction">#macro</span> sw(myArg) { :startsWith(myArg) }
+<span class="comment">//creates a macro which selects the first or the last element</span>
+<span class="instruction">#macro</span> limit { :first, :last }
+<span class="comment">//macros are reusable inside other macros' definitions</span>
+<span class="instruction">#macro</span> wideLimit { (width > height):::limit }
+<span class="comment">//flags are accepted as well</span>
+<span class="instruction">#macro</span> dock { ::target::hover }
+
+:::firstBlack { }
+:::sw("") { }
+:::limit { }
+:::wideLimit { }
+:::dock { }
+</pre>
 </div>
 <div class="sub part">
 <h4 class="title"><span class="number"><a name="1.5.10">1.5.10</a></span> User flags</h4>
