@@ -15,7 +15,7 @@
     height: <number> | (content);
     next: (auto) | sel() | return;
     previous: (auto) | sel() | return;
-    mask: (no) | shape | @shape | @gradient | @image | sel();
+    mask: (no) | <object> | sel();
     shape: <object>;
     speech: (@read) | no;
     text: <object>;
