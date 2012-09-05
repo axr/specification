@@ -6,11 +6,11 @@ It's much in the style of current web standards, using plain text files linked t
 
 Specification
 =============
-This repository is the place where we edit the current working draft of the specification of the HSS language. The current published draft (not completely up to date) can be found at http://axr.vg/spec/. The latest draft can be found at http://spec.axr.vg/specification.html.
+This repository is the place where we edit the current [working draft](http://spec.axr.vg/specification.html) of the specification of the HSS language.
 
 Workflow
 ========
-We hold a meeting once a week over IRC, and the issues are also often discussed in the comments of the [github issues](https://github.com/AXR/Specification/issues).
+We hold a [meeting](http://axr.vg/wiki/Spec_Meetings) on our [IRC channel](irc://irc.freenode.net:6667/axr) once a week, and the issues are also often discussed in the comments of the [github issues](https://github.com/AXR/Specification/issues).
 
 Repository manager
 ==================
