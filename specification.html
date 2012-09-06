@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/09/05
+      Last changed: 2012/09/06
       HSS version: 1.0
-      Revision: 1.34
+      Revision: 1.35
 
 ****************************************************************-->
 
@@ -612,7 +612,7 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="property">width</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>) / <span class="number">3</span>;
 }
-<span class="comment">//this reference would return nothing (the root doesn't have a parent)</span>
+<span class="comment">//this reference would return nothing (the root element doesn't have a parent)</span>
 <span class="selector">@root</span>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>);
@@ -694,7 +694,7 @@ A1:odd, A2:odd { }</pre>
 		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axr.vg/images/spec/accessing_content_text.png"></p>
 		<p>To select portions of text, the content text combinator is used. After the combinator, you write a string to specify what part of the text you want to select.</p>
 <pre><span class="comment">//this will select any occurrence of “dummy text” and set
-//it be 15 points tall</span>
+//its height to 15 points</span>
 <span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span> { <span class="property">height</span>: <span class="number">15</span> }
 <span class="comment">//this will only match the first one</span>
 <span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span><span class="filter">:first</span> { <span class="property">height</span>: <span class="number">15</span> }</pre>
@@ -1112,9 +1112,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
      &#12291;	    #F;
 
 <span class="comment">//sets the alpha channel to CC using the #RRGGBBAA format</span>
-<span class="property">background</span>: #521521CC;
+<span class="property">background</span>: #552211CC;
 	    <span class="comment">//which can be alternatively be written</span>
-     &#12291;	    #521521C;
+     &#12291;	    #552211C;
 	    <span class="comment">//or</span>
      &#12291;	    #521CC;
 	    <span class="comment">//or</span>
