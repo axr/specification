@@ -21,8 +21,8 @@
     font: inherit;
     focusable: no;
     height: content;
-    next: auto;
     mask: no;
+    next: auto;
     previous: auto;
     shape: @rectangle;
     speech: @read;
@@ -38,6 +38,7 @@
     alignY: baseline;
     background: no;
     hangingPunctuation: no;
+    height: 1.5 * em;
     tab: 8;
     indent: 0;
     overflow: visible;

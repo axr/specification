@@ -13,9 +13,9 @@
     font: <object>;
     focusable: yes | (no);
     height: <number> | (content);
+    mask: (no) | <object> | sel();
     next: (auto) | sel() | return;
     previous: (auto) | sel() | return;
-    mask: (no) | <object> | sel();
     shape: <object>;
     speech: (@read) | no;
     text: <object>;
@@ -30,6 +30,7 @@
     alignY: (baseline) | sup | sub | top | bottom | middle | <number>;
     background: (no) | <object>, …;
     hangingPunctuation: (no) | first | last | end;
+    height: <number>;
     tab: <N>;
     indent: <N>;
     overflow: (visible) | hidden | @{"", last} | @{"", all};¹
