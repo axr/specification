@@ -58,7 +58,7 @@
     src: default;
     color: #0;
     size: 16;
-    sizeAdjust: no;
+    sizeAdjust: @self.ex / @self.size;
     weight: 400;
     style: no;
     fauxBold: no;

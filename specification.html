@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/09/06
+      Last changed: 2012/09/11
       HSS version: 1.0
-      Revision: 1.35
+      Revision: 1.36
 
 ****************************************************************-->
 
@@ -411,7 +411,7 @@
 		<p>Here are some examples:</p>
 <pre><span class="selector">document</span>
 {
-    <span class="comment">//this makes it 150 points wide</span>
+    <span class="comment">//this makes it 150 <a href="#1.2.5">points</a> wide</span>
     <span class="property">width</span>: <span class="number">150</span>;
     <span class="comment">//this makes the element 10 points less high than its parent's <a href="#1.6.6.3">innerHeight</a></span>
     <span class="property">height</span>: <span class="number">100%</span> - <span class="number">10</span>;
@@ -423,7 +423,6 @@
 <span class="comment">//in this example the semicolon was omitted, since that
 //property immediately precedes the closing brace</span>
 <span class="selector">document</span> { <span class="property">alignX</span>: <span class="number">50%</span> }</pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/10">Issue 10</a>
 
 		<h4><span class="number"><a name="1.2.4">1.2.4</a></span> Objects</h4>
 		<p><a href="#1.7">Objects</a> represent values that are more complex in their nature. Similar to rules, objects have properties which accept values, defined inside a block. Objects are identified using the object sign <code>@</code> prefixed to their object type.</p>
@@ -439,8 +438,9 @@
         <span class="property">color</span>: <span class="number">#000</span>;
     };
 }</pre>
-		<h4><span class="number"><a name="1.2.5">1.2.5</a></span> Instructions</h4>
-#TODO <a href="https://github.com/AXR/Specification/issues/27">Issue 27</a>
+
+		<h4><span class="number"><a name="1.2.5">1.2.5</a></span> HSS points</h4>
+#TODO description
 <div class="sub part">
 		<h4><span class="number"><a name="1.2.6">1.2.6</a></span> The negator</h4>
 		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <code>!</code>, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
@@ -451,7 +451,7 @@
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not being hovered</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="flag">::hover</span> { }</pre>
-		<p>To negate an entire selector (including its filters or flags) you have to use the alternate <code>![]</code> notation.</p>
+		<p>To negate an entire selector (including its filters or flags) you have to use <a href="#1.3.3.2">grouping brackets</a>.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>[<span class="selector">note</span><span class="filter">:last</span>] {}</pre>
 </div>
@@ -516,7 +516,7 @@ note { }
 note child1, note child2 { }
 note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }</pre>
-		<p>Through the use of grouping brackets, several consecutive parts of a selector chain can be evaluated as one.</p>
+		<p>Through the use of <a name="1.3.3.2">grouping brackets</a>, several consecutive parts of a selector chain can be evaluated as one.</p>
 <pre><span class="comment">//inline grouping is also available</span>
 note [child1, child2] [element1, element2] { }
 <span class="comment">//which is equivalent to</span>
@@ -725,7 +725,7 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="comment">//this will select each line of text and give it vertical margins,
     //increasing the line spacing</span>
-    <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="splitter">/each</span> { <span class="property">margin</span>: <span class="number">5</span> top, <span class="number">5</span> bottom }
+    <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="splitter">/each</span> { <span class="property">margin</span>: @{ <span class="property">top</span>, <span class="property">bottom</span>: <span class="number">5</span> }; }
     <span class="comment">//this will select the first three letters of "dummy", each separately</span>
     <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="string">"dummy"</span> <span class="combinator">&gt;</span> <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span>)<span class="splitter">/each</span> { }
 }</pre>
@@ -775,7 +775,9 @@ A1:odd, A2:odd { }</pre>
 <pre><span class="comment">//this matches the first <em>to</em> element in our example</span>
 notes note <span class="filter">:first</span> { }
 <span class="comment">//this matches the first <em>to</em> elements of each <em>note</em> element in our example</span>
-notes note <span class="filter">:firstChild</span> { }</pre>
+notes note <span class="filter">:firstChild</span> { }
+<span class="comment">//which is equivalent to appending the <a href="#s_each">each splitter</a> to the former</span>
+notes note <span class="splitter">/each</span><span class="filter">:first</span> { }</pre>
 		<p>The <strong><a name="f_last">last and lastChild filters</a></strong> match the last element(s).</p>
 <pre><span class="comment">//this matches the last element in the second <em>note</em> element</span>
 notes note <span class="filter">:last</span> { }
@@ -902,7 +904,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">*</span>(<span class="property">height</span> = <span class="property">width</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
-<div class="sub part">
+<div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Splitters</h4>
 	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result.</p>
 	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.8">collection filters</a> or other splitters.</p>
@@ -1037,10 +1039,13 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     &lt;<span class="selector">child2</span>&gt;static content text&lt;/<span class="selector">child2</span>&gt;
 &lt;/<span class="selector">parent</span>&gt;</pre>
 <p>Suppose that in your layout each child elements is a column, taking half of the horizontal width. If you wanted the second child element to always have the same height as the first one, since the first changes in height, you could not use any static value. Instead, you would reference the first child from the second one.</p>
-<pre><span class="comment">//this makes both columns the same height</span>
-<span class="selector">parent child2</span>
+<pre><span class="selector">parent child2</span>
 {
-&#160;&#160;&#160; <span class="property">height</span>: ref(<span class="property">height</span> of <span class="selector">child1</span>)
+    <span class="comment">//this gives both columns the same height</span>
+    <span class="property">height</span>: ref(<span class="property">height</span> of <span class="selector">child1</span>);
+    <span class="comment">//since the property referenced is the same
+    //as the one we are setting, this is equivalent</span>
+    <span class="property">height</span>: ref(of <span class="selector">child1</span>);
 }</pre>
 <p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
 <p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
@@ -1149,8 +1154,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 #TODO add illustration
 	<h5><a name="1.6.6.5">x-height</a></h5>
 	<p>The current typeface used by a font object has an x-height, it can be retrieved using the <code>ex</code> property.</p>
-<pre>    <span class="comment">//this sets this property to the aspect value of the font</span>
-    sizeAdjust: @self.ex / @self.size;</pre>
+<pre><span class="comment">//this sets this property to the aspect value of the font</span>
+sizeAdjust: @self.ex / @self.size;</pre>
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
@@ -1167,10 +1172,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<h4 class="title"><span class="number"><a name="1.6.8">1.6.8</a></span> The value selector</h4>
 	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name, index or using a filter.</p>
 <pre><span class="selector">element</span> {
-    <span class="comment">//supposing these objects were defined elsewhere</span>
+    <span class="comment">//supposing these @container objects were defined elsewhere</span>
     <span class="property">isA</span>: objectA, objectX, objectY;
-    <span class="comment">//assuming its object's type accept a width,
-    //this would set objectY's width to 50</span>
+    <span class="comment">//this would set objectY's width to 50</span>
     <span class="property">isA</span>[objectY].<span class="property">width</span>: <span class="number">50</span>;
     <span class="comment">//which is equivalent to</span>
     <span class="property">isA</span>[3].<span class="property">width</span>: <span class="number">50</span>;

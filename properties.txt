@@ -55,7 +55,7 @@
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
     stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
-    sizeAdjust: (no) | <number>;
+    sizeAdjust: <number>;
 }
 
 @read {
