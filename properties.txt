@@ -18,7 +18,7 @@
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;
     on: <object>, …;
-    padding: <object>;
+    padding: <object>, …;
     previous: (auto) | sel() | return;
     shape: <object>;
     speech: (@read) | no;
