@@ -10,11 +10,15 @@
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
     flow: (yes) | no;
-    font: <object>;
+    font: <object>, …;
     focusable: yes | (no);
     height: <number> | (content);
+    isA: <object>, …;
+    margin: <object>, …;
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;
+    on: <object>, …;
+    padding: <object>;
     previous: (auto) | sel() | return;
     shape: <object>;
     speech: (@read) | no;

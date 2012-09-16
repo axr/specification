@@ -21,8 +21,12 @@
     font: inherit;
     focusable: no;
     height: content;
+    isA:;
+    margin: @{0};
     mask: no;
     next: auto;
+    on:;
+    padding: @{0};
     previous: auto;
     shape: @rectangle;
     speech: @read;
