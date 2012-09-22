@@ -5,7 +5,7 @@
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
     background: (no) | <object>, …;
     contained: (yes) | no;
-    content: no | sel() | <string>;
+    content: no | (content) | <string>;
     contentAlignX: left | right | center/middle | justify | even | <number>;
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
@@ -13,7 +13,7 @@
     font: <object>, …;
     focusable: yes | (no);
     height: <number> | (content);
-    isA: <object>, …;
+    isA: <object>, … | sel();
     margin: <object>, …;
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;

@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/09/21
+      Last changed: 2012/09/22
       HSS version: 1.0
-      Revision: 1.38
+      Revision: 1.39
 
 ****************************************************************-->
 
@@ -451,7 +451,7 @@
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not being hovered</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="flag">::hover</span> { }</pre>
-		<p>To negate an entire selector (including its filters or flags) you have to use <a href="#1.3.3.2">grouping brackets</a>.</p>
+		<p>To negate an entire selector (including its filters or flags) you have to use <a href="#square">grouping brackets</a>.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>[<span class="selector">note</span><span class="filter">:last</span>] {}</pre>
 </div>
@@ -516,7 +516,7 @@ note { }
 note child1, note child2 { }
 note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }</pre>
-		<p>Through the use of <a name="1.3.3.2">grouping brackets</a>, several consecutive parts of a selector chain can be evaluated as one.</p>
+		<p>Through the use of <a name="square">grouping brackets</a>, several consecutive parts of a selector chain can be evaluated as one.</p>
 <pre><span class="comment">//inline grouping is also available</span>
 note [child1, child2] [element1, element2] { }
 <span class="comment">//which is equivalent to</span>
@@ -641,7 +641,7 @@ A1:odd, A2:odd { }</pre>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre>
 </div>
-<div class="sub comp">
+<div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
 		<p>If you want to select elements which are descendants (could be direct children of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p>
 <pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
@@ -908,7 +908,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Splitters</h4>
 	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result. The sorting of the returned collections is determined by the elements' order in the source.</p>
 	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.8">collection filters</a> or other splitters.</p>
-	<p>Using the <a name="s_type"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types.</p>
+	<p>Using the <a name="s_type"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types. Put simply the type of an element is its tag's name.</p>
 <pre><span class="selector">notes</span>
 {
 	<span class="comment">//this will match the children of each <em>note</em> elements which
@@ -924,7 +924,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
    &lt;match3 ali="won" frazier="lost" name="Thrilla in Manila" /&gt;
 &lt;/matches&gt;</pre>
 <pre><span class="comment">//the splitter returns 3 collections in this order: louis, frazier and ali
-//this selects the first listed match won by each boxer separately:
+//this selects the first element of each boxer collection:
 //<em>match0</em> (for Louis), <em>match1</em> (for Frazier) and <em>match2</em> (for Ali)</span>
 <span class="selector">matches</span> <span class="splitter">/attr(<span class="string">"won"</span>)</span><span class="filter">:first</span> { }
 
@@ -1094,16 +1094,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	<h5><a name="1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
-<pre><span class="selector">element1</span>
-{
-    <span class="comment">//this would dynamically mirror the content of
-    //element2 in its element1 sibling</span>
-    <span class="property">content</span>: sel(<span class="selector">element2</span>);
-    <span class="comment">//which is equivalent to</span>
-    <span class="property">content</span>: ref(<span class="property">content</span> of <span class="selector">element2</span>);
-}</pre>
+#TODO example
 	<h5><a name="1.6.3.4">The object function</a></h5>
-	<p>The syntax is <code>obj(objectName)</code> and can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: when omitted if a name clash happens the keyword is retained.</p>
+	<p>The syntax is <code>obj(objectName)</code> and can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//sets the background to black using a keyword</span>
@@ -1116,6 +1109,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">background</span>: obj(bg);
 }</pre>
+	<h5>str(), num() and kwd()</h5>
 	<h5>max(), min(), floor(), ceil() and round()</h5>
 	</div>
 	<div class="sub part">

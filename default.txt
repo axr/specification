@@ -13,7 +13,7 @@
     anchorY: no;
     background: no;
     contained: yes;
-    content: sel(@this);
+    content: content;
     contentAlignX:?;
     contentAlignY:?;
     direction: ltr;
@@ -21,7 +21,7 @@
     font: inherit;
     focusable: no;
     height: content;
-    isA:?;
+    isA: sel(@self);
     margin: 0;
     mask: no;
     next: auto;
