@@ -43,9 +43,10 @@
     lineWrap: (break) | nowrap | preserve | prewrap;
     tracking: <N>;
     wordSpacing: <N>;
-    decoration: (no) | @line { position: over | through | descender | below; };²
+    decoration: (no) | @{ position: over | through | descender | below; };²
     transform: (no) | capitalize | uppercase | lowercase;
     direction: (ltr) | rtl | ttb | btt;
+    wrapDirection: (ttb) | btt | rtl | ltr;
 }
 
 @font {
