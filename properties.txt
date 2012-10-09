@@ -3,12 +3,14 @@
     anchorY: (no) | <number>;
     alignX: (auto) | left | right | center/middle | justify | even | <number>;
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
+    attr: @value { <name>:<string>; …; };
     background: (no) | <object>, …;
     contained: (yes) | no;
     content: no | (content) | <string>;
     contentAlignX: left | right | center/middle | justify | even | <number>;
     contentAlignY: top | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
+    draggable: yes | (no);
     flow: (yes) | no;
     font: <object>, …;
     focusable: yes | (no);
@@ -37,7 +39,7 @@
     height: <number>;
     tab: <N>;
     indent: <N>;
-    overflow: (visible) | hidden | @{"", last} | @{"", all};¹
+    overflow: (visible) | hidden | @{<string>, last} | @{<string>, all};¹
     wrap: (auto) | breakword | hyphenate;
     whitespace: (collapse) | preserve;
     lineWrap: (break) | nowrap | preserve | prewrap;
@@ -70,9 +72,9 @@
 }
 
 ¹
-    overflow: "";
+    overflow: <string>;
     //is equivalent to
-    overflow: @{"", last};
+    overflow: @{<string>, last};
 
 ²
     decoration accepts any line object

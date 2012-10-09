@@ -11,12 +11,14 @@
     alignY: auto;
     anchorX: no;
     anchorY: no;
+    attr: no;
     background: no;
     contained: yes;
     content: content;
-    contentAlignX:?;
-    contentAlignY:?;
+    contentAlignX: top;
+    contentAlignY: left;
     direction: ltr;
+    draggable: no;
     flow: yes;
     font: inherit;
     focusable: no;
