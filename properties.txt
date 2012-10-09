@@ -7,8 +7,8 @@
     background: (no) | <object>, …;
     contained: (yes) | no;
     content: no | (content) | <string>;
-    contentAlignX: left | right | center/middle | justify | even | <number>;
-    contentAlignY: top | bottom | center/middle | justify | even | <number>;
+    contentAlignX: (left) | right | center/middle | justify | even | <number>;
+    contentAlignY: (top) | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
     draggable: yes | (no);
     flow: (yes) | no;

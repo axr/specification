@@ -15,8 +15,8 @@
     background: no;
     contained: yes;
     content: content;
-    contentAlignX: top;
-    contentAlignY: left;
+    contentAlignX: left;
+    contentAlignY: top;
     direction: ltr;
     draggable: no;
     flow: yes;
