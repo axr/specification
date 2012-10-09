@@ -3,7 +3,7 @@
     anchorY: (no) | <number>;
     alignX: (auto) | left | right | center/middle | justify | even | <number>;
     alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
-    attr: @value { <name>:<string>; …; };
+    attr: (no) | @value { <name>:<string>; …; };
     background: (no) | <object>, …;
     contained: (yes) | no;
     content: no | (content) | <string>;
