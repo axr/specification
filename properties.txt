@@ -1,8 +1,8 @@
 @container {
     anchorX: (no) | <number>;
     anchorY: (no) | <number>;
-    alignX: (auto) | left | right | center/middle | justify | even | <number>;
-    alignY: (auto) | top | bottom | center/middle | justify | even | <number>;
+    alignX: left | right | center/middle | justify | even | <number>;
+    alignY: top | bottom | center/middle | justify | even | <number>;
     attr: (no) | @value { <name>:<string>; …; };
     background: (no) | <object>, …;
     contained: (yes) | no;
@@ -22,6 +22,7 @@
     on: <object>, …;
     padding: <object>, …;
     previous: (auto) | sel() | return;
+    selectable: yes | (no);
     shape: <object>;
     speech: (@read) | no;
     text: <object>;
@@ -35,19 +36,21 @@
     alignX: (start) | end | left | right | center | justify | <number>;
     alignY: (baseline) | sup | sub | top | bottom | middle | <number>;
     background: (no) | <object>, …;
+    decoration: (no) | @{ position: over | through | descender | below; };²
+    direction: (ltr) | rtl | ttb | btt;
+    font: <object>, …;
     hangingPunctuation: (no) | first | last | end;
     height: <number>;
-    tab: <N>;
     indent: <N>;
-    overflow: (visible) | hidden | @{<string>, last} | @{<string>, all};¹
-    wrap: (auto) | breakword | hyphenate;
-    whitespace: (collapse) | preserve;
     lineWrap: (break) | nowrap | preserve | prewrap;
+    overflow: (visible) | hidden | @{<string>, last} | @{<string>, all};¹
+    selectable: (yes) | no;
+    tab: <N>;
     tracking: <N>;
-    wordSpacing: <N>;
-    decoration: (no) | @{ position: over | through | descender | below; };²
     transform: (no) | capitalize | uppercase | lowercase;
-    direction: (ltr) | rtl | ttb | btt;
+    whitespace: (collapse) | preserve;
+    wordSpacing: <N>;
+    wrap: (auto) | breakword | hyphenate;
     wrapDirection: (ttb) | btt | rtl | ltr;
 }
 

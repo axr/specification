@@ -1,4 +1,4 @@
-@root {
+﻿@root {
     font: @font;
     text: @text;
     visible: yes;
@@ -7,29 +7,37 @@
 }
 
 @container {
-    alignX: auto;
-    alignY: auto;
+    alignX: ref(contentAlignX of @parent);
+    alignY: ref(contentAlignY of @parent);
     anchorX: no;
     anchorY: no;
     attr: no;
     background: no;
+    children; Ⓡ
     contained: yes;
     content: content;
     contentAlignX: left;
     contentAlignY: top;
+    currentFont; Ⓡ
     direction: ltr;
     draggable: no;
     flow: yes;
     font: inherit;
     focusable: no;
     height: content;
+    innerHeight; Ⓡ
+    innerWidth; Ⓡ
     isA: sel(@self);
+    level; Ⓡ
     margin: 0;
     mask: no;
     next: auto;
     on:?;
+    outerHeight; Ⓡ
+    outerWidth; Ⓡ
     padding: 0;
     previous: auto;
+    selectable: no;
     shape: @rectangle;
     speech: @read;
     text: inherit;
@@ -43,6 +51,7 @@
     alignX: start;
     alignY: baseline;
     background: no;
+    font: @this.font;
     hangingPunctuation: no;
     height: 1.5 * ref(currentFont.em of @this);
     tab: 8;
@@ -56,12 +65,16 @@
     decoration: no;
     transform: no;
     direction: ltr;
+    selectable: yes;
     wrapDirection: ttb;
 }
 
 @font {
+    em; Ⓡ
+    ex; Ⓡ
     faces: src;
     src: default;
+    capHeight; Ⓡ
     color: #0;
     size: 16;
     sizeAdjust: @self.ex / @self.size;
