@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/09/22
+      Last changed: 2012/10/12
       HSS version: 1.0
-      Revision: 1.39
+      Revision: 1.40
 
 ****************************************************************-->
 
@@ -252,6 +252,24 @@
 		counter-increment:subsection;
 		content:"1." counter(section) "." counter(subsection) " ";
 	}
+
+	nav li.hasSub ul
+	{
+		display:none;
+	}
+	nav li.hasSub:hover ul
+	{
+		display:block;
+	}
+	nav li.hasSub li
+	{
+		counter-increment:func;
+	}
+	nav li.hasSub li:before 
+	{
+		counter-increment:none;
+		content:"1." counter(section) "." counter(subsection) "." counter(func, upper-latin) " ";
+	}
 	
 	.sub.yet:hover h4:after, .sub.part:hover h4:after, .sub.comp:hover h4:after
 	{
@@ -274,7 +292,22 @@
 		content: "\2042\00A0";
 		font-size:14px;
 	}
-	
+
+	.subsec
+	{
+		color: #8e4dd0;
+	}
+	.subsec:before
+	{
+		content: "\00A7\00A0";
+		font-size: 22px;
+		font-weight: normal;
+	}
+	.subsec:after
+	{
+		display:none;
+	}
+
 	#btt
 	{
 		position:fixed;
@@ -344,7 +377,13 @@
 	<ul>
 	     <li><a href="#1.6.1">Literal values</a></li>
 	     <li><a href="#1.6.2">Expressions</a></li>
-	     <li><a href="#1.6.3">Functions</a></li>
+	     <li class="hasSub"><a href="#1.6.3">Functions</a>
+	     <ul>
+		<li><a href="#1.6.3.a">Retrieval funtions</a></li>
+		<li><a href="#1.6.3.b">Type conversion functions</a></li>
+		<li><a href="#1.6.3.c">Arithmetic functions</a></li>
+	     </ul>
+	     </li>
 	     <li><a href="#1.6.4">Color</a></li>
 	     <li><a href="#1.6.5">isA</a></li>
 	     <li><a href="#1.6.6">Read-only properties</a></li>
@@ -891,17 +930,17 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.6">1.5.6</a></span> Property filters</h4>
 <p>Conditions are used to test whether an element is matched based on its properties.</p>
-<p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords you have to put keywords inside backticks (backquotes). Similarly to distinguish properties from object names you have to put object names inside <a href="#1.6.3.4">object functions</a>.</p>
+<p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#1.6.3.b">conversion type functions</a> are necessary.</p>
 <pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
-<span class="selector">*</span>(<span class="property">content</span> = "select me") { }
+<span class="selector">*</span>:(<span class="property">content</span> = "select me") { }
 <span class="comment">//matches all elements whose background color is not black</span>
-<span class="selector">*</span>(<span class="property">background</span> != `black`) { }
+<span class="selector">*</span>:(<span class="property">background</span> != kwd(black)) { }
 <span class="comment">//matches all elements which are using a font object named <em>serif</em></span>
-<span class="selector">*</span>(<span class="property">font</span> = obj(serif)) { }
+<span class="selector">*</span>:(<span class="property">font</span> = obj(serif)) { }
 <span class="comment">//matches all elements that are taller than 300 and not wider than 400</span>
-<span class="selector">*</span>(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }
+<span class="selector">*</span>:(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }
 <span class="comment">//matches all elements which surface is square shaped</span>
-<span class="selector">*</span>(<span class="property">height</span> = <span class="property">width</span>) { }</pre>
+<span class="selector">*</span>:(<span class="property">height</span> = <span class="property">width</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub yet">
@@ -977,13 +1016,13 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p>In HSS it is possible to create your own set of macros using the <code>#macro</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
 <span class="comment">//used to style the first element out of the ones which have a black background</span>
-<span class="instruction">#macro</span> firstBlack { (background = `black`):first }
+<span class="instruction">#macro</span> firstBlack { :(background = kwd(black)):first }
 <span class="comment">//this creates an alias for :startsWith()</span>
 <span class="instruction">#macro</span> sw(myArg) { :startsWith(myArg) }
 <span class="comment">//creates a macro which selects the first or the last element</span>
 <span class="instruction">#macro</span> limit { :first, :last }
 <span class="comment">//macros are reusable inside other macros' definitions</span>
-<span class="instruction">#macro</span> wideLimit { (width > height):::limit }
+<span class="instruction">#macro</span> wideLimit { :(width > height):::limit }
 <span class="comment">//flags are accepted as well</span>
 <span class="instruction">#macro</span> dock { ::target::hover }
 
@@ -1046,6 +1085,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
 	<p>Functions take some parameters and create an output. The result of the function is what is assigned to the property.</p>
+	<h4 class="subsec"><a name="1.6.3.a">Retrieval functions</a></h4>
 	<h5><a name="1.6.3.1">References</a></h5>
 	<p>You can take values from other elements to apply them to the properties of the currently selected element(s).&#160; The value returned is always the computed value of that property, not the declared one. The syntax is <span>ref(<span class="property">propertyName</span> of <span class="selector">selector</span>)</span> and can be used anywhere a value is accepted.</p>
 	<p>Consider the following XML snippet:</p>
@@ -1095,6 +1135,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<h5><a name="1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
 #TODO example
+	<h4 class="subsec"><a name="1.6.3.b">Type conversion functions</a></h4>
 	<h5><a name="1.6.3.4">The object function</a></h5>
 	<p>The syntax is <code>obj(objectName)</code> and can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
@@ -1110,6 +1151,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">background</span>: obj(bg);
 }</pre>
 	<h5>str(), num() and kwd()</h5>
+	<h4 class="subsec"><a name="1.6.3.c">Arithmetic functions</a></h4>
 	<h5>max(), min(), floor(), ceil() and round()</h5>
 	</div>
 	<div class="sub part">
