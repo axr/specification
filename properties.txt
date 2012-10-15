@@ -16,11 +16,11 @@
     focusable: yes | (no);
     height: <number> | (content);
     isA: <object>, … | sel();
-    margin: <object>, …;
+    margin: (no) | <object>, …;
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;
     on: <object>, …;
-    padding: <object>, …;
+    padding: (no) | <object>, …;
     previous: (auto) | sel() | return;
     selectable: yes | (no);
     shape: <object>;
@@ -55,7 +55,7 @@
 }
 
 @font {
-    faces: <string>, src, …;
+    faces: <string> | (src), …;
     size: <N>;
     color: <object>;
     style: (no) | oblique | italic;

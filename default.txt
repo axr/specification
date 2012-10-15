@@ -1,8 +1,11 @@
 ﻿@root {
-    font: @font;
-    text: @text;
-    visible: yes;
     background: #F;
+    font: @font;
+    text: @text {
+          direction: ltr;
+          wrapDirection: ttb;
+    };
+    visible: yes;
     z: 0;
 }
 
@@ -29,18 +32,18 @@
     innerWidth; Ⓡ
     isA: sel(@self);
     level; Ⓡ
-    margin: 0;
+    margin: no;
     mask: no;
     next: auto;
     on:?;
     outerHeight; Ⓡ
     outerWidth; Ⓡ
-    padding: 0;
+    padding: no;
     previous: auto;
     selectable: no;
     shape: @rectangle;
     speech: @read;
-    text: inherit;
+    text: @text;
     visible: inherit;
     width: 100%;
     wrapDirection: ttb;
@@ -64,9 +67,9 @@
     wordSpacing: 0;
     decoration: no;
     transform: no;
-    direction: ltr;
+    direction: inherit;
     selectable: yes;
-    wrapDirection: ttb;
+    wrapDirection: inherit;
 }
 
 @font {

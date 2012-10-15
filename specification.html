@@ -263,12 +263,12 @@
 	}
 	nav li.hasSub li
 	{
-		counter-increment:func;
+		counter-increment:alpha;
 	}
 	nav li.hasSub li:before 
 	{
 		counter-increment:none;
-		content:"1." counter(section) "." counter(subsection) "." counter(func, upper-latin) " ";
+		content:"1." counter(section) "." counter(subsection) "." counter(alpha, upper-latin) " ";
 	}
 	
 	.sub.yet:hover h4:after, .sub.part:hover h4:after, .sub.comp:hover h4:after
@@ -930,7 +930,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.6">1.5.6</a></span> Property filters</h4>
 <p>Conditions are used to test whether an element is matched based on its properties.</p>
-<p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#1.6.3.b">conversion type functions</a> are necessary.</p>
+<p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#1.6.3.b">type conversion functions</a> are necessary.</p>
 <pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
 <span class="selector">*</span>:(<span class="property">content</span> = "select me") { }
 <span class="comment">//matches all elements whose background color is not black</span>
