@@ -30,12 +30,12 @@
     height: content;
     innerHeight; Ⓡ
     innerWidth; Ⓡ
-    isA: sel(@self);
+    isA:;
     level; Ⓡ
     margin: no;
     mask: no;
     next: auto;
-    on:?;
+    on:;
     outerHeight; Ⓡ
     outerWidth; Ⓡ
     padding: no;

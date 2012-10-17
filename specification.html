@@ -25,7 +25,7 @@
       =================
       Last changed: 2012/10/17
       HSS version: 1.0
-      Revision: 1.41
+      Revision: 1.42
 
 ****************************************************************-->
 
@@ -907,21 +907,22 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Text matching filters</h4>
 <p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
 <p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
-<pre><span class="comment">//matches every element whose content text contains “Reminder”</span>
+<pre><span class="comment">//matches every element whose content text contains “reminder”
+//regardless of the case</span>
 <span class="filter">:contains</span>(<span class="string">"reminder"</span>) { }
 <span class="comment">//matches every element whose content text exactly contains “Reminder”</span>
 <span class="filter">:contains</span>(<span class="string">"Reminder"</span>, sensitive) { }
 <span class="comment">//matches every element whose title attribute contains “reminder”</span>
-:[title<span class="filter">:contains</span>(<span class="string">"Reminder"</span>)] { }</pre>
-<p>The <strong>equals filter</strong> matches elements whose texts are equal to a given string.</p>
+:[title<span class="filter">:contains</span>(<span class="string">"reminder"</span>)] { }</pre>
+<p>The <strong>equals filter</strong> matches any element whose text is a given string.</p>
 <pre><span class="comment">//matches every element whose content text is equal to “reminder”</span>
-<span class="filter">:equals</span>(<span class="string">“Reminder”</span>) { }</pre>
+<span class="filter">:equals</span>(<span class="string">“reminder”</span>) { }</pre>
 <p>The <strong>startsWith filter</strong> matches elements whose texts start with a given string.</p>
 <pre><span class="comment">//matches every element whose content text starts with “reminder”</span>
-<span class="filter">:startsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
+<span class="filter">:startsWith</span>(<span class="string">“reminder”</span>) { }</pre>
 <p>The <strong>endsWith filter</strong> matches elements whose texts end with a given string.</p>
 <pre><span class="comment">//matches every element whose content text ends with “reminder”</span>
-<span class="filter">:endsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
+<span class="filter">:endsWith</span>(<span class="string">“reminder”</span>) { }</pre>
 <p>The <strong>match filter</strong> matches elements whose texts match a given regular expression.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
 <span class="filter">:match</span>(<span class="string">/^[0-9]/</span>) { }</pre>
@@ -1145,7 +1146,12 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	<h5><a name="1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
-#TODO example
+<pre><span class="selector">people</span>
+{
+    <span class="comment">//applies the properties set on all the <em>citizen</em> elements
+    //to the <em>people</em> element in respect to the cascade</span>
+    <span class="property">isA</span>: sel(<span class="selector">@root .. citizen</span>);
+}</pre>
 	<h4 class="subsec"><a name="1.6.3.b">Type conversion functions</a></h4>
 	<h5><a name="1.6.3.4">The object function</a></h5>
 	<p>The syntax is <code>obj(objectName)</code> and can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
