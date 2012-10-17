@@ -43,6 +43,7 @@
     selectable: no;
     shape: @rectangle;
     speech: @read;
+    targetable: no;
     text: @text;
     visible: inherit;
     width: 100%;
@@ -54,39 +55,39 @@
     alignX: start;
     alignY: baseline;
     background: no;
+    decoration: no;
+    direction: inherit;
     font: @this.font;
     hangingPunctuation: no;
     height: 1.5 * ref(currentFont.em of @this);
-    tab: 8;
     indent: 0;
-    overflow: visible;
-    wrap: auto;
-    whitespace: collapse;
     lineWrap: break;
-    tracking: 0;
-    wordSpacing: 0;
-    decoration: no;
-    transform: no;
-    direction: inherit;
+    overflow: visible;
     selectable: yes;
+    tab: 8;
+    tracking: 0;
+    transform: no;
+    whitespace: collapse;
+    wordSpacing: 0;
+    wrap: auto;
     wrapDirection: inherit;
 }
 
 @font {
+    capHeight; Ⓡ
+    color: #0;
     em; Ⓡ
     ex; Ⓡ
     faces: src;
-    src: default;
-    capHeight; Ⓡ
-    color: #0;
-    size: 16;
-    sizeAdjust: @self.ex / @self.size;
-    weight: 400;
-    style: no;
     fauxBold: no;
     fauxItalic: no;
-    stretch: no;
     kerning: yes;
+    size: 16;
+    sizeAdjust: @self.ex / @self.size;
+    src: default;
+    style: no;
+    stretch: no;
+    weight: 400;
 }
 
 @read {

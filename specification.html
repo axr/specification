@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/12
+      Last changed: 2012/10/17
       HSS version: 1.0
-      Revision: 1.40
+      Revision: 1.41
 
 ****************************************************************-->
 
@@ -863,23 +863,32 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub part">
 <h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
 <p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using flags is an easy way to add interactivity to the site, to create a compelling user experience.</p>
-<p>The <a name="f_hover"><strong>hover flag</strong></a> targets only elements that are lying under the cursor.</p><pre><span class="comment">//matches every element which has the mouse over it
-//(even overlaid ones)</span>
+<p>The <a name="f_hover"><strong>hover flag</strong></a> targets only elements that are lying under the cursor.</p><pre><span class="comment">//matches every element which has the mouse over it (even overlaid ones)</span>
 <span class="flag">::hover</span> { }</pre>
 <p>The <strong>press flag</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during an hold event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
 <span class="flag">::press</span> { }</pre>
 <p>The <strong>drag flag</strong> targets only elements which are being dragged (multiple elements can be dragged at the same time using a multi-touch interface device).</p><pre><span class="comment">//matches every element that is being dragged</span>
 <span class="flag">::drag</span> { }</pre>
-<p>The <strong>target flag</strong> targets elements which are a potential landing point for the currently dragged element(s).</p><pre><span class="comment">//matches every element that is a dragging destination of the
-//currently dragged element</span>
-<span class="flag">::target</span> { }</pre>
-<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the hover flag: the currently dragged element is integrated to the surface of contact.</p>
+<p>The <strong>target flag</strong> targets elements which are a potential landing point for the currently dragged element(s).</p>
+<pre><span class="comment">//matches all elements that are actual dragging destination
+//for the currently dragged element(s)</span>
+<span class="flag">::target</span> { }
+<span class="comment">//which is equivalent to</span>
+<span class="flag">::target(*)</span> { }
+<span class="comment">//this will match while a <em>file</em> element is being dragged</span>
+<span class="flag">::target(file)</span> { }</pre>
+<p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the hover flag: the drop target will be matched when any part of the combined boundary of the dragged element and the contact area of the input device touches it.</p>
 <pre><span class="comment">//matches every dragging destination elements when a dragged
 //element is over it</span>
 <span class="flag">::target::hover</span> { }</pre>
 <p>The <strong>focus flag</strong> matches the element that currently receives user input (through tabbing for example).</p>
 <pre><span class="comment">//matches every element which receives user input</span>
 <span class="flag">::focus</span> { }</pre>
+<p>The <strong>select flag</strong> matches characters or elements that are currently selected. It ceases if a click or a tap occurs afterward.</p>
+<pre><span class="comment">//matches elements which are currently selected</span>
+<span class="flag">::select</span> { }
+<span class="comment">//matches all characters that are currently selected</span>
+* <span class="combinator">&gt;</span> <span class="flag">::select</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> The attribute filter</h4>
@@ -897,26 +906,28 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Text matching filters</h4>
 <p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
-<p>The <strong>contains filter</strong> matches elements that contain a given string in the text.</p>
+<p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
 <pre><span class="comment">//matches every element whose content text contains “Reminder”</span>
 <span class="filter">:contains</span>(<span class="string">"reminder"</span>) { }
 <span class="comment">//matches every element whose content text exactly contains “Reminder”</span>
 <span class="filter">:contains</span>(<span class="string">"Reminder"</span>, sensitive) { }
 <span class="comment">//matches every element whose title attribute contains “reminder”</span>
 :[title<span class="filter">:contains</span>(<span class="string">"Reminder"</span>)] { }</pre>
-<p>The <strong>equals filter</strong> matches elements if the text is equal to a given string.</p>
+<p>The <strong>equals filter</strong> matches elements whose texts are equal to a given string.</p>
 <pre><span class="comment">//matches every element whose content text is equal to “reminder”</span>
 <span class="filter">:equals</span>(<span class="string">“Reminder”</span>) { }</pre>
-<p>The <strong>startsWith filter</strong> matches elements if the text starts with a given string.</p><pre><span class="comment">//matches every element whose content text starts with “reminder”</span>
+<p>The <strong>startsWith filter</strong> matches elements whose texts start with a given string.</p>
+<pre><span class="comment">//matches every element whose content text starts with “reminder”</span>
 <span class="filter">:startsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
-<p>The <strong>endsWith filter</strong> matches elements if the text ends with a given string.</p><pre><span class="comment">//matches every element whose content text ends with “reminder”</span>
+<p>The <strong>endsWith filter</strong> matches elements whose texts end with a given string.</p>
+<pre><span class="comment">//matches every element whose content text ends with “reminder”</span>
 <span class="filter">:endsWith</span>(<span class="string">“Reminder”</span>) { }</pre>
-<p>The <strong>match filter</strong> uses a regular expression to match elements.</p>
+<p>The <strong>match filter</strong> matches elements whose texts match a given regular expression.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
 <span class="filter">:match</span>(<span class="string">/^[0-9]/</span>) { }</pre>
-<p>The <strong>empty filter</strong> matches elements which have no text <em>nor</em> children or whose attribute's value is empty.</p>
-<pre><span class="comment">//matches elements which have a title attribute set to ""</span>
-:[title<span class="filter">:empty</span>] { }</pre>
+<p>The <strong>empty filter</strong> matches elements which have no text <em>nor</em> children or whose attributes' values are empty.</p>
+<pre><span class="comment">//matches elements which have at least one attribute set to ""</span>
+:[*<span class="filter">:empty</span>] { }</pre>
 <p><em>Reminder:</em> <code>!:[]</code> is used to match elements which have inexistent attributes.</p>
 <p>The <strong>length filter</strong> use a criterion to match elements or compares the length of the text against a given condition.</p>
 <pre><span class="comment">//matches every element whose content text’s length is greater
@@ -1027,7 +1038,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="instruction">#macro</span> dock { ::target::hover }
 
 :::firstBlack { }
-:::sw("") { }
+:::sw() { }
 :::limit { }
 :::wideLimit { }
 :::dock { }
@@ -1221,16 +1232,16 @@ sizeAdjust: @self.ex / @self.size;</pre>
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.8">1.6.8</a></span> The value selector</h4>
-	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name, index or using a filter.</p>
+	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name or using a filter.</p>
 <pre><span class="selector">element</span> {
     <span class="comment">//supposing these @container objects were defined elsewhere</span>
     <span class="property">isA</span>: objectA, objectX, objectY;
     <span class="comment">//this would set objectY's width to 50</span>
     <span class="property">isA</span>[objectY].<span class="property">width</span>: <span class="number">50</span>;
     <span class="comment">//which is equivalent to</span>
-    <span class="property">isA</span>[3].<span class="property">width</span>: <span class="number">50</span>;
-    <span class="comment">//which is equivalent to</span>
     <span class="property">isA</span>[<span class="filter">:last</span>].<span class="property">width</span>: <span class="number">50</span>;
+    <span class="comment">//and naturally, <a href="#1.3.3">selector grouping</a> remains available</span>
+    <span class="property">isA</span>[:first, objectX].<span class="property">width</span>: <span class="number">80</span>;
 }</pre>
 	</div>
 </section>

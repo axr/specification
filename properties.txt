@@ -25,6 +25,7 @@
     selectable: yes | (no);
     shape: <object>;
     speech: (@read) | no;
+    targetable: yes | (no);
     text: <object>;
     visible: (yes) | no;
     width: <number> | content;
