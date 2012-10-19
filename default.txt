@@ -75,13 +75,13 @@
 @font {
     capHeight; Ⓡ
     color: #0;
-    em; Ⓡ
     ex; Ⓡ
     face; Ⓡ
     faces: src;
     fauxBold: no;
     fauxItalic: no;
     kerning: yes;
+    maxHeight; Ⓡ
     size: 16;
     sizeAdjust: @self.ex / @self.size;
     src: default;
