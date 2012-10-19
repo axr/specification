@@ -25,7 +25,7 @@
       =================
       Last changed: 2012/10/19
       HSS version: 1.0
-      Revision: 1.43
+      Revision: 1.44
 
 ****************************************************************-->
 
@@ -101,7 +101,7 @@
 	
 	section ul
 	{
-		list-style: circle;
+		list-style: circle outside;
 	}
 
 	.comment
@@ -685,7 +685,7 @@ A1:odd, A2:odd { }</pre>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre>
 </div>
-<div class="sub part">
+<div class="sub comp">
 		<h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
 		<p>If you want to select elements which are descendants (could be direct children of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p>
 <pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
@@ -1260,10 +1260,16 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<h5><a name="1.6.6.4">Occupied space</a></h5>
 	<p>You can use the <code>outerHeight</code> and <code>outerWidth</code> properties to retrieve the actual space taken up by an element. It corresponds to the sum of its height or width and its corresponding margins.</p>
 #TODO add illustration
-	<h5><a name="1.6.6.5">x-height</a></h5>
-	<p>The current typeface used by a font object has an x-height, it can be retrieved using the <code>ex</code> property.</p>
-<pre><span class="comment">//this sets this property to the aspect value of the font</span>
-sizeAdjust: @self.ex / @self.size;</pre>
+	<h5><a name="1.6.6.5">Current font</a></h5>
+	<p>The font object has several read-only properties:</p>
+	<ul>
+		<li><code>face</code>: it returns the selected typeface.</li>
+		<li><code>ex</code>: it returns the x-height.</li>
+		<li><code>em</code>: equal to the <em>point size</em>, it returns the <em>body height</em>.</li>
+		<li><code>capHeight</code>: it returns the distance from the baseline to the top of a capital letter—traditionally H—which displays no overshoot.</li>
+		<li><code>maxHeight</code>: known as Êp height, it returns the distance from the top of the tallest accented capital letter to the bottom of the lowest descender.</li>
+	</ul>
+#TODO add illustration
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>

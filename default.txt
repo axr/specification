@@ -21,7 +21,6 @@
     content: content;
     contentAlignX: left;
     contentAlignY: top;
-    currentFont; Ⓡ
     direction: ltr;
     draggable: no;
     flow: yes;
@@ -59,7 +58,7 @@
     direction: inherit;
     font: @this.font;
     hangingPunctuation: no;
-    height: 1.5 * ref(currentFont.em of @this);
+    height: 1.5 * ref(font.em of @self);
     indent: 0;
     lineWrap: break;
     overflow: visible;
@@ -78,6 +77,7 @@
     color: #0;
     em; Ⓡ
     ex; Ⓡ
+    face; Ⓡ
     faces: src;
     fauxBold: no;
     fauxItalic: no;
