@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/17
+      Last changed: 2012/10/19
       HSS version: 1.0
-      Revision: 1.42
+      Revision: 1.43
 
 ****************************************************************-->
 
@@ -94,9 +94,14 @@
 		word-wrap: break-word;
 	}
 	
-	p code
+	p code, ul code
 	{
 		padding: 0 2px;
+	}
+	
+	section ul
+	{
+		list-style: circle;
 	}
 
 	.comment
@@ -863,7 +868,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub part">
 <h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
 <p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using flags is an easy way to add interactivity to the site, to create a compelling user experience.</p>
-<p>The <a name="f_hover"><strong>hover flag</strong></a> targets only elements that are lying under the cursor.</p><pre><span class="comment">//matches every element which has the mouse over it (even overlaid ones)</span>
+<p>The <strong>hover flag</strong> targets only elements that are lying under the cursor.</p><pre><span class="comment">//matches every element which has the mouse over it (even overlaid ones)</span>
 <span class="flag">::hover</span> { }</pre>
 <p>The <strong>press flag</strong> targets only elements which are lying under the mouse pointer while the primary button is pressed (usually the left one) or during an hold event (an unreleased touch event).</p><pre><span class="comment">//matches every element which is being pressed</span>
 <span class="flag">::press</span> { }</pre>
@@ -875,7 +880,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="flag">::target</span> { }
 <span class="comment">//which is equivalent to</span>
 <span class="flag">::target(*)</span> { }
-<span class="comment">//this will match while a <em>file</em> element is being dragged</span>
+<span class="comment">//this will match while a <em>file</em> sibling is being dragged</span>
 <span class="flag">::target(file)</span> { }</pre>
 <p><em>Note:</em> If you want to match a dragging destination which is currently hovered by a dragged element you just need to append the hover flag: the drop target will be matched when any part of the combined boundary of the dragged element and the contact area of the input device touches it.</p>
 <pre><span class="comment">//matches every dragging destination elements when a dragged
@@ -1113,6 +1118,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//since the property referenced is the same
     //as the one we are setting, this is equivalent</span>
     <span class="property">height</span>: ref(of <span class="selector">child1</span>);
+    <span class="comment">//using the <a href="#1.6.3.8">min function</a>, you can prevent
+    //the child2's height from dropping below its content's height</span>
+    <span class="property">height</span>: min(content, ref(of <span class="selector">child1</span>));
 }</pre>
 <p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
 <p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
@@ -1167,9 +1175,41 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">background</span>: obj(bg);
 }</pre>
-	<h5>str(), num() and kwd()</h5>
+	<h5><a name="1.6.3.5">The string function</a></h5>
+	<h5><a name="1.6.3.6">The number function</a></h5>
+	<h5><a name="1.6.3.7">The keyword function</a></h5>
 	<h4 class="subsec"><a name="1.6.3.c">Arithmetic functions</a></h4>
-	<h5>max(), min(), floor(), ceil() and round()</h5>
+	<h5><a name="1.6.3.8">The bounding functions</a></h5>
+	<p>Using the bounding functions you can constrain numeric values to certain limits.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="comment">//if 20% of the parent's innerWidth represents less than 100
+    //this sets the width to 100 and 20% otherwise</span>
+    <span class="property">width</span>: min(100, 20%);
+    <span class="comment">//similarly, if 50% of the parent's innerWidth represents 300 or more
+    //this sets the width to 300 and defaults to 50% in other cases</span>
+    <span class="property">width</span>: max(300, 50%);
+    <span class="comment">//this sets the width to 300 until the maximum threshold is reached
+    //at which point it locks itself at 50% of the parent's innerWidth</span>
+    <span class="property">width</span>: max(50%, 300);
+    <span class="comment">//this sets a lower and an upper limit of respectively
+    //200 for the minimum and 400 for the maximum</span>
+    <span class="property">width</span>: bound(200, 30%, 400);
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">width</span>: min(200, max(400, 30%));
+}</pre>
+	<p>The bound function has two valid syntaxes:</p>
+	<ul>
+		<li><code>bound(variable, static, variable)</code></li>
+		<li><code>bound(static, variable, static)</code></li>
+	</ul>
+	<p>The max and min functions share the same syntaxes:</p>
+	<ul>
+		<li><code>min(static, variable)</code> and <code>max(static, variable)</code></li>
+		<li><code>min(variable, static)</code> and <code>max(variable, static)</code></li>
+	</ul>
+	<p><em>Note:</em> the third argument of the bound function must always be greater than the first one.</p>
+	<h5><a name="1.6.3.9">The rounding functions</a></h5>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.4">1.6.4</a></span> Color</h4>
