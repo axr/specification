@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/19
+      Last changed: 2012/10/22
       HSS version: 1.0
-      Revision: 1.44
+      Revision: 1.45
 
 ****************************************************************-->
 
@@ -146,7 +146,7 @@
 	
 	.modifier
 	{
-		color: #703010;
+		color: #000;
 	}
 
 	.instruction
@@ -498,6 +498,14 @@
 		<p>To negate an entire selector (including its filters or flags) you have to use <a href="#square">grouping brackets</a>.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>[<span class="selector">note</span><span class="filter">:last</span>] {}</pre>
+		<p>The negator can also be prepended to values.</p>
+<pre><span class="selector">note</span>
+{
+    <span class="comment">//using a <a href="#1.6.3.1">reference</a>, this ensures that the element
+    //is not targetable when it is draggable
+    //and targetable when it's not draggable</span>
+    <span class="property">targetable</span>: <span class="modifier">!</span>ref(<span class="property">draggable</span>);
+}</pre>
 </div>
 </section>
 	
@@ -643,7 +651,7 @@ A1:odd, A2:odd { }</pre>
     <span class="property">width</span>:  @self.height;
 }</pre>
 		<p>The <a name="1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
-<pre><span class="comment">//using a <a href="#1.6.3.1">reference</a>, this sets the width of the section elements
+<pre><span class="comment">//this sets the width of the <em>section</em> element(s)
 //to the same value as the width of the root element
 //if it is named "document"</span>
 <span class="combinator">..</span> <span class="selector">section</span>
@@ -694,7 +702,6 @@ A1:odd, A2:odd { }</pre>
 		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Siblings combinator</h4>
 		<p>Sibling elements can be accessed via the siblings combinator <span class="combinator">=</span>:</p>
 <pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element(s)</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
-<p><em>Note:</em> You shouldn't use <code>==</code> since it can only select what precedes it, rendering it totally useless.</p>
 </div>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a name="1.4.4">1.4.4</a></span> Next and previous siblings combinators</h4>
@@ -777,7 +784,7 @@ A1:odd, A2:odd { }</pre>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a name="1.4.7">1.4.7</a></span> Ancestor combinator</h4>
 		<p>Ancestors can be selected using the ancestor combinator <code>&lt;&lt;</code>. If the elements matched previously don't share the same ancestors, the combined collection of ancestors&#8212;and not the common ones&#8212;will be returned.</p>
-<pre><span class="comment">//matches every ancestors of important elements</span>
+<pre><span class="comment">//matches every ancestors of <em>important</em> elements</span>
 <span class="combinator">..</span> <span class="selector">important</span> <span class="combinator">&lt;&lt;</span> <span class="selector">*</span> { }</pre>
 </div>
 </section>
@@ -934,7 +941,6 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p>The <strong>empty filter</strong> matches elements which have no text <em>nor</em> children or whose attributes' values are empty.</p>
 <pre><span class="comment">//matches elements which have at least one attribute set to ""</span>
 :[*<span class="filter">:empty</span>] { }</pre>
-<p><em>Reminder:</em> <code>!:[]</code> is used to match elements which have inexistent attributes.</p>
 <p>The <strong>length filter</strong> use a criterion to match elements or compares the length of the text against a given condition.</p>
 <pre><span class="comment">//matches every element whose content text’s length is greater
 //than 3 characters</span>
@@ -1082,7 +1088,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//the child inherits the <em>content</em> value (<strong>not its computed value</strong>)</span>
     <span class="selector">child</span> { <span class="property">width</span>: inherit }
 }</pre>
-	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. You can't selectively inherit one value from multi-value properties because their values don't have a fixed order. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
+	<p><em>Note:</em> The inherit value is not allowed on properties set on the root element. You can't separately inherit one value from multi-value properties because their values don't have a fixed order. To retrieve the computed value of a property you can use a <a href="#1.6.3.1">reference</a>.</p>
 	<p>Using the <strong>current</strong> value you can retrieve the current value(s) of a property whether it has been explicitly set earlier or not. If a property has multiple values set it will refer them as a whole.</p>
 <pre><span class="comment">//assuming the background property has currently "object1, object2" as values</span>
 <span class="property">background</span>: current, object3;
@@ -1110,7 +1116,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     &lt;<span class="selector">child1</span>&gt;dynamically generated content text, changes in height&lt;/<span class="selector">child1</span>&gt;
     &lt;<span class="selector">child2</span>&gt;static content text&lt;/<span class="selector">child2</span>&gt;
 &lt;/<span class="selector">parent</span>&gt;</pre>
-<p>Suppose that in your layout each child elements is a column, taking half of the horizontal width. If you wanted the second child element to always have the same height as the first one, since the first changes in height, you could not use any static value. Instead, you would reference the first child from the second one.</p>
+	<p>Suppose that in your layout each child elements is a column, taking half of the horizontal width. If you wanted the second child element to always have the same height as the first one, since the first changes in height, you could not use any static value. Instead, you would reference the first child from the second one.</p>
 <pre><span class="selector">parent child2</span>
 {
     <span class="comment">//this gives both columns the same height</span>
@@ -1122,15 +1128,22 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //the child2's height from dropping below its content's height</span>
     <span class="property">height</span>: min(content, ref(of <span class="selector">child1</span>));
 }</pre>
-<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
-<p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
+	<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
+	<p>In case you are referencing another property of the element(s) on which you are declaring the reference, a shorthand exists:</p>
+<pre><span class="selector">parent</span>
+{
+    <span class="property">height</span>: ref(<span class="property">width</span> of <span class="selector">@this</span>);
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">height</span>: ref(<span class="property">width</span>);
+}</pre>
+	<p>Using the sum, avg, max and min <strong>modifiers</strong> you can respectively do a summation, get an average and retrieve the maximum or minimum.</p>
 <pre><span class="selector">parent *</span>
 {
     <span class="comment">//this sets the width of the children of each parent element
     //to the width of whichever is currently the widest child</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">*</span>);
 }</pre>
-<p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
+	<p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
 {
     <span class="selector">child1</span> { <span class="property">background</span>: #0 }
@@ -1162,7 +1175,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	<h4 class="subsec"><a name="1.6.3.b">Type conversion functions</a></h4>
 	<h5><a name="1.6.3.4">The object function</a></h5>
-	<p>The syntax is <code>obj(objectName)</code> and can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
+	<p>It can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence normally. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//sets the background to black using a keyword</span>
@@ -1175,9 +1188,17 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">background</span>: obj(bg);
 }</pre>
-	<h5><a name="1.6.3.5">The string function</a></h5>
-	<h5><a name="1.6.3.6">The number function</a></h5>
-	<h5><a name="1.6.3.7">The keyword function</a></h5>
+	<h5><a name="1.6.3.5">The keyword function</a></h5>
+	<p>It can be used anywhere keywords are accepted. It is mainly used to convert single-word strings to keywords. It also filters what's passed to it by discarding numbers and multi-word strings.</p>
+<pre><span class="selector">element</span>
+{
+    <span class="comment">//assuming we have a <em>hidden</em> attribute set on the element
+    //its value would be converted to a keyword
+    //it doesn't ensure it will be valid on this property</span>
+    <span class="property">visible</span>: <span class="modifier">!</span>kwd(attr(hidden));
+}</pre>
+	<h5><a name="1.6.3.6">The string function</a></h5>
+	<h5><a name="1.6.3.7">The number function</a></h5>
 	<h4 class="subsec"><a name="1.6.3.c">Arithmetic functions</a></h4>
 	<h5><a name="1.6.3.8">The bounding functions</a></h5>
 	<p>Using the bounding functions you can constrain numeric values to certain limits.</p>
@@ -1262,10 +1283,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<h5><a name="1.6.6.5">Current font</a></h5>
 	<p>The font object has several read-only properties:</p>
 	<ul>
-		<li><code>face</code>: it returns the selected typeface.</li>
-		<li><code>ex</code>: it returns the x-height.</li>
-		<li><code>capHeight</code>: it returns the distance from the baseline to the top of a capital letter—traditionally H—which displays no overshoot.</li>
-		<li><code>maxHeight</code>: it returns the distance from the top of the tallest accented capital letter to the bottom of the lowest descender.</li>
+		<li><code>face</code> which returns the selected typeface.</li>
+		<li><code>ex</code> which returns the x-height.</li>
+		<li><code>capHeight</code> which returns the distance from the baseline to the top of a capital letter—traditionally H—which displays no overshoot.</li>
+		<li><code>maxHeight</code> which returns the distance from the top of the tallest accented capital letter to the bottom of the lowest descender.</li>
 	</ul>
 #TODO add illustration
 	</div>
