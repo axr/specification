@@ -1189,13 +1189,13 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">background</span>: obj(bg);
 }</pre>
 	<h5><a name="1.6.3.5">The keyword function</a></h5>
-	<p>It can be used anywhere keywords are accepted. It is mainly used to convert single-word strings to keywords. It also filters what's passed to it by discarding numbers and multi-word strings.</p>
+	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <nobr>single-word</nobr> strings to keywords. It also filters what's passed to it by discarding numbers and <nobr>multi-word</nobr> strings.</p>
 <pre><span class="selector">element</span>
 {
-    <span class="comment">//assuming we have a <em>hidden</em> attribute set on the element
+    <span class="comment">//assuming we have a <em>visible</em> attribute set on the element
     //its value would be converted to a keyword
     //it doesn't ensure it will be valid on this property</span>
-    <span class="property">visible</span>: <span class="modifier">!</span>kwd(attr(hidden));
+    <span class="property">visible</span>: kwd(attr(visible));
 }</pre>
 	<h5><a name="1.6.3.6">The string function</a></h5>
 	<h5><a name="1.6.3.7">The number function</a></h5>
