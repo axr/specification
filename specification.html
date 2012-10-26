@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" />
 
 <!--***************************************************************
  
@@ -30,7 +30,7 @@
 ****************************************************************-->
 
 	<title>The AXR Specification</title>
-	<meta name="author" content="Miro Keller, Marc G.">
+	<meta name="author" content="Miro Keller, Marc G." />
 	<style>
 	
 	body
@@ -696,17 +696,17 @@ A1:odd, A2:odd { }</pre>
 		<h4 class="title"><span class="number"><a name="1.4.1">1.4.1</a></span> Child combinator</h4>
 		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
-<pre><span class="comment">//matches every subject element which is a child of note</span><br><span class="selector">note subject</span> { }</pre>
+<pre><span class="comment">//matches every subject element which is a child of note</span><br /><span class="selector">note subject</span> { }</pre>
 </div>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
 		<p>If you want to select elements which are descendants (could be direct children of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p>
-<pre><span class="comment">//matches every subject element which is a descendant of note</span><br><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
+<pre><span class="comment">//matches every subject element which is a descendant of note</span><br /><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Siblings combinator</h4>
 		<p>Sibling elements can be accessed via the siblings combinator <span class="combinator">=</span>:</p>
-<pre><span class="comment">//matches all the subject elements that are siblings of<br>//the message element(s)</span><br><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
+<pre><span class="comment">//matches all the subject elements that are siblings of<br />//the message element(s)</span><br /><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a name="1.4.4">1.4.4</a></span> Next and previous siblings combinators</h4>
