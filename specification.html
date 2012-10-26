@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/22
+      Last changed: 2012/10/26
       HSS version: 1.0
-      Revision: 1.45
+      Revision: 1.46
 
 ****************************************************************-->
 
@@ -390,10 +390,9 @@
 	     </ul>
 	     </li>
 	     <li><a href="#1.6.4">Color</a></li>
-	     <li><a href="#1.6.5">isA</a></li>
-	     <li><a href="#1.6.6">Read-only properties</a></li>
-	     <li><a href="#1.6.7">Grouping</a></li>
-	     <li><a href="#1.6.8">The value selector</a></li>
+	     <li><a href="#1.6.5">Grouping</a></li>
+	     <li><a href="#1.6.6">The value selector</a></li>
+	     <li><a href="#1.6.7">Boolean casting</a></li>
 	</ul>
 </li>
 <li><a href="#1.7">Objects</a>
@@ -457,7 +456,7 @@
 {
     <span class="comment">//this makes it 150 <a href="#1.2.5">points</a> wide</span>
     <span class="property">width</span>: <span class="number">150</span>;
-    <span class="comment">//this makes the element 10 points less high than its parent's <a href="#1.6.6.3">innerHeight</a></span>
+    <span class="comment">//this makes the element 10 points less high than its parent's <a href="http://hss.axr.vg/@container#innerHeight">innerHeight</a></span>
     <span class="property">height</span>: <span class="number">100%</span> - <span class="number">10</span>;
     <span class="comment">//this aligns the element to the center of its parent element</span>
     <span class="property">alignX</span>: <span class="number">50%</span>;
@@ -633,7 +632,7 @@ A1:odd, A2:odd { }</pre>
 </div>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Reference Objects</h4>
-		<p>The <a name="1.3.7.1"><strong>this object</strong></a> always refers to the nearest container in the content tree. It can be used in a selector or a property's value.</p>
+		<p>The <a name="1.3.7.1"><strong>this object</strong></a> always refers to the nearest container(s); independently of each other (if there are several matches). It can be used in a selector or a property's value.</p>
 <pre><span class="comment">//using the <a href="#1.7.1">object dot notation</a>, this would set the width
 //to the element's <strong>current</strong> <em>computed</em> height value</span>
 <span class="selector">element</span>
@@ -641,7 +640,6 @@ A1:odd, A2:odd { }</pre>
     <span class="property">height</span>: 100%;
     <span class="property">width</span>:  @this.height;
 }</pre>
-		<p><em>Reminder</em>: In HSS all elements are objects of type container.</p>
 		<p>The <a name="1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#1.7.3">anonymous objects</a>.</p>
 <pre><span class="comment">//this would set the pattern's width value to the current
 //pattern's height <em>computed</em> value</span>
@@ -669,7 +667,14 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>);
 }</pre>
-		<p>The <a name="1.3.7.5"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
+		<p>The <a name="1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole.</p>
+<pre><span class="selector">parent *</span>
+{
+    <span class="comment">//this sets the height of the children of each parent element
+    //to the height of whichever is currently its tallest child</span>
+    <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="selector">@these</span>);
+}</pre>
+		<p>The <a name="1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
 #TODO example
 </div>
 </section>
@@ -956,8 +961,14 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#1.6.3.b">type conversion functions</a> are necessary.</p>
 <pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
 <span class="selector">*</span>:(<span class="property">content</span> = "select me") { }
-<span class="comment">//matches all elements whose background color is not black</span>
-<span class="selector">*</span>:(<span class="property">background</span> != kwd(black)) { }
+<span class="comment">//matches all elements with a background</span>
+<span class="selector">*</span>:(<span class="property">background</span>) { }
+<span class="comment">//which is equivalent to</span>
+<span class="selector">*</span>:(<span class="property">background</span> != kwd(no)) { }
+<span class="comment">//similarly, this matches invisible elements</span>
+<span class="selector">*</span>:(<span class="modifier">!</span><span class="property">visible</span>) { }
+<span class="comment">//which is equivalent to</span>
+<span class="selector">*</span>:(<span class="property">visible</span> = kwd(no)) { }
 <span class="comment">//matches all elements which are using a font object named <em>serif</em></span>
 <span class="selector">*</span>:(<span class="property">font</span> = obj(serif)) { }
 <span class="comment">//matches all elements that are taller than 300 and not wider than 400</span>
@@ -1076,7 +1087,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">width</span>:  100;
     @<span class="flag">::hover</span>
     {
-        <span class="comment">//using <a href="#1.6.7">grouping</a> this resets the height and width
+        <span class="comment">//using <a href="#1.6.5">grouping</a> this resets the height and width
         //to their default values (respectively <em>content</em> and <em>100%</em>)</span>
         <span class="property">height</span>, <span class="property">width</span>: default;
     }
@@ -1101,9 +1112,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <pre><span class="comment">//this element will always be twice as wide as its current height</span>
 <span class="selector">element</span> { <span class="property">width</span>: 2 * ref(<span class="property">height</span>); }
 
-<span class="comment">//using the <a href="#1.6.6.2">children property</a>, this permits to perfectly fit
+<span class="comment">//using the <a href="http://hss.axr.vg/@container#count">count property</a>, this permits to perfectly fit
 //the <em>child</em> element(s) in their parent to prevent wrapping</span>
-<span class="selector">parent child</span> { <span class="property">width</span>: 100% / ref(children of @parent); }</pre>
+<span class="selector">parent child</span> { <span class="property">width</span>: 100% / ref(count of @these); }</pre>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
@@ -1142,6 +1153,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this sets the width of the children of each parent element
     //to the width of whichever is currently the widest child</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">*</span>);
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">@these</span>);
 }</pre>
 	<p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
@@ -1253,45 +1266,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	    <span class="comment">//or</span>
      &#12291;	    #521C;
 </pre>
-	<p>Besides instructions, you can also use <strong>objects</strong> (@rgb, @cmyk and @hsb) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
-	</div>
-	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.6.5">1.6.5</a></span> isA</h4>
-	<p>The <code>isA</code> property permits to apply properties from a <a href="#1.7.2">named object</a> to an object of the <strong>same type</strong>. Keep in mind that the order of the objects matters: the rightmost object is the last in the cascade (relevant if they share the same properties).</p>
-<pre><span class="selector">element</span>
-{
-    <span class="comment">//assuming these two container objects are defined,
-    //this would apply their properties to <em>element</em></span>
-    <span class="property">isA</span>: object1, object2;
-    <span class="comment">//assuming a font object named <em>fontSet</em> is defined,
-    //this would apply its properties to @font</span>
-    <span class="property">font</span>: @font { isA: fontSet };
-}</pre>
+	<p>Besides instructions, you can also use <strong>objects</strong> (<a href="http://hss.axr.vg/@rgb">@rgb</a>, <a href="http://hss.axr.vg/@cmyk">@cmyk</a> and <a href="http://hss.axr.vg/@hsb">@hsb</a>) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
 	</div>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.6">1.6.6</a></span> Read-only properties</h4>
-	<h5><a name="1.6.6.1">Stack level</a></h5>
-	<p>Using the <code>level</code> property you can retrieve the absolute stack level of an element—in other words its degree of nesting relative to the root element.</p>
-	<h5><a name="1.6.6.2">Children count</a></h5>
-	<p>The <code>children</code> property is used to retrieve the number of children an element holds.</p>
-	<h5><a name="1.6.6.3">Available space</a></h5>
-	<p>You can use the <code>innerHeight</code> and <code>innerWidth</code> properties to retrieve an element's height or width <strong>minus</strong> its padding.</p>
-#TODO add illustration
-	<h5><a name="1.6.6.4">Occupied space</a></h5>
-	<p>You can use the <code>outerHeight</code> and <code>outerWidth</code> properties to retrieve the actual space taken up by an element. It corresponds to the sum of its height or width and its corresponding margins.</p>
-#TODO add illustration
-	<h5><a name="1.6.6.5">Current font</a></h5>
-	<p>The font object has several read-only properties:</p>
-	<ul>
-		<li><code>face</code> which returns the selected typeface.</li>
-		<li><code>ex</code> which returns the x-height.</li>
-		<li><code>capHeight</code> which returns the distance from the baseline to the top of a capital letter—traditionally H—which displays no overshoot.</li>
-		<li><code>maxHeight</code> which returns the distance from the top of the tallest accented capital letter to the bottom of the lowest descender.</li>
-	</ul>
-#TODO add illustration
-	</div>
-	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Property grouping</h4>
+	<h4 class="title"><span class="number"><a name="1.6.5">1.6.5</a></span> Property grouping</h4>
 	<p>You can group two or more properties which share the same value(s).</p>
 <pre><span class="selector">element</span>
 {
@@ -1302,10 +1280,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	</div>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.8">1.6.8</a></span> The value selector</h4>
+	<h4 class="title"><span class="number"><a name="1.6.6">1.6.6</a></span> The value selector</h4>
 	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name or using a filter.</p>
 <pre><span class="selector">element</span> {
-    <span class="comment">//supposing these @container objects were defined elsewhere</span>
+    <span class="comment">//supposing these container objects were defined elsewhere</span>
     <span class="property">isA</span>: objectA, objectX, objectY;
     <span class="comment">//this would set objectY's width to 50</span>
     <span class="property">isA</span>[objectY].<span class="property">width</span>: <span class="number">50</span>;
@@ -1315,10 +1293,20 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">isA</span>[:first, objectX].<span class="property">width</span>: <span class="number">80</span>;
 }</pre>
 	</div>
+	<div class="sub yet">
+	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Boolean casting</h4>
+	<p>Using the <a href="#1.2.6">negator</a> you can convert a value to a boolean.</p>
+<pre><span class="comment">//this sets the property to <em>no</em> for any value
+//except !no which returns <em>yes</em></span>
+<span class="property">property</span>: <span class="modifier">!</span>value;
+<span class="comment">//this sets the property to <em>yes</em> for any value
+//except !!no which returns <em>no</em></span>
+<span class="property">property</span>: <span class="modifier">!!</span>value;</pre>
+	</div>
 </section>
 <section class="chapter">
 	<h3 class="title"><span class="number"><a name="1.7">1.7</a></span> Objects</h3>
-	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#1.3.7.5">owner</a>. This enables great flexibility and modularization of the code.</p>
+	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#1.3.7.6">owner</a>. This enables great flexibility and modularization of the code.</p>
 	<p>Objects can be set to be of a certain type, placing an object type immediately after the at sign, or automatically deriving it from the context. It is followed by whitespace, and optionally an object name and more optional whitespace, followed by a block. Inside the block, its properties are defined.</p>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a name="1.7.1">1.7.1</a></span> Object dot notation</h4>

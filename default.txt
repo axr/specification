@@ -16,11 +16,11 @@
     anchorY: no;
     attr: no;
     background: no;
-    children; Ⓡ
     contained: yes;
     content: content;
     contentAlignX: left;
     contentAlignY: top;
+    count; Ⓡ
     direction: ltr;
     draggable: no;
     flow: yes;

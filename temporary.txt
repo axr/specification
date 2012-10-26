@@ -1,0 +1,29 @@
+Stack level
+Using the level property you can retrieve the absolute stack level of an element—in other words its degree of nesting relative to the root element.
+
+Available space
+You can use the innerHeight and innerWidth properties to retrieve an element's height or width minus its padding.
+
+Occupied space
+You can use the outerHeight and outerWidth properties to retrieve the actual space taken up by an element. It corresponds to the sum of its height or width and its corresponding margins.
+
+Current font
+The font object has several read-only properties:
+
+    * face which returns the selected typeface.
+    * ex which returns the x-height.
+    * capHeight which returns the distance from the baseline to the top of a capital letter—traditionally H—which displays no overshoot.
+    * maxHeight which returns the distance from the top of the tallest accented capital letter to the bottom of the lowest descender.
+
+isA
+The isA property permits to apply properties from a named object to an object of the same type. Keep in mind that the order of the objects matters: the rightmost object is the last in the cascade (relevant if they share the same properties).
+
+element
+{
+    //assuming these two container objects are defined,
+    //this would apply their properties to element
+    isA: object1, object2;
+    //assuming a font object named fontSet is defined,
+    //this would apply its properties to @font
+    font: @font { isA: fontSet };
+}
