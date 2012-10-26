@@ -58,7 +58,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 Where to file bug reports
 =========================
-Please [click here](https://github.com/axr/specification/issues/new) to create a new issue. To
+Please create a new issue here: https://github.com/axr/specification/issues/new. To
 make the process of fixing bugs easier, developers need to know what causes the
 problem and also what platform(s) it affects. Be as detailed as possible, for
 example by including code samples or links to related articles.
@@ -66,32 +66,32 @@ example by including code samples or links to related articles.
 Continuous Integration status
 =============================
 <table>
-	<tr>
-		<th>Module</th>
-		<th>Status</th>
-	</tr>
-	<tr>
-		<td>Core</td>
-		<td><a href="http://travis-ci.org/axr/core"><img src="https://secure.travis-ci.org/axr/core.png" alt="Build Status" /></a></td>
-	</tr>
-	<tr>
-		<td>Browser</td>
-		<td><a href="http://travis-ci.org/axr/browser"><img src="https://secure.travis-ci.org/axr/browser.png" alt="Build Status" /></a></td>
-	</tr>
-	<tr>
-		<td>Plugin</td>
-		<td><a href="http://travis-ci.org/axr/plugin"><img src="https://secure.travis-ci.org/axr/plugin.png" alt="Build Status" /></a></td>
-	</tr>
-	<tr>
-		<td>Examples</td>
-		<td><a href="http://travis-ci.org/axr/examples"><img src="https://secure.travis-ci.org/axr/examples.png" alt="Build Status" /></a></td>
-	</tr>
-	<tr>
-		<td>Specification</td>
-		<td><a href="http://travis-ci.org/axr/specification"><img src="https://secure.travis-ci.org/axr/specification.png" alt="Build Status" /></a></td>
-	</tr>
-	<tr>
-		<td>Extras</td>
-		<td><a href="http://travis-ci.org/axr/extras"><img src="https://secure.travis-ci.org/axr/extras.png" alt="Build Status" /></a></td>
-	</tr>
+    <tr>
+        <th>Module</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>Core</td>
+        <td><a href="http://travis-ci.org/axr/core"><img src="https://secure.travis-ci.org/axr/core.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Browser</td>
+        <td><a href="http://travis-ci.org/axr/browser"><img src="https://secure.travis-ci.org/axr/browser.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Plugin</td>
+        <td><a href="http://travis-ci.org/axr/plugin"><img src="https://secure.travis-ci.org/axr/plugin.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Examples</td>
+        <td><a href="http://travis-ci.org/axr/examples"><img src="https://secure.travis-ci.org/axr/examples.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Specification</td>
+        <td><a href="http://travis-ci.org/axr/specification"><img src="https://secure.travis-ci.org/axr/specification.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Extras</td>
+        <td><a href="http://travis-ci.org/axr/extras"><img src="https://secure.travis-ci.org/axr/extras.png" alt="Build Status" /></a></td>
+    </tr>
 </table>
