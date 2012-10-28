@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="UTF-8" />
 
@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/26
+      Last changed: 2012/10/28
       HSS version: 1.0
-      Revision: 1.46
+      Revision: 1.47
 
 ****************************************************************-->
 
@@ -667,11 +667,11 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>);
 }</pre>
-		<p>The <a name="1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole.</p>
-<pre><span class="selector">parent *</span>
+		<p>The <a name="1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole. It is particularly useful in case the rightmost selector is unknown.</p>
+<pre><span class="object">@container</span> maxHeight
 {
-    <span class="comment">//this sets the height of the children of each parent element
-    //to the height of whichever is currently its tallest child</span>
+    <span class="comment">//this sets the height of the elements matched
+    //to the height of whichever is currently the tallest</span>
     <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="selector">@these</span>);
 }</pre>
 		<p>The <a name="1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
@@ -1112,9 +1112,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <pre><span class="comment">//this element will always be twice as wide as its current height</span>
 <span class="selector">element</span> { <span class="property">width</span>: 2 * ref(<span class="property">height</span>); }
 
-<span class="comment">//using the <a href="http://hss.axr.vg/@container#count">count property</a>, this permits to perfectly fit
+<span class="comment">//using the <a href="http://hss.axr.vg/@these#count">count property</a>, this permits to perfectly fit
 //the <em>child</em> element(s) in their parent to prevent wrapping</span>
-<span class="selector">parent child</span> { <span class="property">width</span>: 100% / ref(count of @these); }</pre>
+<span class="selector">parent child</span> { <span class="property">width</span>: 100% / @these.count); }</pre>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
