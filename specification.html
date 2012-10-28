@@ -342,7 +342,7 @@
 <body>
 <div id="draft_warning" class="notice">
 	<p><strong>Warning!</strong></p>
-	<p>This file is an editor’s draft and should not be considered final.</p>
+	<p>This file is an editor's draft and should not be considered final.</p>
 </div>
 
 <h1>Arbitrary XML Rendering Specification</h1>
@@ -438,7 +438,7 @@
 		<h3><span class="number"><a id="1.1">1.1</a></span> Introduction</h3>
 		<p>HSS stands for Hierarchical Style Sheets and it is the language used to instruct the AXR renderer how the various elements in the document should look like, how they are laid out and, to some extent, how they behave. The syntax of this language is inspired in CSS, but extending and altering it in various ways, to achieve powerful new ways of creating a web document. Therefore, HSS is not compatible with existing CSS files.</p>
 		<p class="center"><img src="http://static.axr.vg/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
-		<p>HSS inherits the simplicity and clarity of CSS‌’ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
+		<p>HSS inherits the simplicity and clarity of CSS‌' syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
 
 <section class="chapter">
@@ -456,13 +456,13 @@
 		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector (or selector chain) and reads from left to right.</p>
 		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">reference objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
 		<p>Some examples:</p>
-<pre><span class="comment">//select elements with name “document”</span>
+<pre><span class="comment">//select elements with name "document"</span>
 <span class="selector">document</span> { }
-<span class="comment">//select the first element with name “book”</span>
+<span class="comment">//select the first element with name "book"</span>
 <span class="selector">book</span><span class="filter">:first</span> { }
-<span class="comment">//select the elements with name “content” that occur after “title”
-//elements, which are descendants of “book” elements, which themselves
-//are direct children of “books” elements</span>
+<span class="comment">//select the elements with name "content" that occur after "title"
+//elements, which are descendants of "book" elements, which themselves
+//are direct children of "books" elements</span>
 <span class="selector">books book</span> <span class="combinator">..</span> <span class="selector">title</span> <span class="combinator">+</span><span class="combinator"></span> <span class="selector">content</span> { }</pre>
 
 		<h4><span class="number"><a id="1.2.3">1.2.3</a></span> Properties</h4>
@@ -503,7 +503,7 @@
 #TODO <a href="https://github.com/AXR/Specification/issues/68">Issue 68</a>
 <div class="sub part">
 		<h4><span class="number"><a id="1.2.6">1.2.6</a></span> The negator</h4>
-		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <code>!</code>, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
+		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <code>!</code>, meaning that all elements in the current scope that don't match the selector will be selected.</p>
 <pre><span class="comment">//this selects all elements except note ones</span>
 <span class="modifier">!</span><span class="selector">note</span> { }</pre>
 		<p>Likewise you can negate filters and flags.</p>
@@ -532,7 +532,7 @@
    &lt;<span class="selector">to</span>&gt;Peter&lt;/<span class="selector">to</span>&gt;
    &lt;<span class="selector">from</span>&gt;James&lt;/<span class="selector">from</span>&gt;
    &lt;<span class="selector">subject</span>&gt;Reminder&lt;/<span class="selector">subject</span>&gt;
-   &lt;<span class="selector">message</span>&gt;Please don’t forget to bring some &lt;<span class="selector">important</span>&gt;wine&lt;/<span class="selector">important</span>&gt;&#8230;&lt;/<span class="selector">message</span>&gt;
+   &lt;<span class="selector">message</span>&gt;Please don't forget to bring some &lt;<span class="selector">important</span>&gt;wine&lt;/<span class="selector">important</span>&gt;&#8230;&lt;/<span class="selector">message</span>&gt;
 &lt;/<span class="selector">note</span>&gt;</pre>
 
 		<p>In the following examples we will be using rules, but without property definitions for clarity. We will assume that this xml snippet could be inserted anywhere: the <em>note</em> element doesn't necessarily represent the root of the xml document.</p>
@@ -674,7 +674,7 @@ A1:odd, A2:odd { }</pre>
     <span class="property">width</span>: ref(<span class="property">width</span> of <span class="object">@root</span><span class="filter">:is(document)</span>);
 }</pre>
 		<p>The <a id="1.3.7.4"><strong>parent object</strong></a> refers to the parent of the preceding element in the selector chain or (if there's none before) to the parent of the element which is currently affected by the styling rule containing <span class="object">@parent</span>.</p>
-<pre><span class="comment">//set the messages’ width to a third of their own parents’ height</span>
+<pre><span class="comment">//set the messages' width to a third of their own parents' height</span>
 <span class="combinator">..</span> <span class="selector">message</span>
 {
     <span class="property">width</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>) / <span class="number">3</span>;
@@ -697,7 +697,7 @@ A1:odd, A2:odd { }</pre>
 </section>
 <section class="chapter">
 		<h3 class="title"><span class="number"><a id="1.4">1.4</a></span> Combinators</h3>
-		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” the elements which leads to the one you want to style. In the case of a single childhood relationship, it is more convenient to use the child combinator than to nest rules; in other cases, combinators are mandatory regardless.</p>
+		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to "skip" the elements which leads to the one you want to style. In the case of a single childhood relationship, it is more convenient to use the child combinator than to nest rules; in other cases, combinators are mandatory regardless.</p>
 <pre><span class="comment">//even in a hierarchical context
 //you can start a selector chain by a combinator</span>
 <span class="selector">note</span>
@@ -712,7 +712,7 @@ A1:odd, A2:odd { }</pre>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a id="1.4.1">1.4.1</a></span> Child combinator</h4>
 		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&#160;<span class="combinator"> </span>.</p>
-		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
+		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it's just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br /><span class="selector">note subject</span> { }</pre>
 </div>
 <div class="sub comp">
@@ -766,11 +766,11 @@ A1:odd, A2:odd { }</pre>
 		<p>Conceptually, the text can be further split into elements. Each word is preceded, followed, or surrounded by whitespace. Furthermore, each character (letter, kanji&#8230;) of that word is a separate glyph you can refer to.</p>
 		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axr.vg/images/spec/accessing_content_text.png" /></p>
 		<p>To select portions of text, the content text combinator is used. After the combinator, you write a string to specify what part of the text you want to select.</p>
-<pre><span class="comment">//this will select any occurrence of “dummy text” and set
+<pre><span class="comment">//this will select any occurrence of "dummy text" and set
 //its height to 15 points</span>
-<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span> { <span class="property">height</span>: <span class="number">15</span> }
+<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">"dummy text"</span> { <span class="property">height</span>: <span class="number">15</span> }
 <span class="comment">//this will only match the first one</span>
-<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">“dummy text”</span><span class="filter">:first</span> { <span class="property">height</span>: <span class="number">15</span> }</pre>
+<span class="combinator">..</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="string">"dummy text"</span><span class="filter">:first</span> { <span class="property">height</span>: <span class="number">15</span> }</pre>
 		<p>The universal selector permits to select text elements by type (lines, words or glyphs):</p>
 <pre><span class="comment">//this will select all lines (the entire content text)</span>
 <span class="selector">document</span> <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> { }
@@ -830,7 +830,7 @@ A1:odd, A2:odd { }</pre>
 		&lt;<span class="selector">from</span>&gt;James&lt;/<span class="selector">from</span>&gt;
 		&lt;<span class="selector">subject</span>&gt;Reminder&lt;/<span class="selector">subject</span>&gt;
 		&lt;<span class="selector">message</span>&gt;The keys are under the doormat.&lt;/<span class="selector">message</span>&gt;
-		&lt;<span class="selector">message</span>&gt;Please don’t forget to bring some wine.&lt;/<span class="selector">message</span>&gt;
+		&lt;<span class="selector">message</span>&gt;Please don't forget to bring some wine.&lt;/<span class="selector">message</span>&gt;
 	&lt;/<span class="selector">note</span>&gt;
 	&lt;<span class="selector">note</span>&gt;
 		&lt;<span class="selector">to</span>&gt;Paul&lt;/<span class="selector">to</span>&gt;
@@ -941,22 +941,22 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a id="1.5.5">1.5.5</a></span> Text matching filters</h4>
 <p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
 <p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
-<pre><span class="comment">//matches every element whose content text contains “reminder”
+<pre><span class="comment">//matches every element whose content text contains "reminder"
 //regardless of the case</span>
 <span class="filter">:contains</span>(<span class="string">"reminder"</span>) { }
-<span class="comment">//matches every element whose content text exactly contains “Reminder”</span>
+<span class="comment">//matches every element whose content text exactly contains "Reminder"</span>
 <span class="filter">:contains</span>(<span class="string">"Reminder"</span>, sensitive) { }
-<span class="comment">//matches every element whose title attribute contains “reminder”</span>
+<span class="comment">//matches every element whose title attribute contains "reminder"</span>
 :[title<span class="filter">:contains</span>(<span class="string">"reminder"</span>)] { }</pre>
 <p>The <strong>equals filter</strong> matches any element whose text is a given string.</p>
-<pre><span class="comment">//matches every element whose content text is equal to “reminder”</span>
-<span class="filter">:equals</span>(<span class="string">“reminder”</span>) { }</pre>
+<pre><span class="comment">//matches every element whose content text is equal to "reminder"</span>
+<span class="filter">:equals</span>(<span class="string">"reminder"</span>) { }</pre>
 <p>The <strong>startsWith filter</strong> matches elements whose texts start with a given string.</p>
-<pre><span class="comment">//matches every element whose content text starts with “reminder”</span>
-<span class="filter">:startsWith</span>(<span class="string">“reminder”</span>) { }</pre>
+<pre><span class="comment">//matches every element whose content text starts with "reminder"</span>
+<span class="filter">:startsWith</span>(<span class="string">"reminder"</span>) { }</pre>
 <p>The <strong>endsWith filter</strong> matches elements whose texts end with a given string.</p>
-<pre><span class="comment">//matches every element whose content text ends with “reminder”</span>
-<span class="filter">:endsWith</span>(<span class="string">“reminder”</span>) { }</pre>
+<pre><span class="comment">//matches every element whose content text ends with "reminder"</span>
+<span class="filter">:endsWith</span>(<span class="string">"reminder"</span>) { }</pre>
 <p>The <strong>match filter</strong> matches elements whose texts match a given regular expression.</p>
 <pre><span class="comment">//matches every element whose content text starts with a number</span>
 <span class="filter">:match</span>(<span class="string">/^[0-9]/</span>) { }</pre>
@@ -964,7 +964,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <pre><span class="comment">//matches elements which have at least one attribute set to ""</span>
 :[*<span class="filter">:empty</span>] { }</pre>
 <p>The <strong>length filter</strong> use a criterion to match elements or compares the length of the text against a given condition.</p>
-<pre><span class="comment">//matches every element whose content text’s length is greater
+<pre><span class="comment">//matches every element whose content text's length is greater
 //than 3 characters</span>
 <span class="filter">:length</span>(&gt; <span class="number">3</span>) { }
 <span class="comment">//matches the element(s) whose content text has the most characters</span>
