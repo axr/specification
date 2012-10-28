@@ -4,9 +4,9 @@
 	<meta charset="UTF-8" />
 
 <!--***************************************************************
- 
+
       AUTHORS: Miro Keller and collaborators
-      
+
       COPYRIGHT: ©2011 - All Rights Reserved
 
       LICENSE: see License.txt file
@@ -32,7 +32,7 @@
 	<title>The AXR Specification</title>
 	<meta name="author" content="Miro Keller, Marc G." />
 	<style>
-	
+
 	body
 	{
 		width: 720px;
@@ -40,13 +40,13 @@
 		margin: 30px auto;
 		color: #666;
 	}
-	
+
 	a[href^="#"], :local-link
         {
                 -moz-text-decoration-line:underline;
                 -moz-text-underline-style:dotted;
         }
-        
+
 	.notice
 	{
 		margin: 20px auto;
@@ -79,7 +79,7 @@
 		border-radius: 2px;
 		font-family: monospace;
 	}
-	
+
 	code, pre
 	{
 		background: #FEF3C8;
@@ -93,12 +93,12 @@
 		white-space: -o-pre-wrap;    /* Opera 7 */
 		word-wrap: break-word;
 	}
-	
+
 	p code, ul code
 	{
 		padding: 0 2px;
 	}
-	
+
 	section ul
 	{
 		list-style: circle outside;
@@ -143,7 +143,7 @@
 	{
 		color: #fd2716;
 	}
-	
+
 	.modifier
 	{
 		color: #000;
@@ -153,12 +153,12 @@
 	{
 		color: #8A0067;
 	}
-	
+
 	.flag
 	{
 		color: #8D8711;
 	}
-	
+
 	.splitter
 	{
 		color: #E52A90;
@@ -212,20 +212,20 @@
 	{
 		color: #666666;
 	}
-	
+
 	nav li
 	{
 		list-style:none;
 		font-size:13px;
 		line-height:18px;
 	}
-        
+
 	nav li li
 	{
 		font-size:11px;
 		line-height:15px;
 	}
-	
+
 	nav > ul
 	{
 		counter-reset:section;
@@ -240,19 +240,19 @@
 		column-gap: 1em;
 		height: 610px;
 	}
-	
+
 	nav > ul > li
 	{
 		counter-reset:subsection;
 	}
-	
+
 	nav > ul > li:before
 	{
 		counter-increment:section;
 		content:"1." counter(section) " ";
 	}
-	
-	nav ul ul > li:before 
+
+	nav ul ul > li:before
 	{
 		counter-increment:subsection;
 		content:"1." counter(section) "." counter(subsection) " ";
@@ -270,12 +270,12 @@
 	{
 		counter-increment:alpha;
 	}
-	nav li.hasSub li:before 
+	nav li.hasSub li:before
 	{
 		counter-increment:none;
 		content:"1." counter(section) "." counter(subsection) "." counter(alpha, upper-latin) " ";
 	}
-	
+
 	.sub.yet:hover h4:after, .sub.part:hover h4:after, .sub.comp:hover h4:after
 	{
 		content:" [not supported yet]";
@@ -423,11 +423,11 @@
 		<p class="center"><img src="http://static.axr.vg/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
 		<p>HSS inherits the simplicity and clarity of CSS‌’ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
-	
+
 <section class="chapter">
 		<h3><span class="number"><a name="1.2">1.2</a></span> The primary building blocks</h3>
 		<h4><span class="number"><a name="1.2.1">1.2.1</a></span> Rules</h4>
-		<p>One of the most basic concepts in HSS is the notion of rules. A rule is the combination of a selector and a block, which starts with an opening curly brace <code>{</code> and ends with a closing one <code>}</code>, and may contain property definitions and/or other rules.</p>			
+		<p>One of the most basic concepts in HSS is the notion of rules. A rule is the combination of a selector and a block, which starts with an opening curly brace <code>{</code> and ends with a closing one <code>}</code>, and may contain property definitions and/or other rules.</p>
 <pre><span class="selector">selector</span>
 {
 	<span class="property">property</span>: value;
@@ -507,7 +507,7 @@
 }</pre>
 </div>
 </section>
-	
+
 <section class="chapter">
 		<h3><span class="number"><a name="1.3">1.3</a></span> Selectors</h3>
 		<p>Consider the following XML snippet:</p>
@@ -561,7 +561,7 @@ note {
         child1, child2 {
                         element1, element2 { }
         }
-}  
+}
 <span class="comment">//which is equivalent to</span>
 note { }
 note child1, note child2 { }
@@ -1026,7 +1026,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	//the first <em>message</em> elements following a <em>from</em> element
 	//these elements could be positioned <u>anywhere</u> in their siblings' collections</span>
 	<span class="selector">note</span><span class="splitter">/each</span> <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span><span class="filter">:first</span> { }
-	
+
 	<span class="comment">//this matches the fourth element out of the combined collection
 	//of notes' children if it's not a <em>message</em> element</span>
 	<span class="selector">note</span> <span class="filter">:nth(<span class="number">4</span>)</span><span class="modifier">!</span><span class="filter">:is(<span class="selector">message</span>)</span> { }
@@ -1074,7 +1074,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </section>
 <section class="chapter">
 	<h3 class="title"><span class="number"><a name="1.6">1.6</a></span> Properties</h3>
-		
+
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a name="1.6.1">1.6.1</a></span> Literal values</h4>
 	<p>Literal values are keywords, numbers and strings.</p>
@@ -1139,7 +1139,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //the child2's height from dropping below its content's height</span>
     <span class="property">height</span>: min(content, ref(of <span class="selector">child1</span>));
 }</pre>
-	<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>	
+	<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>
 	<p>In case you are referencing another property of the element(s) on which you are declaring the reference, a shorthand exists:</p>
 <pre><span class="selector">parent</span>
 {
