@@ -764,7 +764,7 @@ A1:odd, A2:odd { }</pre>
 		<p>First, we have to understand what happens with the content text when it is rendered. An element is represented by a container, think of it as an amount of space in the rendered document and inside it the content text and the containing elements. The default height of the container is the height of its content.</p>
 		<p>When the width of the container is not wide enough to accommodate all its content text, wrapping occurs. This means that the text is split in various lines of text, and therefore the height increases. Now there are two or more blocks stacked over each other.</p>
 		<p>Conceptually, the text can be further split into elements. Each word is preceded, followed, or surrounded by whitespace. Furthermore, each character (letter, kanji&#8230;) of that word is a separate glyph you can refer to.</p>
-		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axr.vg/images/spec/accessing_content_text.png"></p>
+		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axr.vg/images/spec/accessing_content_text.png" /></p>
 		<p>To select portions of text, the content text combinator is used. After the combinator, you write a string to specify what part of the text you want to select.</p>
 <pre><span class="comment">//this will select any occurrence of “dummy text” and set
 //its height to 15 points</span>
