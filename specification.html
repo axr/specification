@@ -346,7 +346,7 @@
 </div>
 
 <h1>Arbitrary XML Rendering Specification</h1>
-<nav><a name="toc"></a>
+<nav><a id="toc"></a>
 <ul>
 <li><a href="#1.1">Introduction</a></li>
 <li><a href="#1.2">The primary building blocks</a>
@@ -435,15 +435,15 @@
 <div id="hss_syntax">
 	<h2><span>1</span> The syntax of HSS</h2>
 <section class="chapter">
-		<h3><span class="number"><a name="1.1">1.1</a></span> Introduction</h3>
+		<h3><span class="number"><a id="1.1">1.1</a></span> Introduction</h3>
 		<p>HSS stands for Hierarchical Style Sheets and it is the language used to instruct the AXR renderer how the various elements in the document should look like, how they are laid out and, to some extent, how they behave. The syntax of this language is inspired in CSS, but extending and altering it in various ways, to achieve powerful new ways of creating a web document. Therefore, HSS is not compatible with existing CSS files.</p>
 		<p class="center"><img src="http://static.axr.vg/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
 		<p>HSS inherits the simplicity and clarity of CSS‌’ syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
 
 <section class="chapter">
-		<h3><span class="number"><a name="1.2">1.2</a></span> The primary building blocks</h3>
-		<h4><span class="number"><a name="1.2.1">1.2.1</a></span> Rules</h4>
+		<h3><span class="number"><a id="1.2">1.2</a></span> The primary building blocks</h3>
+		<h4><span class="number"><a id="1.2.1">1.2.1</a></span> Rules</h4>
 		<p>One of the most basic concepts in HSS is the notion of rules. A rule is the combination of a selector and a block, which starts with an opening curly brace <code>{</code> and ends with a closing one <code>}</code>, and may contain property definitions and/or other rules.</p>
 <pre><span class="selector">selector</span>
 {
@@ -451,7 +451,7 @@
 	<span class="selector">selector</span> { &hellip; }
 }</pre>
 
-		<h4><span class="number"><a name="1.2.2">1.2.2</a></span> Selector basic principles</h4>
+		<h4><span class="number"><a id="1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
 		<p><a href="#1.3.1">Simple selectors</a> are the element name or <a href="#1.3.4">universal selector</a>, combined with one or several appended <a href="#1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#1.4">combinators</a> is called the selector (or selector chain) and reads from left to right.</p>
 		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#1.3.7">reference objects</a>. <a href="#1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
@@ -465,7 +465,7 @@
 //are direct children of “books” elements</span>
 <span class="selector">books book</span> <span class="combinator">..</span> <span class="selector">title</span> <span class="combinator">+</span><span class="combinator"></span> <span class="selector">content</span> { }</pre>
 
-		<h4><span class="number"><a name="1.2.3">1.2.3</a></span> Properties</h4>
+		<h4><span class="number"><a id="1.2.3">1.2.3</a></span> Properties</h4>
 		<p>Each element in the document has a certain amount of <a href="#1.6">properties</a>, which you can define using property definitions. They are contained within the block that follows a selector chain.</p>
 		<p>To write a property declaration simply place the name of the property, followed by a colon and optional whitespace, and then followed by a literal value, an expression, a function or an object. More whitespace can come afterwards, as well. If it is not the last property declaration of the block, it must be ended by a semicolon, to denote that it finishes on that place, and that what follows is something else.</p>
 		<p>Here are some examples:</p>
@@ -484,7 +484,7 @@
 //property immediately precedes the closing brace</span>
 <span class="selector">document</span> { <span class="property">alignX</span>: <span class="number">50%</span> }</pre>
 
-		<h4><span class="number"><a name="1.2.4">1.2.4</a></span> Objects</h4>
+		<h4><span class="number"><a id="1.2.4">1.2.4</a></span> Objects</h4>
 		<p><a href="#1.7">Objects</a> represent values that are more complex in their nature. Similar to rules, objects have properties which accept values, defined inside a block. Objects are identified using the object sign <code>@</code> prefixed to their object type.</p>
 <pre><span class="selector">document</span>
 {
@@ -499,10 +499,10 @@
     };
 }</pre>
 
-		<h4><span class="number"><a name="1.2.5">1.2.5</a></span> HSS points</h4>
+		<h4><span class="number"><a id="1.2.5">1.2.5</a></span> HSS points</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/68">Issue 68</a>
 <div class="sub part">
-		<h4><span class="number"><a name="1.2.6">1.2.6</a></span> The negator</h4>
+		<h4><span class="number"><a id="1.2.6">1.2.6</a></span> The negator</h4>
 		<p>You can negate <a href="#1.3.1">simple selectors</a> by prefixing them with <code>!</code>, meaning that all elements in the current scope that don’t match the selector will be selected.</p>
 <pre><span class="comment">//this selects all elements except note ones</span>
 <span class="modifier">!</span><span class="selector">note</span> { }</pre>
@@ -526,7 +526,7 @@
 </section>
 
 <section class="chapter">
-		<h3><span class="number"><a name="1.3">1.3</a></span> Selectors</h3>
+		<h3><span class="number"><a id="1.3">1.3</a></span> Selectors</h3>
 		<p>Consider the following XML snippet:</p>
 <pre class="xml">&lt;<span class="selector">note</span>&gt;
    &lt;<span class="selector">to</span>&gt;Peter&lt;/<span class="selector">to</span>&gt;
@@ -537,14 +537,14 @@
 
 		<p>In the following examples we will be using rules, but without property definitions for clarity. We will assume that this xml snippet could be inserted anywhere: the <em>note</em> element doesn't necessarily represent the root of the xml document.</p>
 <div class="sub comp">
-		<h4><span class="number"><a name="1.3.1">1.3.1</a></span> A simple selector</h4>
+		<h4><span class="number"><a id="1.3.1">1.3.1</a></span> A simple selector</h4>
 		<p>You can target an element by its name. </p>
 <pre><span class="comment">//match every note element (within the current scope) and apply
 //the style rules declared within the block (in this case none)</span>
 <span class="selector">note</span> { }</pre>
 </div>
 <div class="sub comp">
-		<h4><span class="number"><a name="1.3.2">1.3.2</a></span> Hierarchy &amp; Scope</h4>
+		<h4><span class="number"><a id="1.3.2">1.3.2</a></span> Hierarchy &amp; Scope</h4>
 		<p>Usually what the HSS author does is following the document tree and applying styles to most elements. Rules can be nested inside other rules which will only match children of the elements matched by the parent selector. This is what gives HSS its name.</p>
 		<p>The scope refers to the elements targeted by the selector. In the following example, only message elements that are immediate children of note can be selected, because the scope is restricted to the children of the note element.</p>
 <pre><span class="selector">note</span>
@@ -567,7 +567,7 @@
 <span class="selector">note</span><span class="flag">::hover</span> { }</pre>
 </div>
 <div class="sub part">
-		<h4><span class="number"><a name="1.3.3">1.3.3</a></span> Grouping</h4>
+		<h4><span class="number"><a id="1.3.3">1.3.3</a></span> Grouping</h4>
 		<p>You can group multiple selectors together which is convenient when they share the same properties (or rules).</p>
 <pre><span class="comment">//match the note's children of type subject and message</span>
 <span class="selector">note</span> <span class="selector">subject</span>, <span class="selector">note</span> <span class="selector">message</span> { }</pre>
@@ -584,7 +584,7 @@ note { }
 note child1, note child2 { }
 note child1 element1, note child1 element2,
 note child2 element1, note child2 element2 { }</pre>
-		<p>Through the use of <a name="square">grouping brackets</a>, several consecutive parts of a selector chain can be evaluated as one.</p>
+		<p>Through the use of <a id="square">grouping brackets</a>, several consecutive parts of a selector chain can be evaluated as one.</p>
 <pre><span class="comment">//inline grouping is also available</span>
 note [child1, child2] [element1, element2] { }
 <span class="comment">//which is equivalent to</span>
@@ -610,7 +610,7 @@ A1:odd, A2:odd { }</pre>
 [<span class="selector">*</span><span class="splitter">/type</span><span class="filter">:odd</span>]<span class="filter">:odd</span> { }</pre>
 </div>
 <div class="sub comp">
-		<h4><span class="number"><a name="1.3.4">1.3.4</a></span> The universal selector</h4>
+		<h4><span class="number"><a id="1.3.4">1.3.4</a></span> The universal selector</h4>
 		<p>The universal selector <span class="selector">*</span> matches every element in the current scope:</p>
 <pre><span class="comment">//matches every element that is a child of <em>note</em></span>
 <span class="selector">note</span>
@@ -633,7 +633,7 @@ A1:odd, A2:odd { }</pre>
 <span class="selector">*</span> <span class="combinator">&gt;&gt;</span> <span class="selector">*</span> { }</pre>
 </div>
 <div class="sub yet">
-		<h4><span class="number"><a name="1.3.5">1.3.5</a></span> Selecting the subject</h4>
+		<h4><span class="number"><a id="1.3.5">1.3.5</a></span> Selecting the subject</h4>
 		<p>Using the subject selector <code>$</code> you can match an element anywhere in the selector chain thus turning everything that follows it into a condition.</p>
 <pre><span class="comment">//matches all note elements which have at least one comment element as a child</span>
 <span class="modifier">$</span><span class="selector">note</span><span class="combinator"> </span><span class="selector">comment</span> { }
@@ -642,14 +642,14 @@ A1:odd, A2:odd { }</pre>
 <span class="modifier">$</span><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">important</span><span class="flag">::hover</span> { }</pre>
 </div>
 <div class="sub yet">
-		<h4><span class="number"><a name="1.3.6">1.3.6</a></span> Regex selector</h4>
+		<h4><span class="number"><a id="1.3.6">1.3.6</a></span> Regex selector</h4>
 		<p>You can use a regular expression to select elements based on their names.</p>
 <pre><span class="comment">//matches every element in the current scope whose name starts with a number</span>
 <span class="selector">/^[0-9]/</span> { }</pre>
 </div>
 <div class="sub part">
-		<h4 class="title"><span class="number"><a name="1.3.7">1.3.7</a></span> Reference Objects</h4>
-		<p>The <a name="1.3.7.1"><strong>this object</strong></a> always refers to the nearest container(s); independently of each other (if there are several matches). It can be used in a selector or a property's value.</p>
+		<h4 class="title"><span class="number"><a id="1.3.7">1.3.7</a></span> Reference Objects</h4>
+		<p>The <a id="1.3.7.1"><strong>this object</strong></a> always refers to the nearest container(s); independently of each other (if there are several matches). It can be used in a selector or a property's value.</p>
 <pre><span class="comment">//using the <a href="#1.7.1">object dot notation</a>, this would set the width
 //to the element's <strong>current</strong> <em>computed</em> height value</span>
 <span class="selector">element</span>
@@ -657,7 +657,7 @@ A1:odd, A2:odd { }</pre>
     <span class="property">height</span>: 100%;
     <span class="property">width</span>:  @this.height;
 }</pre>
-		<p>The <a name="1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#1.7.3">anonymous objects</a>.</p>
+		<p>The <a id="1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#1.7.3">anonymous objects</a>.</p>
 <pre><span class="comment">//this would set the pattern's width value to the current
 //pattern's height <em>computed</em> value</span>
 <span class="object">@pattern</span>
@@ -665,7 +665,7 @@ A1:odd, A2:odd { }</pre>
     <span class="property">height</span>: 100%;
     <span class="property">width</span>:  @self.height;
 }</pre>
-		<p>The <a name="1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
+		<p>The <a id="1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
 <pre><span class="comment">//this sets the width of the <em>section</em> element(s)
 //to the same value as the width of the root element
 //if it is named "document"</span>
@@ -673,7 +673,7 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="property">width</span>: ref(<span class="property">width</span> of <span class="object">@root</span><span class="filter">:is(document)</span>);
 }</pre>
-		<p>The <a name="1.3.7.4"><strong>parent object</strong></a> refers to the parent of the preceding element in the selector chain or (if there's none before) to the parent of the element which is currently affected by the styling rule containing <span class="object">@parent</span>.</p>
+		<p>The <a id="1.3.7.4"><strong>parent object</strong></a> refers to the parent of the preceding element in the selector chain or (if there's none before) to the parent of the element which is currently affected by the styling rule containing <span class="object">@parent</span>.</p>
 <pre><span class="comment">//set the messages’ width to a third of their own parents’ height</span>
 <span class="combinator">..</span> <span class="selector">message</span>
 {
@@ -684,19 +684,19 @@ A1:odd, A2:odd { }</pre>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>);
 }</pre>
-		<p>The <a name="1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole. It is particularly useful in case the rightmost selector is unknown.</p>
+		<p>The <a id="1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole. It is particularly useful in case the rightmost selector is unknown.</p>
 <pre><span class="object">@container</span> maxHeight
 {
     <span class="comment">//this sets the height of the elements matched
     //to the height of whichever is currently the tallest</span>
     <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="selector">@these</span>);
 }</pre>
-		<p>The <a name="1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
+		<p>The <a id="1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
 #TODO example
 </div>
 </section>
 <section class="chapter">
-		<h3 class="title"><span class="number"><a name="1.4">1.4</a></span> Combinators</h3>
+		<h3 class="title"><span class="number"><a id="1.4">1.4</a></span> Combinators</h3>
 		<p>Combinators allow you to select an element based on its relationship to another in the hierarchy. Multiple simple selectors can be chained together, forming the selector chain. Usually this is done when you want to “skip” the elements which leads to the one you want to style. In the case of a single childhood relationship, it is more convenient to use the child combinator than to nest rules; in other cases, combinators are mandatory regardless.</p>
 <pre><span class="comment">//even in a hierarchical context
 //you can start a selector chain by a combinator</span>
@@ -710,23 +710,23 @@ A1:odd, A2:odd { }</pre>
 <span class="selector">note</span> <span class="combinator">..</span> <span class="selector">important</span> { }</pre>
 <p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub comp">
-		<h4 class="title"><span class="number"><a name="1.4.1">1.4.1</a></span> Child combinator</h4>
+		<h4 class="title"><span class="number"><a id="1.4.1">1.4.1</a></span> Child combinator</h4>
 		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br /><span class="selector">note subject</span> { }</pre>
 </div>
 <div class="sub comp">
-		<h4 class="title"><span class="number"><a name="1.4.2">1.4.2</a></span> Descendant combinator</h4>
+		<h4 class="title"><span class="number"><a id="1.4.2">1.4.2</a></span> Descendant combinator</h4>
 		<p>If you want to select elements which are descendants (could be direct children of the element, or more generations down), the descendant combinator <span class="combinator">..</span> is used.</p>
 <pre><span class="comment">//matches every subject element which is a descendant of note</span><br /><span class="selector">note</span> <span class="combinator">..</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub part">
-		<h4 class="title"><span class="number"><a name="1.4.3">1.4.3</a></span> Siblings combinator</h4>
+		<h4 class="title"><span class="number"><a id="1.4.3">1.4.3</a></span> Siblings combinator</h4>
 		<p>Sibling elements can be accessed via the siblings combinator <span class="combinator">=</span>:</p>
 <pre><span class="comment">//matches all the subject elements that are siblings of<br />//the message element(s)</span><br /><span class="selector">message</span> <span class="combinator">=</span> <span class="selector">subject</span> { }</pre>
 </div>
 <div class="sub comp">
-		<h4 class="title"><span class="number"><a name="1.4.4">1.4.4</a></span> Next and previous siblings combinators</h4>
+		<h4 class="title"><span class="number"><a id="1.4.4">1.4.4</a></span> Next and previous siblings combinators</h4>
 		<p>Use the next siblings combinator <span class="combinator">+</span> and previous siblings combinator <span class="combinator">-</span> if you want to access elements following or preceding (in the <em>current</em> tree order) a specified element in the same scope.</p>
 <pre><span class="comment">//this will match the message element(s) following a from sibling</span>
 <span class="selector">from</span> <span class="combinator">+</span> <span class="selector">message</span> { }
@@ -735,7 +735,7 @@ A1:odd, A2:odd { }</pre>
 		<p><em>Note:</em> For further instructions on how to select amongst the following or preceding elements read the <a href="#1.5">filters, flags and splitters</a> chapter.</p>
 </div>
 <div class="sub yet">
-		<h4 class="title"><span class="number"><a name="1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
+		<h4 class="title"><span class="number"><a id="1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
 		<p><strong>Note:</strong> This section is just the explanation of the very basic idea, and may change soon.</p>
 		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements (see Layout of elements in Flow). You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
 #TODO link "Layout of elements in Flow"
@@ -755,7 +755,7 @@ A1:odd, A2:odd { }</pre>
 		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="#1.3.7.4">parent object</a> will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub yet">
-		<h4 class="title"><span class="number"><a name="1.4.6">1.4.6</a></span> Content text combinator</h4>
+		<h4 class="title"><span class="number"><a id="1.4.6">1.4.6</a></span> Content text combinator</h4>
 		<p>Many times you will want to access a part of an element's content text—a word, or a particular line, for example—rather than its container.</p><p>Consider this snippet of XML code:</p>
 <pre class="xml">&lt;<span class="selector">document</span>&gt;
     &lt;<span class="selector">paragraph</span>&gt;This is a line of dummy text. Lorem ipsum
@@ -804,14 +804,14 @@ A1:odd, A2:odd { }</pre>
 }</pre>
 </div>
 <div class="sub yet">
-		<h4 class="title"><span class="number"><a name="1.4.7">1.4.7</a></span> Ancestor combinator</h4>
+		<h4 class="title"><span class="number"><a id="1.4.7">1.4.7</a></span> Ancestor combinator</h4>
 		<p>Ancestors can be selected using the ancestor combinator <code>&lt;&lt;</code>. If the elements matched previously don't share the same ancestors, the combined collection of ancestors&#8212;and not the common ones&#8212;will be returned.</p>
 <pre><span class="comment">//matches every ancestors of <em>important</em> elements</span>
 <span class="combinator">..</span> <span class="selector">important</span> <span class="combinator">&lt;&lt;</span> <span class="selector">*</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
-		<h3 class="title"><span class="number"><a name="1.5">1.5</a></span> Filters, flags and  splitters</h3>
+		<h3 class="title"><span class="number"><a id="1.5">1.5</a></span> Filters, flags and  splitters</h3>
 		<p><strong>Filters</strong> are used to reduce or alter the current selection. Each individual element of the selection is checked to see if the condition(s) match(es).</p>
 		<p>Always remember that if used alone, the omitted universal selector is actually assumed. Filters can be appended to any other selector even allowing multiple affixed filters. For example, you could do the following:</p>
 <pre><span class="comment">//this matches the first occurrence of the note element,
@@ -840,34 +840,34 @@ A1:odd, A2:odd { }</pre>
 	&lt;/<span class="selector">note</span>&gt;
 &lt;/<span class="selector">notes</span>&gt;</pre>
 <div class="sub part">
-		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
+		<h4 class="title"><span class="number"><a id="1.5.1">1.5.1</a></span> Position filters</h4>
 		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
 		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <em class="monospace">Child</em> variant to the children's position <strong>inside their own parent</strong>.</p>
 
-		<p>The <strong><a name="f_first">first and firstChild filters</a></strong> match the first element(s).</p>
+		<p>The <strong><a id="f_first">first and firstChild filters</a></strong> match the first element(s).</p>
 <pre><span class="comment">//this matches the first <em>to</em> element in our example</span>
 notes note <span class="filter">:first</span> { }
 <span class="comment">//this matches the first <em>to</em> elements of each <em>note</em> element in our example</span>
 notes note <span class="filter">:firstChild</span> { }
 <span class="comment">//which is equivalent to appending the <a href="#s_each">each splitter</a> to the former</span>
 notes note <span class="splitter">/each</span><span class="filter">:first</span> { }</pre>
-		<p>The <strong><a name="f_last">last and lastChild filters</a></strong> match the last element(s).</p>
+		<p>The <strong><a id="f_last">last and lastChild filters</a></strong> match the last element(s).</p>
 <pre><span class="comment">//this matches the last element in the second <em>note</em> element</span>
 notes note <span class="filter">:last</span> { }
 <span class="comment">//this matches the last element<u>s</u> of each <em>note</em> element</span>
 notes note <span class="filter">:lastChild</span> { }</pre>
-		<p>The <strong><a name="f_even">even and evenChild filter</a></strong> select elements whose index is even (the count starts with 1).</p>
+		<p>The <strong><a id="f_even">even and evenChild filter</a></strong> select elements whose index is even (the count starts with 1).</p>
 <pre><span class="comment">//in our example this matches the <em>from</em> element in the first <em>note</em> element
 //but not the one in the second <em>note</em> element (7 isn't even)</span>
 notes note from<span class="filter">:even</span> { }
 <span class="comment">//in our example this matches the fourth <em>message</em> element<u>s</u> of the <em>note</em> elements</span>
 notes note message<span class="filter">:evenChild</span> { }</pre>
-		<p>The <strong><a name="f_odd">odd and oddChild filters</a></strong> select elements whose index is odd (the count starts with 1).</p>
+		<p>The <strong><a id="f_odd">odd and oddChild filters</a></strong> select elements whose index is odd (the count starts with 1).</p>
 <pre><span class="comment">//this matches the 1st <em>to</em> element in our example</span>
 notes note to<span class="filter">:odd</span> { }
 <span class="comment">//this matches the 1st <em>to</em> elements of each <em>note</em> element in our example</span>
 notes note to<span class="filter">:oddChild</span> { }</pre>
-		<p>The <strong><a name="f_nth">nth and nthChild filters</a></strong> select elements which index matches a number or expression, meets a condition or falls within a given range.</p>
+		<p>The <strong><a id="f_nth">nth and nthChild filters</a></strong> select elements which index matches a number or expression, meets a condition or falls within a given range.</p>
 <pre><span class="comment">//this matches the fourth element in the collection</span>
 <span class="filter">:nth</span>(<span class="number">4</span>) { }
 <span class="comment">//if there are at least 6 elements currently in the collection,
@@ -881,7 +881,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> &amp; <span class="number">8</span>, *) { }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
+<h4 class="title"><span class="number"><a id="1.5.2">1.5.2</a></span> Hierarchy filters</h4>
 		<p>You can filter elements by their relationship with the other elements in the tree.</p>
 		<p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p>
 <pre><span class="comment">//this matches childless elements</span>
@@ -895,7 +895,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:has</span>(<span class="selector">- message</span>) { }</pre>
 </div>
 <div class="sub part">
-<h4 class="title"><span class="number"><a name="1.5.3">1.5.3</a></span> System flags</h4>
+<h4 class="title"><span class="number"><a id="1.5.3">1.5.3</a></span> System flags</h4>
 <p>You usually want to provide some kind of feedback to the user when he/she is using your site. Targeting elements using flags is an easy way to add interactivity to the site, to create a compelling user experience.</p>
 <p>The <strong>hover flag</strong> targets only elements that are lying under the cursor.</p><pre><span class="comment">//matches every element which has the mouse over it (even overlaid ones)</span>
 <span class="flag">::hover</span> { }</pre>
@@ -925,7 +925,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 * <span class="combinator">&gt;</span> <span class="flag">::select</span> { }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.4">1.5.4</a></span> The attribute filter</h4>
+<h4 class="title"><span class="number"><a id="1.5.4">1.5.4</a></span> The attribute filter</h4>
 <p>You can filter elements based on their attributes using the <strong>attribute filter</strong>.</p>
 <pre>
 <span class="comment">//matches elements which have a title attribute</span>
@@ -938,7 +938,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 :[title], :[href] { }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.5">1.5.5</a></span> Text matching filters</h4>
+<h4 class="title"><span class="number"><a id="1.5.5">1.5.5</a></span> Text matching filters</h4>
 <p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
 <p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
 <pre><span class="comment">//matches every element whose content text contains “reminder”
@@ -973,7 +973,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:length</span>(min) { }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.6">1.5.6</a></span> Property filters</h4>
+<h4 class="title"><span class="number"><a id="1.5.6">1.5.6</a></span> Property filters</h4>
 <p>Conditions are used to test whether an element is matched based on its properties.</p>
 <p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#1.6.3.b">type conversion functions</a> are necessary.</p>
 <pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
@@ -995,10 +995,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.7">1.5.7</a></span> Splitters</h4>
+<h4 class="title"><span class="number"><a id="1.5.7">1.5.7</a></span> Splitters</h4>
 	<p>Splitters are preceded by <code>/</code> and directly act on the current selection outputting one or more collections in result. The sorting of the returned collections is determined by the elements' order in the source.</p>
-	<p>The <a name="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.8">collection filters</a> or other splitters.</p>
-	<p>Using the <a name="s_type"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types. Put simply the type of an element is its tag's name.</p>
+	<p>The <a id="s_each"><strong>each splitter</strong></a> separates each element that would otherwise be joined in a selection. Apart from being a content text splitter, it is particularly useful in association with sibling combinators, <a href="#1.5.8">collection filters</a> or other splitters.</p>
+	<p>Using the <a id="s_type"><strong>type splitter</strong></a> you can rearrange the elements of a collection by types. Put simply the type of an element is its tag's name.</p>
 <pre><span class="selector">notes</span>
 {
 	<span class="comment">//this will match the children of each <em>note</em> elements which
@@ -1006,7 +1006,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	//the second <em>message</em> element from the first <em>note</em></span>
 	<span class="selector">note</span><span class="splitter">/each</span> <span class="splitter">/type</span><span class="filter">:nth(<span class="number">2</span>)</span> { }
 }</pre>
-	<p>The <a name="s_attr"><strong>attribute splitter</strong></a> allows the splitting of elements into separate collections in relation to either an attribute's name or an attribute's value.</p>
+	<p>The <a id="s_attr"><strong>attribute splitter</strong></a> allows the splitting of elements into separate collections in relation to either an attribute's name or an attribute's value.</p>
 <pre class="xml">&lt;matches&gt;
    &lt;match0 louis="won" schmeling="lost" name="Fight of the Century" /&gt;
    &lt;match1 ali="lost" frazier="won" name="Fight of the Century" /&gt;
@@ -1025,7 +1025,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p><em>Note:</em> You can't negate a splitter.</p>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.8">1.5.8</a></span> Collection Filters</h4>
+<h4 class="title"><span class="number"><a id="1.5.8">1.5.8</a></span> Collection Filters</h4>
 	<p>The <strong>amount filter</strong> matches elements depending on their current number in the returned collection(s). If a number or a condition is given, the amount of elements is compared.</p>
 <pre><span class="comment">//this matches if the sibling collection has exactly 3 elements</span>
 <span class="filter">:amount</span>(<span class="number">3</span>) { }
@@ -1063,7 +1063,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a name="1.5.9">1.5.9</a></span> Custom macros</h4>
+<h4 class="title"><span class="number"><a id="1.5.9">1.5.9</a></span> Custom macros</h4>
 <p>In HSS it is possible to create your own set of macros using the <code>#macro</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
 <span class="comment">//used to style the first element out of the ones which have a black background</span>
@@ -1085,15 +1085,15 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </pre>
 </div>
 <div class="sub part">
-<h4 class="title"><span class="number"><a name="1.5.10">1.5.10</a></span> User flags</h4>
+<h4 class="title"><span class="number"><a id="1.5.10">1.5.10</a></span> User flags</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
 </section>
 <section class="chapter">
-	<h3 class="title"><span class="number"><a name="1.6">1.6</a></span> Properties</h3>
+	<h3 class="title"><span class="number"><a id="1.6">1.6</a></span> Properties</h3>
 
 	<div class="sub part">
-	<h4 class="title"><span class="number"><a name="1.6.1">1.6.1</a></span> Literal values</h4>
+	<h4 class="title"><span class="number"><a id="1.6.1">1.6.1</a></span> Literal values</h4>
 	<p>Literal values are keywords, numbers and strings.</p>
 	<h5>Special keywords</h5>
 	<p>Special keywords are considered valid values for all HSS properties.</p>
@@ -1124,7 +1124,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="property">background</span>: object1, object2, object3;</pre>
 	</div>
 	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.6.2">1.6.2</a></span> Expressions</h4>
+	<h4 class="title"><span class="number"><a id="1.6.2">1.6.2</a></span> Expressions</h4>
 	<p>You can write an expression anywhere a numerical value is accepted, and it is generally only useful when used with a variable value. If all the values are fixed numbers, the result will be calculated at parse time and it would be interpreted as if the result had been written. The available operations are: sum (+), subtraction (&#8722;), multiplication (&#215;) and division (&#8725;). You can also use parentheses to designate the order of the operations, in an inside-out order. Otherwise, multiple operations are executed following the mathematical order (first multiply and divide, then sum and subtract).</p>
 <pre><span class="comment">//this element will always be twice as wide as its current height</span>
 <span class="selector">element</span> { <span class="property">width</span>: 2 * ref(<span class="property">height</span>); }
@@ -1134,10 +1134,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">parent child</span> { <span class="property">width</span>: 100% / @these.count); }</pre>
 	</div>
 	<div class="sub part">
-	<h4 class="title"><span class="number"><a name="1.6.3">1.6.3</a></span> Functions</h4>
+	<h4 class="title"><span class="number"><a id="1.6.3">1.6.3</a></span> Functions</h4>
 	<p>Functions take some parameters and create an output. The result of the function is what is assigned to the property.</p>
-	<h4 class="subsec"><a name="1.6.3.a">Retrieval functions</a></h4>
-	<h5><a name="1.6.3.1">References</a></h5>
+	<h4 class="subsec"><a id="1.6.3.a">Retrieval functions</a></h4>
+	<h5><a id="1.6.3.1">References</a></h5>
 	<p>You can take values from other elements to apply them to the properties of the currently selected element(s).&#160; The value returned is always the computed value of that property, not the declared one. The syntax is <span>ref(<span class="property">propertyName</span> of <span class="selector">selector</span>)</span> and can be used anywhere a value is accepted.</p>
 	<p>Consider the following XML snippet:</p>
 <pre class="xml">&lt;<span class="selector">parent</span>&gt;
@@ -1185,7 +1185,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this one returns #0</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
 }</pre>
-	<h5><a name="1.6.3.2">The attribute function</a></h5>
+	<h5><a id="1.6.3.2">The attribute function</a></h5>
 	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
 <pre><span class="selector">element</span>
 {
@@ -1195,7 +1195,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">content</span>: attr(href);
 }</pre>
-	<h5><a name="1.6.3.3">The selector function</a></h5>
+	<h5><a id="1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
 <pre><span class="selector">people</span>
 {
@@ -1203,8 +1203,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //to the <em>people</em> element in respect to the cascade</span>
     <span class="property">isA</span>: sel(<span class="selector">@root .. citizen</span>);
 }</pre>
-	<h4 class="subsec"><a name="1.6.3.b">Type conversion functions</a></h4>
-	<h5><a name="1.6.3.4">The object function</a></h5>
+	<h4 class="subsec"><a id="1.6.3.b">Type conversion functions</a></h4>
+	<h5><a id="1.6.3.4">The object function</a></h5>
 	<p>It can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence normally. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
 {
@@ -1218,7 +1218,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">background</span>: obj(bg);
 }</pre>
-	<h5><a name="1.6.3.5">The keyword function</a></h5>
+	<h5><a id="1.6.3.5">The keyword function</a></h5>
 	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <span class="compound-word">single-word</span> strings to keywords. It also filters what's passed to it by discarding numbers and <span class="compound-word">multi-word</span> strings.</p>
 <pre><span class="selector">element</span>
 {
@@ -1227,10 +1227,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //it doesn't ensure it will be valid on this property</span>
     <span class="property">visible</span>: kwd(attr(visible));
 }</pre>
-	<h5><a name="1.6.3.6">The string function</a></h5>
-	<h5><a name="1.6.3.7">The number function</a></h5>
-	<h4 class="subsec"><a name="1.6.3.c">Arithmetic functions</a></h4>
-	<h5><a name="1.6.3.8">The bounding functions</a></h5>
+	<h5><a id="1.6.3.6">The string function</a></h5>
+	<h5><a id="1.6.3.7">The number function</a></h5>
+	<h4 class="subsec"><a id="1.6.3.c">Arithmetic functions</a></h4>
+	<h5><a id="1.6.3.8">The bounding functions</a></h5>
 	<p>Using the bounding functions you can constrain numeric values to certain limits.</p>
 <pre><span class="selector">element</span>
 {
@@ -1262,7 +1262,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p><em>Note:</em> the third argument of the bound function must always be greater than the first one.</p>
 	</div>
 	<div class="sub part">
-	<h4 class="title"><span class="number"><a name="1.6.4">1.6.4</a></span> Color</h4>
+	<h4 class="title"><span class="number"><a id="1.6.4">1.6.4</a></span> Color</h4>
 	<p>For convenience and compatibility with common graphic edition programs, color values in the sRGB color space can be written as <strong>instructions</strong>. It is composed of a hash (number sign) <code>#</code> followed by a number in hexadecimal notation of one to eight digits. If omitted the alpha channel defaults to <code>FF</code>.</p>
 <pre>
 <span class="comment">//this would set the background to white</span>
@@ -1286,7 +1286,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p>Besides instructions, you can also use <strong>objects</strong> (<a href="http://hss.axr.vg/@rgb">@rgb</a>, <a href="http://hss.axr.vg/@cmyk">@cmyk</a> and <a href="http://hss.axr.vg/@hsb">@hsb</a>) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
 	</div>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.5">1.6.5</a></span> Property grouping</h4>
+	<h4 class="title"><span class="number"><a id="1.6.5">1.6.5</a></span> Property grouping</h4>
 	<p>You can group two or more properties which share the same value(s).</p>
 <pre><span class="selector">element</span>
 {
@@ -1297,7 +1297,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	</div>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.6">1.6.6</a></span> The value selector</h4>
+	<h4 class="title"><span class="number"><a id="1.6.6">1.6.6</a></span> The value selector</h4>
 	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name or using a filter.</p>
 <pre><span class="selector">element</span> {
     <span class="comment">//supposing these container objects were defined elsewhere</span>
@@ -1311,7 +1311,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	</div>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.6.7">1.6.7</a></span> Boolean casting</h4>
+	<h4 class="title"><span class="number"><a id="1.6.7">1.6.7</a></span> Boolean casting</h4>
 	<p>Using the <a href="#1.2.6">negator</a> you can convert a value to a boolean.</p>
 <pre><span class="comment">//this sets the property to <em>no</em> for any value
 //except !no which returns <em>yes</em></span>
@@ -1322,27 +1322,27 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	</div>
 </section>
 <section class="chapter">
-	<h3 class="title"><span class="number"><a name="1.7">1.7</a></span> Objects</h3>
+	<h3 class="title"><span class="number"><a id="1.7">1.7</a></span> Objects</h3>
 	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#1.3.7.6">owner</a>. This enables great flexibility and modularization of the code.</p>
 	<p>Objects can be set to be of a certain type, placing an object type immediately after the at sign, or automatically deriving it from the context. It is followed by whitespace, and optionally an object name and more optional whitespace, followed by a block. Inside the block, its properties are defined.</p>
 	<div class="sub yet">
-	<h4 class="title"><span class="number"><a name="1.7.1">1.7.1</a></span> Object dot notation</h4>
+	<h4 class="title"><span class="number"><a id="1.7.1">1.7.1</a></span> Object dot notation</h4>
 	</div>
 	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.7.2">1.7.2</a></span> Named objects</h4>
+	<h4 class="title"><span class="number"><a id="1.7.2">1.7.2</a></span> Named objects</h4>
 	</div>
 	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.7.3">1.7.3</a></span> Anonymous objects</h4>
+	<h4 class="title"><span class="number"><a id="1.7.3">1.7.3</a></span> Anonymous objects</h4>
 	</div>
 	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.7.4">1.7.4</a></span> Shorthand notation</h4>
+	<h4 class="title"><span class="number"><a id="1.7.4">1.7.4</a></span> Shorthand notation</h4>
 	</div>
 	<div class="sub comp">
-	<h4 class="title"><span class="number"><a name="1.7.5">1.7.5</a></span> Grouping and inheritance</h4>
+	<h4 class="title"><span class="number"><a id="1.7.5">1.7.5</a></span> Grouping and inheritance</h4>
 	</div>
 </section>
 <section class="chapter">
-	<h3 class="title"><span class="number"><a name="1.8">1.8</a></span> Instructions</h3>
+	<h3 class="title"><span class="number"><a id="1.8">1.8</a></span> Instructions</h3>
 </section>
 </div>
 <div id="btt"><a href="#toc">table of contents</a></div>
