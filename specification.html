@@ -7,7 +7,7 @@
 
       AUTHORS: Miro Keller and collaborators
 
-      COPYRIGHT: ©2011 - All Rights Reserved
+      COPYRIGHT: (c)2011 - All Rights Reserved
 
       LICENSE: see License.txt file
 
@@ -711,7 +711,7 @@ A1:odd, A2:odd { }</pre>
 <p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a name="n1.4.1">1.4.1</a></span> Child combinator</h4>
-		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&#160;<span class="combinator"> </span>.</p>
+		<p>Children&#8212;or more explicitly level one descendants&#8212;may be selected using the child combinator (whitespace)&#160;<span class="combinator"> </span>.</p>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it's just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br /><span class="selector">note subject</span> { }</pre>
 </div>
@@ -756,7 +756,7 @@ A1:odd, A2:odd { }</pre>
 </div>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a name="n1.4.6">1.4.6</a></span> Content text combinator</h4>
-		<p>Many times you will want to access a part of an element's content text—a word, or a particular line, for example—rather than its container.</p><p>Consider this snippet of XML code:</p>
+		<p>Many times you will want to access a part of an element's content text&#8212;a word, or a particular line, for example&#8212;rather than its container.</p><p>Consider this snippet of XML code:</p>
 <pre class="xml">&lt;<span class="selector">document</span>&gt;
     &lt;<span class="selector">paragraph</span>&gt;This is a line of dummy text. Lorem ipsum
     dolor sit amet, consectetur adipiscing elit.&lt;/<span class="selector">paragraph</span>&gt;
@@ -873,7 +873,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="comment">//if there are at least 6 elements currently in the collection,
 //it matches the element after every 5th one; if not it matches the 5th one</span>
 <span class="filter">:nth</span>(5n + 1 | <span class="number">5</span>) { }
-<span class="comment">//this matches elements whose index is ≥ 3 in the collection</span>
+<span class="comment">//this matches elements whose index is &#8805; 3 in the collection</span>
 <span class="filter">:nth</span>(&gt;= <span class="number">3</span>) { }
 <span class="comment">//this matches elements whose index is 5, 10 or 15 in the collection</span>
 <span class="filter">:nth</span>(5n, <span class="number">15</span>) { }
@@ -939,7 +939,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a name="n1.5.5">1.5.5</a></span> Text matching filters</h4>
-<p>These filters select elements which text—either the content text or the value of the attribute(s)—matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
+<p>These filters select elements which text&#8212;either the content text or the value of the attribute(s)&#8212;matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
 <p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
 <pre><span class="comment">//matches every element whose content text contains "reminder"
 //regardless of the case</span>
