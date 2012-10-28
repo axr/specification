@@ -711,7 +711,7 @@ A1:odd, A2:odd { }</pre>
 <p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a id="1.4.1">1.4.1</a></span> Child combinator</h4>
-		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&nbsp;<span class="combinator"> </span>.</p>
+		<p>Children—or more explicitly level one descendants—may be selected using the child combinator (whitespace)&#160;<span class="combinator"> </span>.</p>
 		<p><em>Note:</em> This is different from CSS, where the whitespace represents the descendant combinator. The reasoning behind this is that authors are inherently lazy, and thus end up using the descendant combinator when they really should be using the child combinator instead, because it’s just much more convenient.</p>
 <pre><span class="comment">//matches every subject element which is a child of note</span><br /><span class="selector">note subject</span> { }</pre>
 </div>
@@ -779,19 +779,19 @@ A1:odd, A2:odd { }</pre>
 		<p>To access a word, you use the content text combinator and universal selector again, after selecting a portion of the text:</p>
 <pre><span class="selector">document</span>
 {
-&nbsp;&nbsp;&nbsp; <span class="comment">//this will select the last word of the content text</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:last</span> { }
-&nbsp;&nbsp;&nbsp; <span class="comment">//this is equivalent, since the universal selector can be
-&nbsp;&nbsp;&nbsp; //omitted in this case</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="filter">:last</span> { }
+&#160;&#160;&#160; <span class="comment">//this will select the last word of the content text</span>
+&#160;&#160;&#160; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:last</span> { }
+&#160;&#160;&#160; <span class="comment">//this is equivalent, since the universal selector can be
+&#160;&#160;&#160; //omitted in this case</span>
+&#160;&#160;&#160; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;</span> <span class="filter">:last</span> { }
 }</pre>
 		<p>You repeat the same pattern again to select a glyph:</p>
 <pre><span class="selector">document</span>
 {
-&nbsp;&nbsp;&nbsp; <span class="comment">//this will select the first letter of the content text</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> { }
-&nbsp;&nbsp;&nbsp; <span class="comment">//this is equivalent</span>
-&nbsp;&nbsp;&nbsp; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;&gt;</span> <span class="filter">:first</span> { }
+&#160;&#160;&#160; <span class="comment">//this will select the first letter of the content text</span>
+&#160;&#160;&#160; <span class="selector">paragraph</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span> <span class="combinator">&gt;</span> <span class="selector">*</span><span class="filter">:first</span> { }
+&#160;&#160;&#160; <span class="comment">//this is equivalent</span>
+&#160;&#160;&#160; <span class="selector">paragraph</span> <span class="combinator">&gt;&gt;&gt;</span> <span class="filter">:first</span> { }
 }</pre>
 		<p>The <a href="#s_each">each splitter</a> permits the separation of each text elements (either lines, words or glyphs) that would otherwise be joined in the same selection:</p>
 <pre><span class="selector">document</span>
