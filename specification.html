@@ -302,6 +302,7 @@
 	{
 		color: #8e4dd0;
 	}
+
 	.subsec:before
 	{
 		content: "\00A7\00A0";
@@ -319,6 +320,22 @@
 		bottom:5px;
 		right:5px;
 		font-size:xx-small;
+	}
+
+	em.monospace
+	{
+	    font-family: monospace;
+	    font-style: normal;
+	}
+
+	.compound-word
+	{
+	    background: none;
+	    border: 0;
+	    color: #666;
+	    font-family: "Century Gothic", "Futura", "Verdana", sans-serif;
+	    padding: none;
+	    white-space: nowrap;
 	}
 	</style>
 </head>
@@ -825,7 +842,7 @@ A1:odd, A2:odd { }</pre>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a name="1.5.1">1.5.1</a></span> Position filters</h4>
 		<p>The following filters are used to select a subset of elements, depending on their position in the <em>current</em> tree order.</p>
-		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <tt>Child</tt> variant to the children's position <strong>inside their own parent</strong>.</p>
+		<p>In the case of several matched parents the filters refer to the <strong>combined collection</strong> returned whereas their <em class="monospace">Child</em> variant to the children's position <strong>inside their own parent</strong>.</p>
 
 		<p>The <strong><a name="f_first">first and firstChild filters</a></strong> match the first element(s).</p>
 <pre><span class="comment">//this matches the first <em>to</em> element in our example</span>
@@ -1202,7 +1219,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">background</span>: obj(bg);
 }</pre>
 	<h5><a name="1.6.3.5">The keyword function</a></h5>
-	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <nobr>single-word</nobr> strings to keywords. It also filters what's passed to it by discarding numbers and <nobr>multi-word</nobr> strings.</p>
+	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <span class="compound-word">single-word</span> strings to keywords. It also filters what's passed to it by discarding numbers and <span class="compound-word">multi-word</span> strings.</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//assuming we have a <em>visible</em> attribute set on the element
