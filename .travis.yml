@@ -1,4 +1,4 @@
-script: ./validate.sh
+script: .travis/validate.sh
 branches:
   only:
     - master
