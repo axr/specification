@@ -6,7 +6,6 @@
     attr: (no) | @value { <name>:<string>; …; };
     background: (no) | <object>, …;
     contained: (yes) | no;
-    content: no | (content) | <string>;
     contentAlignX: (left) | right | center/middle | justify | even | <number>;
     contentAlignY: (top) | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
@@ -47,6 +46,7 @@
     overflow: (visible) | hidden | @{<string>, last} | @{<string>, all};¹
     selectable: (yes) | no;
     tab: <N>;
+    text: no | (content) | <string>;
     tracking: <N>;
     transform: (no) | capitalize | uppercase | lowercase;
     whitespace: (collapse) | preserve;

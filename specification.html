@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/10/28
+      Last changed: 2012/11/04
       HSS version: 1.0
-      Revision: 1.48
+      Revision: 1.49
 
 ****************************************************************-->
 
@@ -985,24 +985,23 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.6" id="n1.5.6">1.5.6</a></span> Property filters</h4>
-<p>Conditions are used to test whether an element is matched based on its properties.</p>
-<p>The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. To distinguish properties from keywords or object names <a href="#n1.6.3.b">type conversion functions</a> are necessary.</p>
+<p>Conditions are used to test whether an element is matched based on its properties. The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. The properties are on the left side of the comparator, the values on the right.</p>
 <pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
 <span class="selector">*</span>:(<span class="property">content</span> = "select me") { }
 <span class="comment">//matches all elements with a background</span>
 <span class="selector">*</span>:(<span class="property">background</span>) { }
 <span class="comment">//which is equivalent to</span>
-<span class="selector">*</span>:(<span class="property">background</span> != kwd(no)) { }
+<span class="selector">*</span>:(<span class="property">background</span> != no) { }
 <span class="comment">//similarly, this matches invisible elements</span>
 <span class="selector">*</span>:(<span class="modifier">!</span><span class="property">visible</span>) { }
 <span class="comment">//which is equivalent to</span>
-<span class="selector">*</span>:(<span class="property">visible</span> = kwd(no)) { }
+<span class="selector">*</span>:(<span class="property">visible</span> = no) { }
 <span class="comment">//matches all elements which are using a font object named <em>serif</em></span>
-<span class="selector">*</span>:(<span class="property">font</span> = obj(serif)) { }
+<span class="selector">*</span>:(<span class="property">font</span> = serif) { }
 <span class="comment">//matches all elements that are taller than 300 and not wider than 400</span>
 <span class="selector">*</span>:(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }
 <span class="comment">//matches all elements which surface is square shaped</span>
-<span class="selector">*</span>:(<span class="property">height</span> = <span class="property">width</span>) { }</pre>
+<span class="selector">*</span>:(<span class="property">height</span> = ref(<span class="property">width</span>)) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub yet">
@@ -1078,13 +1077,13 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p>In HSS it is possible to create your own set of macros using the <code>#macro</code> instruction. They can also be imported from an external file, as any other part of your HSS code, which enables the creation of custom libraries.</p>
 <pre>
 <span class="comment">//used to style the first element out of the ones which have a black background</span>
-<span class="instruction">#macro</span> firstBlack { :(background = kwd(black)):first }
+<span class="instruction">#macro</span> firstBlack { :(background = black):first }
 <span class="comment">//this creates an alias for :startsWith()</span>
 <span class="instruction">#macro</span> sw(myArg) { :startsWith(myArg) }
 <span class="comment">//creates a macro which selects the first or the last element</span>
 <span class="instruction">#macro</span> limit { :first, :last }
 <span class="comment">//macros are reusable inside other macros' definitions</span>
-<span class="instruction">#macro</span> wideLimit { :(width > height):::limit }
+<span class="instruction">#macro</span> wideLimit { :(width > ref(height)):::limit }
 <span class="comment">//flags are accepted as well</span>
 <span class="instruction">#macro</span> dock { ::target::hover }
 

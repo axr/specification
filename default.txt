@@ -17,7 +17,6 @@
     attr: no;
     background: no;
     contained: yes;
-    content: content;
     contentAlignX: left;
     contentAlignY: top;
     count; Ⓡ
@@ -66,6 +65,7 @@
     overflow: visible;
     selectable: yes;
     tab: 8;
+    text: content;
     tracking: 0;
     transform: no;
     whitespace: collapse;
