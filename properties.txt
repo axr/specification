@@ -14,7 +14,7 @@
     font: <object>, …;
     focusable: yes | (no);
     height: <number> | (content);
-    isA: <object>, … | sel();
+    isA: <object>, …;
     margin: (no) | <object>, …;
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;

@@ -32,7 +32,6 @@
     level; Ⓡ
     margin: no;
     mask: no;
-    name; Ⓡ
     next: auto;
     on:;
     outerHeight; Ⓡ
@@ -43,6 +42,7 @@
     selectable: no;
     shape: @rectangle;
     speech: @read;
+    tag; Ⓡ
     targetable: no;
     text: @text;
     visible: inherit;

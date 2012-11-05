@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/11/04
+      Last changed: 2012/11/05
       HSS version: 1.0
-      Revision: 1.49
+      Revision: 1.50
 
 ****************************************************************-->
 
@@ -1207,15 +1207,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 }</pre>
 	<h5><a href="#n1.6.3.3" id="n1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
-<pre><span class="selector">people</span>
-{
-    <span class="comment">//applies the properties set on all the <em>citizen</em> elements
-    //to the <em>people</em> element in respect to the cascade</span>
-    <span class="property">isA</span>: sel(<span class="selector">@root .. citizen</span>);
-}</pre>
 	<h4 class="subsec"><a id="n1.6.3.b">Type conversion functions</a></h4>
 	<h5><a href="#n1.6.3.4" id="n1.6.3.4">The object function</a></h5>
-	<p>It can be used anywhere object names are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence normally. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
+	<p>It can be used anywhere objects are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence normally. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//sets the background to black using a keyword</span>
@@ -1229,7 +1223,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">background</span>: obj(bg);
 }</pre>
 	<h5><a href="#n1.6.3.5" id="n1.6.3.5">The keyword function</a></h5>
-	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <span class="compound-word">single-word</span> strings to keywords. It also filters what's passed to it by discarding numbers and <span class="compound-word">multi-word</span> strings.</p>
+	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <span class="compound-word">single-word</span> strings to keywords. It also filters what's passed to it by discarding numbers, objects and <span class="compound-word">multi-word</span> strings.</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//assuming we have a <em>visible</em> attribute set on the element
@@ -1238,7 +1232,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">visible</span>: kwd(attr(visible));
 }</pre>
 	<h5><a href="#n1.6.3.6" id="n1.6.3.6">The string function</a></h5>
+	<p><code>str()</code> can be used anywhere strings are accepted. It stringifies what's passed to it.</p>
 	<h5><a href="#n1.6.3.7" id="n1.6.3.7">The number function</a></h5>
+	<p><code>num()</code> can be used anywhere numbers are accepted. It converts strings into numbers (provided that they contain precisely one number). It also filters what's passed to it by discarding keywords and objects.</p>
 	<h4 class="subsec"><a id="n1.6.3.c">Arithmetic functions</a></h4>
 	<h5><a href="#n1.6.3.8" id="n1.6.3.8">The bounding functions</a></h5>
 	<p>Using the bounding functions you can constrain numeric values to certain limits.</p>
