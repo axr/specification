@@ -478,7 +478,7 @@
 
 		<h4><span class="number"><a href="#n1.2.3" id="n1.2.3">1.2.3</a></span> Properties</h4>
 		<p>Each element in the document has a certain amount of <a href="#n1.6">properties</a>, which you can define using property definitions. They are contained within the block that follows a selector chain.</p>
-		<p>A property declaration is composed of the name of the property, followed by optional whitespace, a colon and again optional whitespace, and finally either a literal value, an expression, a function or an object. More whitespace can come afterwards, as well. If it is not the last property declaration of the block, it must be ended by a semicolon, to denote that it finishes on that place, and that what follows is something else.</p>
+		<p>A property declaration is composed of the name of the property followed by optional whitespace, a colon, and finally, preceded by optional whitespace, comes either a literal value, an expression, a function or an object. More whitespace can come afterwards, as well. If it is not the last property declaration of the block, it must be ended by a semicolon, to denote that it finishes on that place, and that what follows is something else.</p>
 		<p>Here are some examples:</p>
 <pre><span class="selector">document</span>
 {
@@ -1102,7 +1102,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> Object filter</h4>
-<p>In HSS, elements are container objects. Furthermore, there are objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axr.vg/@container">@container</a> which have additional properties: without the object filter you couldn't target them specifically.</p>
+<p>In HSS, elements are container objects. Furthermore, the objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axr.vg/@container">@container</a> have additional properties: without the object filter you couldn't target them specifically.</p>
 <pre><span class="comment">//this matches @container objects indiscriminately</span>
 <span class="selector">element</span> { }
 <span class="comment">//this matches image elements</span>
