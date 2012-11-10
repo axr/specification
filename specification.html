@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/11/05
+      Last changed: 2012/11/10
       HSS version: 1.0
-      Revision: 1.50
+      Revision: 1.51
 
 ****************************************************************-->
 
@@ -240,7 +240,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 610px;
+		height: 625px;
 	}
 
 	nav > ul > li
@@ -404,6 +404,7 @@
 	     <li><a href="#n1.5.8">Collection filters</a></li>
 	     <li><a href="#n1.5.9">Custom macros</a></li>
 	     <li><a href="#n1.5.10">User flags</a></li>
+	     <li><a href="#n1.5.11">Object filter</a></li>
 	</ul>
 </li>
 <li><a href="#n1.6">Properties</a>
@@ -1098,6 +1099,16 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a href="#n1.5.10" id="n1.5.10">1.5.10</a></span> User flags</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
+<div class="sub yet">
+<h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> Object filter</h4>
+<p>In HSS, elements are container objects. Furthermore, there are objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axr.vg/@container">@container</a> which have additional properties: without the object filter you couldn't target them specifically.</p>
+<pre><span class="comment">//this matches @container objects indiscriminately</span>
+<span class="selector">element</span> { }
+<span class="comment">//this matches image elements</span>
+<span class="selector">element</span><span class="filter">:@image</span> { }
+<span class="comment">//this matches video elements</span>
+<span class="selector">element</span><span class="filter">:@video</span> { }</pre>
+</div>
 </section>
 <section class="chapter">
 	<h3 class="title"><span class="number"><a href="#n1.6" id="n1.6">1.6</a></span> Properties</h3>
@@ -1266,6 +1277,35 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 		<li><code>min(variable, static)</code> and <code>max(variable, static)</code></li>
 	</ul>
 	<p><em>Note:</em> the third argument of the bound function must always be greater than the first one.</p>
+	<h5><a href="#n1.6.3.9" id="n1.6.3.9">The rounding functions</a></h5>
+<pre><span class="comment">//346</span>
+round(<span class="number">346.238</span>)
+<span class="comment">//346.24</span>
+round(<span class="number">346.238</span>, 2)
+<span class="comment">//300</span>
+round(<span class="number">346.238</span>, -2)
+<span class="comment">//347</span>
+round(<span class="number">346.238</span>, odd)
+<span class="comment">//346</span>
+round(<span class="number">346.238</span>, even)</pre>
+
+<pre><span class="comment">//347</span>
+ceil(<span class="number">346.238</span>)
+<span class="comment">//-346</span>
+ceil(<span class="number">-346.238</span>)
+<span class="comment">//346.24</span>
+ceil(<span class="number">346.238</span>, 2)
+<span class="comment">//400</span>
+ceil(<span class="number">346.238</span>, -2)</pre>
+
+<pre><span class="comment">//346</span>
+floor(<span class="number">346.238</span>)
+<span class="comment">//-347</span>
+floor(<span class="number">-346.238</span>)
+<span class="comment">//346.23</span>
+floor(<span class="number">346.238</span>, 2)
+<span class="comment">//300</span>
+floor(<span class="number">346.238</span>, -2)</pre>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a href="#n1.6.4" id="n1.6.4">1.6.4</a></span> Color</h4>
