@@ -372,7 +372,7 @@
 </li>
 <li><a href="#n1.3">Selectors</a>
 	<ul>
-	     <li><a href="#n1.3.1">A simple selector</a></li>
+	     <li><a href="#n1.3.1">Element name</a></li>
 	     <li><a href="#n1.3.2">Hierarchy &amp; Scope</a></li>
 	     <li><a href="#n1.3.3">Grouping</a></li>
 	     <li><a href="#n1.3.4">The universal selector</a></li>
@@ -465,8 +465,7 @@
 
 		<h4><span class="number"><a href="#n1.2.2" id="n1.2.2">1.2.2</a></span> Selector basic principles</h4>
 		<p><a href="#n1.3">Selectors</a> are used to point to certain elements of the document, so that the properties defined inside of the block get applied to them. You define a search pattern and all applicable elements will be searched to see if the conditions match. If so, the property definitions are applied.</p>
-		<p><a href="#n1.3.1">Simple selectors</a> are the element name or <a href="#n1.3.4">universal selector</a>, combined with one or several appended <a href="#n1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#n1.4">combinators</a> is called the selector (or selector chain) and reads from left to right.</p>
-		<p>In order to access elements' parents or the root element you can use the <span class="object">@root</span> and <span class="object">@parent</span> <a href="#n1.3.7">reference objects</a>. <a href="#n1.3.6">Regular expressions</a> are also available to select elements based on their name.</p>
+		<p>Simple selectors are the <a href="#n1.3.1">element names</a>, the <a href="#n1.3.4">universal selector</a> and <a href="#n1.3.7">reference objects</a>, combined with one or several appended <a href="#n1.5">filters, flags or splitters</a>. A series of simple selectors joined by <a href="#n1.4">combinators</a> is called the selector (or selector chain) and reads from left to right.</p>
 		<p>Some examples:</p>
 <pre><span class="comment">//select elements with name "document"</span>
 <span class="selector">document</span> { }
@@ -479,7 +478,7 @@
 
 		<h4><span class="number"><a href="#n1.2.3" id="n1.2.3">1.2.3</a></span> Properties</h4>
 		<p>Each element in the document has a certain amount of <a href="#n1.6">properties</a>, which you can define using property definitions. They are contained within the block that follows a selector chain.</p>
-		<p>To write a property declaration simply place the name of the property, followed by a colon and optional whitespace, and then followed by a literal value, an expression, a function or an object. More whitespace can come afterwards, as well. If it is not the last property declaration of the block, it must be ended by a semicolon, to denote that it finishes on that place, and that what follows is something else.</p>
+		<p>A property declaration is composed of the name of the property, followed by optional whitespace, a colon and again optional whitespace, and finally either a literal value, an expression, a function or an object. More whitespace can come afterwards, as well. If it is not the last property declaration of the block, it must be ended by a semicolon, to denote that it finishes on that place, and that what follows is something else.</p>
 		<p>Here are some examples:</p>
 <pre><span class="selector">document</span>
 {
@@ -515,7 +514,7 @@
 #TODO <a href="https://github.com/AXR/Specification/issues/68">Issue 68</a>
 <div class="sub part">
 		<h4><span class="number"><a href="#n1.2.6" id="n1.2.6">1.2.6</a></span> The negator</h4>
-		<p>You can negate <a href="#n1.3.1">simple selectors</a> by prefixing them with <code>!</code>, meaning that all elements in the current scope that don't match the selector will be selected.</p>
+		<p>You can negate simple selectors by prefixing them with <code>!</code>, meaning that all elements in the current scope that don't match the selector will be selected.</p>
 <pre><span class="comment">//this selects all elements except note ones</span>
 <span class="modifier">!</span><span class="selector">note</span> { }</pre>
 		<p>Likewise you can negate filters and flags.</p>
@@ -549,8 +548,8 @@
 
 		<p>In the following examples we will be using rules, but without property definitions for clarity. We will assume that this xml snippet could be inserted anywhere: the <em>note</em> element doesn't necessarily represent the root of the xml document.</p>
 <div class="sub comp">
-		<h4><span class="number"><a href="#n1.3.1" id="n1.3.1">1.3.1</a></span> A simple selector</h4>
-		<p>You can target an element by its name. </p>
+		<h4><span class="number"><a href="#n1.3.1" id="n1.3.1">1.3.1</a></span> Element name</h4>
+		<p>You can target an element by its tag name.</p>
 <pre><span class="comment">//match every note element (within the current scope) and apply
 //the style rules declared within the block (in this case none)</span>
 <span class="selector">note</span> { }</pre>
