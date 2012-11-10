@@ -10,6 +10,7 @@
     contentAlignY: (top) | bottom | center/middle | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
     draggable: yes | (no);
+    effects: (no) | <object>;
     flow: (yes) | no;
     font: <object>, …;
     focusable: yes | (no);

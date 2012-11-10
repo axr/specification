@@ -22,6 +22,7 @@
     count; Ⓡ
     direction: ltr;
     draggable: no;
+    effects: no;
     flow: yes;
     font: inherit;
     focusable: no;
