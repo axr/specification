@@ -16,11 +16,11 @@
     focusable: yes | (no);
     height: <number> | (content);
     isA: <object>, …;
-    margin: (no) | <object>, …;
+    margin: (no) | <number> | <object>, …;
     mask: (no) | <object> | sel();
     next: (auto) | sel() | return;
     on: <object>, …;
-    padding: (no) | <object>, …;
+    padding: (no) | <number> | <object>, …;
     previous: (auto) | sel() | return;
     selectable: yes | (no);
     shape: <object>;
@@ -37,14 +37,14 @@
     alignX: (start) | end | left | right | center | justify | <number>;
     alignY: (baseline) | sup | sub | top | bottom | middle | <number>;
     background: (no) | <object>, …;
-    decoration: (no) | @{ position: over | through | descender | below; };²
+    decoration: (no) | overline | underline | strike | <object>;
     direction: (ltr) | rtl | ttb | btt;
     font: <object>, …;
     hangingPunctuation: (no) | first | last | end;
     height: <number>;
     indent: <N>;
     lineWrap: (break) | nowrap | preserve | prewrap;
-    overflow: (visible) | hidden | @{<string>, last} | @{<string>, all};¹
+    overflow: (visible) | hidden | <string>¹ | @{<string>, last} | @{<string>, all};
     selectable: (yes) | no;
     tab: <N>;
     text: no | (content) | <string>;
@@ -61,7 +61,7 @@
     size: <N>;
     color: <object>;
     style: (no) | oblique | italic;
-    weight: keyword | weight class;³
+    weight: <keyword> | <weight class>;²
     kerning: (yes) | no;
     src: <string>, …;
     fauxBold: yes | (no);
@@ -82,8 +82,5 @@
     overflow: @{<string>, last};
 
 ²
-    decoration accepts any line object
-
-³
     keywords: hairline, thin, ultraLight, extraLight, light, book, (normal), medium, semiBold, bold, extraBold, heavy, black, extraBlack, ultraBlack
     weight classes: 100 (thin), 200 (extralight), 300 (light), 400 (normal), 500 (medium), 600 (semibold), 700 (bold), 800 (heavy), 900 (black)
