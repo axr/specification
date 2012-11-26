@@ -80,14 +80,13 @@
     color: #0;
     ex; Ⓡ
     face; Ⓡ
-    faces: src;
+    faces: default;
     fauxBold: no;
     fauxItalic: no;
     kerning: yes;
     maxHeight; Ⓡ
     size: 16;
     sizeAdjust: @self.ex / @self.size;
-    src: default;
     style: no;
     stretch: no;
     weight: 400;
