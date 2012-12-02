@@ -1,13 +1,13 @@
 ﻿@container {
     anchorX: (no) | <number>;
     anchorY: (no) | <number>;
-    alignX: left | right | center/middle | justify | even | <number>;
-    alignY: top | bottom | center/middle | justify | even | <number>;
+    alignX: left | right | center | justify | even | <number>;
+    alignY: top | bottom | center | justify | even | <number>;
     attr: (no) | @value { <name>:<string>; …; };
     background: (no) | <object>, …;
     contained: (yes) | no;
-    contentAlignX: (left) | right | center/middle | justify | even | <number>;
-    contentAlignY: (top) | bottom | center/middle | justify | even | <number>;
+    contentAlignX: (left) | right | center | justify | even | <number>;
+    contentAlignY: (top) | bottom | center | justify | even | <number>;
     direction: (ltr) | rtl | ttb | btt;
     draggable: yes | (no);
     effects: (no) | <object>;
@@ -34,8 +34,8 @@
 }
 
 @text {
-    alignX: (start) | end | left | right | center/middle | justify | <number>;
-    alignY: (baseline) | sup | sub | top | bottom | center/middle | <number>;
+    alignX: (start) | end | left | right | center | justify | <number>;
+    alignY: (baseline) | sup | sub | top | bottom | center | <number>;
     background: (no) | <object>, …;
     decoration: (no) | overline | underline | strike | <object>;
     direction: (ltr) | rtl | ttb | btt;
