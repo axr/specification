@@ -20,6 +20,7 @@
     contentAlignX: left;
     contentAlignY: top;
     count; Ⓡ
+    cursor: auto;
     direction: ltr;
     draggable: no;
     effects: no;
@@ -56,6 +57,7 @@
     alignX: start;
     alignY: baseline;
     background: no;
+    cursor: auto;
     decoration: no;
     direction: inherit;
     font: @this.font;
