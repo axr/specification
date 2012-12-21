@@ -1007,8 +1007,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">*</span>:(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }
 <span class="comment">//matches any element which surface is square shaped</span>
 <span class="selector">*</span>:(<span class="property">height</span> = ref(<span class="property">width</span>)) { }
-<span class="comment">//matches any element which height's value returns a number</span>
-<span class="selector">*</span>:(<span class="property">height</span>.<span class="property">type</span> = <span class="string">"number"</span>) { }</pre>
+<span class="comment">//matches any element which margin's value returns a number</span>
+<span class="selector">*</span>:(<span class="property">margin</span>.<span class="property">type</span> = <span class="string">"number"</span>) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub yet">
@@ -1109,11 +1109,11 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> Object filter</h4>
 <p>In HSS, elements are container objects. Furthermore, the objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axr.vg/@container">@container</a> have additional properties: without the object filter you couldn't target them specifically.</p>
 <pre><span class="comment">//this matches @container objects indiscriminately</span>
-<span class="selector">element</span> { }
+<span class="selector">*</span> { }
 <span class="comment">//this matches image elements</span>
-<span class="selector">element</span><span class="filter">:@image</span> { }
+<span class="selector">*</span><span class="filter">:@image</span> { }
 <span class="comment">//this matches video elements</span>
-<span class="selector">element</span><span class="filter">:@video</span> { }</pre>
+<span class="selector">*</span><span class="filter">:@video</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
