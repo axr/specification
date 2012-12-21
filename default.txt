@@ -66,6 +66,7 @@
     indent: 0;
     lineWrap: break;
     overflow: visible;
+    margin: no;
     selectable: yes;
     tab: 8;
     text: content;

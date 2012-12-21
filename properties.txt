@@ -47,6 +47,7 @@
     indent: <ℕ>;
     lineWrap: (break) | nowrap | preserve | prewrap;
     overflow: (visible) | hidden | <string>;
+    margin: (no) | <number> | <object>, …;
     selectable: (yes) | no;
     tab: <ℕ>;
     text: no | (content) | <string>;
