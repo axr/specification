@@ -43,7 +43,7 @@
     direction: (ltr) | rtl | ttb | btt;
     font: <object>, …;
     hangingPunctuation: (no) | first | last | end;
-    height: <number>;
+    height: <number> | content;
     indent: <ℕ>;
     lineWrap: (break) | nowrap | preserve | prewrap;
     overflow: (visible) | hidden | <string>;
@@ -53,10 +53,12 @@
     text: no | (content) | <string>;
     tracking: <ℕ>;
     transform: (no) | capitalize | uppercase | lowercase;
+    width: <number> | (content);
     whitespace: (collapse) | preserve;
     wordSpacing: <ℕ>;
     wrap: (auto) | breakword | hyphenate;
     wrapDirection: (ttb) | btt | rtl | ltr;
+    z: <ℤ>;
 }
 
 @font {

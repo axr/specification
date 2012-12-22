@@ -73,9 +73,11 @@
     tracking: 0;
     transform: no;
     whitespace: collapse;
+    width: content;
     wordSpacing: 0;
     wrap: auto;
     wrapDirection: inherit;
+    z: 0;
 }
 
 @font {
