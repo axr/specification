@@ -66,7 +66,7 @@
     size: <ℕ>;
     color: <object>;
     style: (no) | oblique | italic;
-    weight: <keyword> | <weight class>, …;¹
+    weight: <keyword> | <weight class>;¹
     kerning: (yes) | no;
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
