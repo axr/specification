@@ -7,7 +7,7 @@
 
       AUTHORS: Miro Keller and collaborators
 
-      COPYRIGHT: (c)2011 - All Rights Reserved
+      COPYRIGHT: (c)2013 - All Rights Reserved
 
       LICENSE: see License.txt file
 
@@ -315,7 +315,7 @@
 	{
 		display:none;
 	}
-	
+
 	h4 span.number:hover:before, h3 span.number:hover:before
 	{
 		content:"\2735";
@@ -449,7 +449,7 @@
 <section class="chapter">
 		<h3><span class="number"><a href="#n1.1" id="n1.1">1.1</a></span> Introduction</h3>
 		<p>HSS stands for Hierarchical Style Sheets and it is the language used to instruct the AXR renderer how the various elements in the document should look like, how they are laid out and, to some extent, how they behave. The syntax of this language is inspired in CSS, but extending and altering it in various ways, to achieve powerful new ways of creating a web document. Therefore, HSS is not compatible with existing CSS files.</p>
-        <p class="center"><img src="http://static.axrproject.org/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
+		<p class="center"><img src="http://static.axrproject.org/images/spec/hss_logo.jpg" alt="Hierarchical Style Sheets Logo" /></p>
 		<p>HSS inherits the simplicity and clarity of CSS‌' syntax, but stops being a static language, bearing more similarity in some areas to other programming languages. The primary premise for this is the realization that a web page isn‌'t a simple hyperlinked text document anymore, but an interactive software, which presents itself to the user through an interface and performs some logic, which may or not be displaying a text document. With this in mind, and the environment in which the document will be accessed (a computing device with an arbitrary display size), it is clear that some sort of interface programming language is needed which is able to express relationships and behaviors, and allows advanced interactivity and layout.</p><p>HSS files are plain-text files, and thus can be edited by any text editor on any platform, although some of its features are better put to use through a visual editing tool, since using code in those cases is less intuitive.</p>
 </section>
 
@@ -774,7 +774,7 @@ A1:odd, A2:odd { }</pre>
 		<p>First, we have to understand what happens with the content text when it is rendered. An element is represented by a container, think of it as an amount of space in the rendered document and inside it the content text and the containing elements. The default height of the container is the height of its content.</p>
 		<p>When the width of the container is not wide enough to accommodate all its content text, wrapping occurs. This means that the text is split in various lines of text, and therefore the height increases. Now there are two or more blocks stacked over each other.</p>
 		<p>Conceptually, the text can be further split into elements. Each word is preceded, followed, or surrounded by whitespace. Furthermore, each character (letter, kanji&#8230;) of that word is a separate glyph you can refer to.</p>
-        <p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axrproject.org/images/spec/accessing_content_text.png" /></p>
+		<p><img alt="Graphic explaining the concept of lines, words and glyphs" src="http://static.axrproject.org/images/spec/accessing_content_text.png" /></p>
 		<p>To select portions of text, the content text combinator is used. After the combinator, you write a string to specify what part of the text you want to select.</p>
 <pre><span class="comment">//this will select any occurrence of "dummy text" and set
 //its height to 15 points</span>
@@ -1345,7 +1345,7 @@ floor(<span class="number">346.238</span>, -2)</pre>
 	    <span class="comment">//or</span>
      &#12291;	    #521C;
 </pre>
-    <p>Besides instructions, you can also use <strong>objects</strong> (<a href="http://hss.axrproject.org/@rgb">@rgb</a>, <a href="http://hss.axrproject.org/@cmyk">@cmyk</a> and <a href="http://hss.axrproject.org/@hsb">@hsb</a>) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
+	<p>Besides instructions, you can also use <strong>objects</strong> (<a href="http://hss.axrproject.org/@rgb">@rgb</a>, <a href="http://hss.axrproject.org/@cmyk">@cmyk</a> and <a href="http://hss.axrproject.org/@hsb">@hsb</a>) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a href="#n1.6.5" id="n1.6.5">1.6.5</a></span> Property grouping</h4>
