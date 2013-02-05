@@ -20,7 +20,7 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 
-# Copyright (c) 2012 AXR Project
+# Copyright (c) 2013 AXR Project
 # Modified from https://gist.github.com/1430166, revision
 # 1cd9c20edcfd5b4a37ebf2bff41e58806097f258, by Jake Petroules
 
