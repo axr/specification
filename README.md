@@ -1,4 +1,4 @@
-[The AXR Project](http://axr.vg/)
+[The AXR Project](http://axrproject.org/)
 ===============
 The AXR Project is a revolutionary open source project that will fundamentally
 improve our tools to create web sites and apps.
@@ -17,12 +17,12 @@ pointers, containers, and other functionality.
 
 Specification
 =============
-This repository hosts the current [working draft](http://spec.axr.vg/) of the
-specification of the HSS language.
+This repository hosts the current [working draft](http://spec.axrproject.org/)
+of the specification of the HSS language.
 
 Workflow
 ========
-We hold a [meeting](http://axr.vg/wiki/Spec_Meetings) on our
+We hold a [meeting](http://wiki.axrproject.org/Spec_Meetings) on our
 [IRC channel](irc://irc.freenode.net:6667/axr) once a week, and the issues are
 also often discussed in the comments of the
 [GitHub issues](https://github.com/axr/specification/issues).
