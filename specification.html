@@ -1006,9 +1006,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="comment">//matches all elements that are taller than 300 and not wider than 400</span>
 <span class="selector">*</span>:(<span class="property">height</span> &gt; <span class="number">300</span> &amp; <span class="property">width</span> &lt; <span class="number">400</span>) { }
 <span class="comment">//matches any element which surface is square shaped</span>
-<span class="selector">*</span>:(<span class="property">height</span> = ref(<span class="property">width</span>)) { }
-<span class="comment">//matches any element which margin's value returns a number</span>
-<span class="selector">*</span>:(<span class="property">margin</span>.<span class="property">type</span> = <span class="string">"number"</span>) { }</pre>
+<span class="selector">*</span>:(<span class="property">height</span> = ref(<span class="property">width</span>)) { }</pre>
 <p><em>Note:</em> If recursion occurences are detected the condition(s) will be evaluated in one pass thus the value(s) returned will always be the same.</p>
 </div>
 <div class="sub yet">
