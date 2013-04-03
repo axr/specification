@@ -20,6 +20,8 @@
     contentAlignX: left;
     contentAlignY: top;
     count; Ⓡ
+    dpcm; Ⓡ
+    dpi; Ⓡ
     cursor: auto;
     direction: ltr;
     draggable: no;
@@ -36,11 +38,13 @@
     mask: no;
     next: auto;
     on:;
+    orientation; Ⓡ
     outerHeight; Ⓡ
     outerWidth; Ⓡ
     overflows; Ⓡ
     padding: no;
     previous: auto;
+    ratio; Ⓡ
     selectable: no;
     shape: @rectangle;
     speech: @read;
