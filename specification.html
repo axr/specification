@@ -991,8 +991,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.6" id="n1.5.6">1.5.6</a></span> Property filters</h4>
 <p>Conditions are used to test whether an element is matched based on its properties. The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. The properties are on the left side of the comparator, the values on the right.</p>
-<pre><span class="comment">//matches all elements whose content text is <em>select me</em></span>
-<span class="selector">*</span>:(<span class="property">content</span> = "select me") { }
+<pre><span class="comment">//matches the elements whose title attribute's value is <em>AXR</em></span>
+<span class="selector">*</span>:(<span class="property">attr</span>.<span class="property">title</span> = "AXR") { }
 <span class="comment">//matches all elements with a background</span>
 <span class="selector">*</span>:(<span class="property">background</span>) { }
 <span class="comment">//which is equivalent to</span>
