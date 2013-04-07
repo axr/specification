@@ -80,6 +80,13 @@
     translation: (no) | locale | browser | system | user;
 }
 
+@window {
+    HTTP: ("standard") | "long polling" | "streaming" | <string>;
+    icon: <string>, …;
+    status: (auto) | visible | hidden;
+    title: <string> | no;
+}
+
 ¹
     keywords: hairline, thin, ultraLight, extraLight, light, book, (normal), medium, semiBold, bold, extraBold, heavy, black, extraBlack, ultraBlack
     weight classes: 100 (thin), 200 (extralight), 300 (light), 400 (normal), 500 (medium), 600 (semibold), 700 (bold), 800 (heavy), 900 (black)
