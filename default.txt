@@ -73,7 +73,7 @@
     margin: no;
     selectable: yes;
     tab: 8;
-    text: content;
+    value: content;
     tracking: 0;
     transform: no;
     whitespace: collapse;
@@ -111,6 +111,5 @@
     file; Ⓡ
     HTTP: "standard";
     icon: default;
-    status: auto;
     title: @this.file;
 }
