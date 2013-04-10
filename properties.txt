@@ -27,7 +27,7 @@
     shape: <object>;
     speech: (@read) | no;
     targetable: yes | (no);
-    text: <object>;
+    text: <object> | <string>;
     visible: (yes) | no;
     width: <number> | content;
     wrapDirection: (ttb) | btt | rtl | ltr;
