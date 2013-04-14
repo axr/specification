@@ -1012,10 +1012,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">*</span>:(<span class="property">background</span>) { }
 <span class="comment">//which is equivalent to</span>
 <span class="selector">*</span>:(<span class="property">background</span> != no) { }
-<span class="comment">//similarly, this matches invisible elements</span>
-<span class="selector">*</span>:(<span class="modifier">!</span><span class="property">visible</span>) { }
+<span class="comment">//similarly, this matches elements which were taken out of the flow</span>
+<span class="selector">*</span>:(<span class="modifier">!</span><span class="property">flow</span>) { }
 <span class="comment">//which is equivalent to</span>
-<span class="selector">*</span>:(<span class="property">visible</span> = no) { }
+<span class="selector">*</span>:(<span class="property">flow</span> = no) { }
 <span class="comment">//matches all elements which are using a font object named <em>serif</em></span>
 <span class="selector">*</span>:(<span class="property">font</span> = serif) { }
 <span class="comment">//matches all elements that are taller than 300 and not wider than 400</span>
@@ -1231,9 +1231,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 {
     <span class="comment">//this would replace the content text of the element
     //by the value of its href attribute</span>
-    <span class="property">content</span>: attr(href of <span class="object">@this</span>);
+    <span class="property">text</span>: attr(href);
     <span class="comment">//which is equivalent to</span>
-    <span class="property">content</span>: attr(href);
+    <span class="property">text.value</span>: attr(href of <span class="object">@this</span>);
 }</pre>
 	<h5><a href="#n1.6.3.3" id="n1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
