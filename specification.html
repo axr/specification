@@ -1223,7 +1223,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this reference won't return anything</span>
     <span class="property">background</span>: ref(<span class="property">background</span> of <span class="object">@this</span> <span class="selector">*</span>);
     <span class="comment">//this one returns #0</span>
-    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="object">@this</span> <span class="selector">*</span><span class="filter">:odd</span></span>);
+    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="object">@this</span> <span class="selector">*</span><span class="filter">:odd</span>);
 }</pre>
 	<h5><a href="#n1.6.3.2" id="n1.6.3.2">The attribute function</a></h5>
 	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
