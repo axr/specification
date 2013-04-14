@@ -111,5 +111,5 @@
     file; Ⓡ
     HTTP: "standard";
     icon: default;
-    title: @window.file;
+    title: @self.file;
 }

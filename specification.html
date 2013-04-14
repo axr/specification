@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2012/11/10
+      Last changed: 2013/04/14
       HSS version: 1.0
-      Revision: 1.52
+      Revision: 1.53
 
 ****************************************************************-->
 
@@ -665,44 +665,59 @@ A1:odd, A2:odd { }</pre>
 <span class="selector">element</span>
 {
     <span class="property">height</span>: 100%;
-    <span class="property">width</span>:  @this.height;
+    <span class="property">width</span>:  <span class="object">@this</span>.<span class="property">height</span>;
 }</pre>
 		<p>The <a href="#n1.3.7.2" id="n1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#n1.7.3">anonymous objects</a>.</p>
-<pre><span class="comment">//this would set the pattern's width value to the current
-//pattern's height <em>computed</em> value</span>
-<span class="object">@pattern</span>
+<pre><span class="combinator">..</span> <span class="selector">element</span>
 {
-    <span class="property">height</span>: 100%;
-    <span class="property">width</span>:  @self.height;
+    <span class="comment">//@self refers to the default value
+    //of the text property (<a href="http://hss.axrproject.org/@text">@text</a>)</span>
+    <span class="property">text</span>.<span class="property">height</span>: 1.6 * ref(<span class="property">font</span>.<span class="property">size</span> of <span class="object">@self</span>);
 }</pre>
-		<p>The <a href="#n1.3.7.3" id="n1.3.7.3"><strong>root object</strong></a> refers to the topmost element, the one that encloses all others (excluding the viewport). This element is also the canvas, where all the other elements are drawn.</p>
+		<p>The <a href="#n1.3.7.3" id="n1.3.7.3"><strong>root object</strong></a> refers to the topmost element (<abbr title="also known as">AKA</abbr> document element), the one that encloses all others in the document.</p>
 <pre><span class="comment">//this sets the width of the <em>section</em> element(s)
 //to the same value as the width of the root element
-//if it is named "document"</span>
+//if it is named "document" (using the <a href="#f_is">is filter</a>)</span>
 <span class="combinator">..</span> <span class="selector">section</span>
 {
     <span class="property">width</span>: ref(<span class="property">width</span> of <span class="object">@root</span><span class="filter">:is(document)</span>);
 }</pre>
+		<p><em>Note:</em> You can turn a generic element into a root element <em>towards its descendants</em> using the <a href="http://hss.axrproject.org/@container#sandbox">sandbox property</a>.</p>
 		<p>The <a href="#n1.3.7.4" id="n1.3.7.4"><strong>parent object</strong></a> refers to the parent of the preceding element in the selector chain or (if there's none before) to the parent of the element which is currently affected by the styling rule containing <span class="object">@parent</span>.</p>
 <pre><span class="comment">//set the messages' width to a third of their own parents' height</span>
 <span class="combinator">..</span> <span class="selector">message</span>
 {
     <span class="property">width</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>) / <span class="number">3</span>;
 }
-<span class="comment">//this reference would return nothing (the root element doesn't have a parent)</span>
-<span class="selector">@root</span>
+<span class="comment">//this reference would return nothing since
+//the headmost root element is devoid of any ancestor</span>
+<span class="object">@root</span>
 {
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@parent</span>);
+}
+<span class="comment">//in case @parent starts the selector chain
+//it relates to the current @this</span>
+<span class="combinator">..</span> <span class="selector">message</span>
+{
+    <span class="object">@parent</span> { }
+    <span class="comment">//resolves to</span>
+    <span class="object">@this</span> <span class="object">@parent</span> { }
 }</pre>
 		<p>The <a href="#n1.3.7.5" id="n1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole. It is particularly useful in case the rightmost selector is unknown.</p>
-<pre><span class="object">@container</span> maxHeight
+<pre><span class="comment">//to be later used as a value of <a href="http://hss.axrproject.org/@container#isA">isA</a></span>
+<span class="object">@container</span> maxHeight
 {
     <span class="comment">//this sets the height of the elements matched
     //to the height of whichever is currently the tallest</span>
-    <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="selector">@these</span>);
+    <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="object">@these</span>);
 }</pre>
 		<p>The <a href="#n1.3.7.6" id="n1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
 #TODO example
+		<p>The <a href="http://hss.axrproject.org/@window" id="n1.3.7.7"><strong>window object</strong></a> holds the properties pertaining to the window.</p>
+<pre><span class="object">@window</span>
+{
+    <span class="property">title</span>: <span class="string">"This is my custom title."</span>;
+}</pre>
 </div>
 </section>
 <section class="chapter">
@@ -1048,7 +1063,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:amount</span>(&gt;= <span class="number">4</span>) { }
 <span class="comment">//this matches the type collections which exactly return 4 elements</span>
 <span class="splitter">/type</span><span class="filter">:amount</span>(<span class="number">4</span>) { }</pre>
-	<p>The <strong>is filter</strong> lets you filter the returned collection(s) by a particular element type.</p>
+	<p>The <a id="f_is"><strong>is filter</strong></a> lets you filter the returned collection(s) by a particular element type.</p>
 <pre><span class="selector">notes</span>
 {
 	<span class="comment">//this will only match the <strong>first siblings</strong> following <em>from</em> elements
@@ -1156,7 +1171,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 
 <span class="comment">//using the <a href="http://hss.axrproject.org/@these#count">count property</a>, this permits to perfectly fit
 //the <em>child</em> element(s) in their parent to prevent wrapping</span>
-<span class="selector">parent child</span> { <span class="property">width</span>: 100% / @these.count); }</pre>
+<span class="selector">parent child</span> { <span class="property">width</span>: 100% / <span class="object">@these</span>.<span class="property">count</span>); }</pre>
 	</div>
 	<div class="sub part">
 	<h4 class="title"><span class="number"><a href="#n1.6.3" id="n1.6.3">1.6.3</a></span> Functions</h4>
@@ -1185,7 +1200,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p>In case you are referencing another property of the element(s) on which you are declaring the reference, a shorthand exists:</p>
 <pre><span class="selector">parent</span>
 {
-    <span class="property">height</span>: ref(<span class="property">width</span> of <span class="selector">@this</span>);
+    <span class="property">height</span>: ref(<span class="property">width</span> of <span class="object">@this</span>);
     <span class="comment">//which is equivalent to</span>
     <span class="property">height</span>: ref(<span class="property">width</span>);
 }</pre>
@@ -1196,7 +1211,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //to the width of whichever is currently the widest child</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">*</span>);
     <span class="comment">//which is equivalent to</span>
-    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">@these</span>);
+    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="object">@these</span>);
 }</pre>
 	<p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#n1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
@@ -1206,9 +1221,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="selector">child3</span> { <span class="property">background</span>: #0 }
 
     <span class="comment">//this reference won't return anything</span>
-    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *</span>);
+    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="object">@this</span> <span class="selector">*</span>);
     <span class="comment">//this one returns #0</span>
-    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="selector">@this *<span class="filter">:odd</span></span>);
+    <span class="property">background</span>: ref(<span class="property">background</span> of <span class="object">@this</span> <span class="selector">*</span><span class="filter">:odd</span></span>);
 }</pre>
 	<h5><a href="#n1.6.3.2" id="n1.6.3.2">The attribute function</a></h5>
 	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
@@ -1216,7 +1231,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 {
     <span class="comment">//this would replace the content text of the element
     //by the value of its href attribute</span>
-    <span class="property">content</span>: attr(href of <span class="selector">@this</span>);
+    <span class="property">content</span>: attr(href of <span class="object">@this</span>);
     <span class="comment">//which is equivalent to</span>
     <span class="property">content</span>: attr(href);
 }</pre>
