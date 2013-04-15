@@ -1,4 +1,4 @@
-﻿@container {
+@container {
     anchorX: (no) | <number>;
     anchorY: (no) | <number>;
     alignX: left | right | center | justify | even | <number>;
