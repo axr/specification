@@ -20,12 +20,12 @@ Specification
 This repository hosts the current [working draft](http://spec.axrproject.org/)
 of the specification of the HSS language.
 
-Workflow
+Contribute
 ========
-We hold a [meeting](http://wiki.axrproject.org/Spec_Meetings) on our
-[IRC channel](irc://irc.freenode.net:6667/axr) once a week, and the issues are
-also often discussed in the comments of the
-[GitHub issues](https://github.com/axr/specification/issues).
+Aside from taking part in the issues currently
+<a href="https://github.com/axr/specification/issues?labels=under+discussion">
+under discussion</a> and [filing issues](#where-to-file-bug-reports), you can
+ also engage us on our [IRC channel](irc://irc.freenode.net:6667/axr).
 
 License
 =======
@@ -71,6 +71,14 @@ Continuous Integration status
         <th>Status</th>
     </tr>
     <tr>
+        <td>Specification</td>
+        <td><a href="http://travis-ci.org/axr/specification"><img src="https://secure.travis-ci.org/axr/specification.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
+        <td>Website Data</td>
+        <td><a href="http://travis-ci.org/axr/website-data"><img src="https://secure.travis-ci.org/axr/website-data.png" alt="Build Status" /></a></td>
+    </tr>
+    <tr>
         <td>Core</td>
         <td><a href="http://travis-ci.org/axr/core"><img src="https://secure.travis-ci.org/axr/core.png" alt="Build Status" /></a></td>
     </tr>
@@ -81,17 +89,5 @@ Continuous Integration status
     <tr>
         <td>Plugin</td>
         <td><a href="http://travis-ci.org/axr/plugin"><img src="https://secure.travis-ci.org/axr/plugin.png" alt="Build Status" /></a></td>
-    </tr>
-    <tr>
-        <td>Examples</td>
-        <td><a href="http://travis-ci.org/axr/examples"><img src="https://secure.travis-ci.org/axr/examples.png" alt="Build Status" /></a></td>
-    </tr>
-    <tr>
-        <td>Specification</td>
-        <td><a href="http://travis-ci.org/axr/specification"><img src="https://secure.travis-ci.org/axr/specification.png" alt="Build Status" /></a></td>
-    </tr>
-    <tr>
-        <td>Extras</td>
-        <td><a href="http://travis-ci.org/axr/extras"><img src="https://secure.travis-ci.org/axr/extras.png" alt="Build Status" /></a></td>
     </tr>
 </table>
