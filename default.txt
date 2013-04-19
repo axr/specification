@@ -1,4 +1,4 @@
-@root {
+﻿@root {
     background: #F;
     font: @font;
     text: @text {
@@ -15,6 +15,7 @@
     anchorX: no;
     anchorY: no;
     attr: no;
+    border: no;
     background: no;
     contained: yes;
     contentAlignX: left;
@@ -112,4 +113,22 @@
     HTTP: "standard";
     icon: default;
     title: @self.file;
+}
+
+@stroke {
+    color: #0;
+    offset: 0;
+    position: center;
+    segments: all;
+    size: 1;
+    style: solid;
+}
+
+@line {
+    color: #0;
+    shiftX: 0;
+    shiftY: 0;
+    size: 1;
+    style: solid;
+    type: underline;
 }

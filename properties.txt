@@ -1,9 +1,10 @@
-@container {
+﻿@container {
     anchorX: (no) | <number>;
     anchorY: (no) | <number>;
     alignX: left | right | center | justify | even | <number>;
     alignY: top | bottom | center | justify | even | <number>;
     attr: (no) | @value { <name>:<string>; …; };
+    border: (no) | <object>, …;
     background: (no) | <object>, …;
     contained: (yes) | no;
     contentAlignX: (left) | right | center | justify | even | <number>;
@@ -39,7 +40,7 @@
     alignY: (baseline) | sup | sub | top | bottom | center | <number>;
     background: (no) | <object>, …;
     cursor: no | (auto) | arrow | pointer | help | textX | textY | zoom | zoomIn | zoomOut | move | grab | drop;
-    decoration: (no) | overline | underline | strike | <object>;
+    decoration: (no) | [overline] | [underline] | [strike] | <object>, …;
     direction: (ltr) | rtl | ttb | btt;
     font: <object>, …;
     hangingPunctuation: (no) | first | last | end;
@@ -84,6 +85,24 @@
     HTTP: ("standard") | "long polling" | "streaming" | <string>;
     icon: <string>, …;
     title: <string> | no;
+}
+
+@stroke {
+    color: <object>;
+    offset: <ℕ> | -<ℕ>;
+    position: outside | inside | (center);
+    segments: (all) | top | bottom | left | right, …;
+    size: <ℕ>;
+    style: @dash | dotted | (solid) | wavy;
+}
+
+@line {
+    color: <object>;
+    shiftX: <ℕ> | -<ℕ>;
+    shiftY: <ℕ> | -<ℕ>;
+    size: <ℕ>;
+    style: @dash | dotted | (solid) | wavy;
+    type: overline | (underline) | strike;
 }
 
 ¹
