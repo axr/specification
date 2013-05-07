@@ -6,6 +6,7 @@
     attr: (no) | @value { <name>:<string>; …; };
     border: (no) | <object>, …;
     background: (no) | <object>, …;
+    break: yes | (no);
     contained: (yes) | no;
     contentAlignX: (left) | right | center | justify | even | <number>;
     contentAlignY: (top) | bottom | center | justify | even | <number>;

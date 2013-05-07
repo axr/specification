@@ -17,6 +17,7 @@
     attr: no;
     border: no;
     background: no;
+    break: no;
     contained: yes;
     contentAlignX: left;
     contentAlignY: top;
