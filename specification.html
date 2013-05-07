@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/04/14
+      Last changed: 2013/05/07
       HSS version: 1.0
-      Revision: 1.53
+      Revision: 1.54
 
 ****************************************************************-->
 
@@ -414,7 +414,7 @@
 	     <li class="hasSub"><a href="#n1.6.3">Functions</a>
 	     <ul>
 		<li><a href="#n1.6.3.a">Retrieval funtions</a></li>
-		<li><a href="#n1.6.3.b">Type conversion functions</a></li>
+		<li><a href="#n1.6.3.b">Type functions</a></li>
 		<li><a href="#n1.6.3.c">Arithmetic functions</a></li>
 	     </ul>
 	     </li>
@@ -422,6 +422,8 @@
 	     <li><a href="#n1.6.5">Grouping</a></li>
 	     <li><a href="#n1.6.6">The value selector</a></li>
 	     <li><a href="#n1.6.7">Boolean casting</a></li>
+	     <li><a href="#n1.6.8">Concatenation</a></li>
+	     <li><a href="#n1.6.9">Custom properties</a></li>
 	</ul>
 </li>
 <li><a href="#n1.7">Objects</a>
@@ -667,7 +669,7 @@ A1:odd, A2:odd { }</pre>
     <span class="property">height</span>: 100%;
     <span class="property">width</span>:  <span class="object">@this</span>.<span class="property">height</span>;
 }</pre>
-		<p>The <a href="#n1.3.7.2" id="n1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful with <a href="#n1.7.3">anonymous objects</a>.</p>
+		<p>The <a href="#n1.3.7.2" id="n1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful when it targets <a href="#n1.7.3">anonymous objects</a>.</p>
 <pre><span class="combinator">..</span> <span class="selector">element</span>
 {
     <span class="comment">//@self refers to the default value
@@ -711,8 +713,9 @@ A1:odd, A2:odd { }</pre>
     //to the height of whichever is currently the tallest</span>
     <span class="property">height</span>: ref(<span class="modifier">max</span> <span class="property">height</span> of <span class="object">@these</span>);
 }</pre>
-		<p>The <a href="#n1.3.7.6" id="n1.3.7.6"><strong>owner object</strong></a> refers to the object or element which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
+		<p>The <a href="#n1.3.7.6" id="n1.3.7.6"><strong>owner object</strong></a> refers to the object which immediately contains the current object. It's designed to retrieve values from varying or multiple owners.</p>
 #TODO example
+		<p><em>Reminder:</em> elements are objects of type container.</p>
 		<p>The <a href="http://hss.axrproject.org/@window" id="n1.3.7.7"><strong>window object</strong></a> holds the properties pertaining to the window.</p>
 <pre><span class="object">@window</span>
 {
@@ -761,9 +764,8 @@ A1:odd, A2:odd { }</pre>
 </div>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a href="#n1.4.5" id="n1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
-		<p><strong>Note:</strong> This section is just the explanation of the very basic idea, and may change soon.</p>
-		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements (see Layout of elements in Flow). You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#n1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
-#TODO link "Layout of elements in Flow"
+		<p><strong>Note:</strong> This section may be subject to change.</p>
+		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements. You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#n1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
 <pre><span class="comment">//this will select all the lines of elements inside of the
 //document element</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="selector">*</span> { }
@@ -776,7 +778,7 @@ A1:odd, A2:odd { }</pre>
 <span class="comment">//this will select all the subjacent lines inside of the first
 //line of elements</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="selector">*</span> { }</pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/37">Issue 37</a>
+#TODO <a href="https://github.com/AXR/Specification/issues/37">37</a> and <a href="https://github.com/AXR/Specification/issues/97">97</a>
 		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="#n1.3.7.4">parent object</a> will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub yet">
@@ -970,13 +972,11 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.5" id="n1.5.5">1.5.5</a></span> Text matching filters</h4>
-<p>These filters select elements which text&#8212;either the content text or the value of the attribute(s)&#8212;matches a given string, condition or pattern. You can use the sensitive argument to enable the case sensitivity.</p>
+<p>These filters select elements which text&#8212;either the content text or the value of the attribute(s)&#8212;matches a given string, condition or pattern.</p>
 <p>The <strong>contains filter</strong> matches elements that contain a given string in their texts.</p>
 <pre><span class="comment">//matches every element whose content text contains "reminder"
 //regardless of the case</span>
 <span class="filter">:contains</span>(<span class="string">"reminder"</span>) { }
-<span class="comment">//matches every element whose content text exactly contains "Reminder"</span>
-<span class="filter">:contains</span>(<span class="string">"Reminder"</span>, sensitive) { }
 <span class="comment">//matches every element whose title attribute contains "reminder"</span>
 :[title<span class="filter">:contains</span>(<span class="string">"reminder"</span>)] { }</pre>
 <p>The <strong>equals filter</strong> matches any element whose text is a given string.</p>
@@ -1233,13 +1233,13 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     //by the value of its href attribute</span>
     <span class="property">text</span>: attr(href);
     <span class="comment">//which is equivalent to</span>
-    <span class="property">text.value</span>: attr(href of <span class="object">@this</span>);
+    <span class="property">text</span>.<span class="property">value</span>: attr(href of <span class="object">@this</span>);
 }</pre>
 	<h5><a href="#n1.6.3.3" id="n1.6.3.3">The selector function</a></h5>
 	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
-	<h4 class="subsec"><a id="n1.6.3.b">Type conversion functions</a></h4>
+	<h4 class="subsec"><a id="n1.6.3.b">Type functions</a></h4>
 	<h5><a href="#n1.6.3.4" id="n1.6.3.4">The object function</a></h5>
-	<p>It can be used anywhere objects are accepted. It permits to enforce the type of the value when a property accept keywords <strong>and</strong> object names: in the event of a name clash the keyword takes precedence normally. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
+	<p>It can be used anywhere objects are accepted. Since keywords takes precedence in the event of a name clash between keywords and object names, this function permits to enforce the type of the value. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//sets the background to black using a keyword</span>
@@ -1390,10 +1390,21 @@ floor(<span class="number">346.238</span>, -2)</pre>
 	<p>Using the <a href="#n1.2.6">negator</a> you can convert a value to a boolean.</p>
 <pre><span class="comment">//this sets the property to <em>no</em> for any value
 //except !no which returns <em>yes</em></span>
-<span class="property">property</span>: <span class="modifier">!</span>value;
+<span class="property">property</span>: <span class="modifier">!</span>&lt;value&gt;;
 <span class="comment">//this sets the property to <em>yes</em> for any value
 //except !!no which returns <em>no</em></span>
-<span class="property">property</span>: <span class="modifier">!!</span>value;</pre>
+<span class="property">property</span>: <span class="modifier">!!</span>&lt;value&gt;;</pre>
+	</div>
+	<div class="sub yet">
+	<h4 class="title"><span class="number"><a href="#n1.6.8" id="n1.6.8">1.6.8</a></span> Concatenation</h4>
+	<p>Concatenating strings is achieved by apposing them next to each other. Optional whitespace can be inserted between the strings to improve readability.</p>
+<pre><span class="comment">//if the attribute's value were <em>example</em>
+//the resulting string would be "The example"</span>
+<span class="property">property</span>: <span class="string">"The "</span> attr(attribute of <span class="selector">selector</span>);</pre>
+	</div>
+	<div class="sub yet">
+	<h4 class="title"><span class="number"><a href="#n1.6.9" id="n1.6.9">1.6.9</a></span> Custom properties</h4>
+#TODO <a href="https://github.com/AXR/Specification/issues/94">Issue 94</a>
 	</div>
 </section>
 <section class="chapter">
