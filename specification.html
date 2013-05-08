@@ -293,6 +293,20 @@
 	{
 		content:" [supported]"
 	}
+	.sub.yet
+	{
+		filter: alpha(opacity=50);
+		-moz-opacity: 0.5;
+		-khtml-opacity: 0.5;
+		opacity: 0.5;
+	}
+	.sub.yet:hover
+	{
+		filter: alpha(opacity=100);
+		-moz-opacity: 1;
+		-khtml-opacity: 1;
+		opacity: 1;
+	}
 
 	h5:before
 	{
@@ -505,8 +519,8 @@
     <span class="property">shape</span>: <span class="object">@roundedRect</span> {
         <span class="property">corners</span>: <span class="number">5</span>;
     };
-    <span class="comment">//this adds a simple border, 3 points wide and black in color</span>
-    <span class="property">border</span>: <span class="object">@line</span> {
+    <span class="comment">//this adds a 3 points wide black border</span>
+    <span class="property">border</span>: <span class="object">@stroke</span> {
         <span class="property">size</span>: <span class="number">3</span>;
         <span class="property">color</span>: <span class="number">#000</span>;
     };
@@ -524,7 +538,7 @@
 <span class="selector">note</span><span class="modifier">!</span><span class="filter">:first</span> { }
 <span class="comment">//this selects any note element which is not being hovered</span>
 <span class="selector">note</span><span class="modifier">!</span><span class="flag">::hover</span> { }</pre>
-		<p>To negate an entire selector (including its filters or flags) you have to use <a href="#square">grouping brackets</a>.</p>
+		<p>To negate an entire selector (taking into account its filters and flags) you have to use <a href="#square">grouping brackets</a>.</p>
 <pre><span class="comment">//this matches all elements except the last note(s)</span>
 <span class="modifier">!</span>[<span class="selector">note</span><span class="filter">:last</span>] {}</pre>
 		<p>The negator can also be prepended to values.</p>

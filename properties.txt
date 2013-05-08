@@ -95,6 +95,7 @@
     segments: (all) | top | bottom | left | right, …;
     size: <ℕ>;
     style: @dash | dotted | (solid) | wavy;
+    z: <ℤ>;
 }
 
 @line {

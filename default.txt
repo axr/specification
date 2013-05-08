@@ -123,6 +123,7 @@
     segments: all;
     size: 1;
     style: solid;
+    z: @this.z;
 }
 
 @line {
