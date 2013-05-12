@@ -684,11 +684,10 @@ A1:odd, A2:odd { }</pre>
     <span class="property">width</span>:  <span class="object">@this</span>.<span class="property">height</span>;
 }</pre>
 		<p>The <a href="#n1.3.7.2" id="n1.3.7.2"><strong>self object</strong></a> refers to the current object which immediately contains it. It is especially useful when it targets <a href="#n1.7.3">anonymous objects</a>.</p>
-<pre><span class="combinator">..</span> <span class="selector">element</span>
+<pre><span class="comment">//sets the file name as the window's title</span>
+<span class="object">@window</span>
 {
-    <span class="comment">//@self refers to the default value
-    //of the text property (<a href="http://hss.axrproject.org/@text">@text</a>)</span>
-    <span class="property">text</span>.<span class="property">height</span>: 1.6 * ref(<span class="property">font</span>.<span class="property">size</span> of <span class="object">@self</span>);
+    <span class="property">title</span>: <span class="object">@self</span>.<span class="property">file</span>;
 }</pre>
 		<p>The <a href="#n1.3.7.3" id="n1.3.7.3"><strong>root object</strong></a> refers to the topmost element (<abbr title="also known as">AKA</abbr> document element), the one that encloses all others in the document.</p>
 <pre><span class="comment">//this sets the width of the <em>section</em> element(s)
