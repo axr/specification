@@ -22,6 +22,7 @@
     contentAlignX: left;
     contentAlignY: top;
     count; Ⓡ
+    depth; Ⓡ
     dpcm; Ⓡ
     dpi; Ⓡ
     cursor: auto;
@@ -35,7 +36,6 @@
     innerHeight; Ⓡ
     innerWidth; Ⓡ
     isA:;
-    level; Ⓡ
     margin: no;
     mask: no;
     next: auto;
