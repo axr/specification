@@ -964,11 +964,11 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <p>The <strong>focus flag</strong> matches the element that currently receives user input (through tabbing for example).</p>
 <pre><span class="comment">//matches every element which receives user input</span>
 <span class="flag">::focus</span> { }</pre>
-<p>The <strong>select flag</strong> matches characters or elements that are currently selected. It ceases if a click or a tap occurs afterward.</p>
+<p>The <strong>select flag</strong> matches either elements, lines, words or characters that are currently selected. It ceases if a click or a tap occurs afterward.</p>
 <pre><span class="comment">//matches elements which are currently selected</span>
 <span class="flag">::select</span> { }
-<span class="comment">//matches all characters that are currently selected</span>
-* <span class="combinator">&gt;</span> <span class="flag">::select</span> { }</pre>
+<span class="comment">//matches the characters that are currently selected</span>
+* <span class="combinator">&gt;&gt;&gt;</span> <span class="flag">::select</span> { }</pre>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.4" id="n1.5.4">1.5.4</a></span> The attribute filter</h4>
