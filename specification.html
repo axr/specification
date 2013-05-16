@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/05/07
+      Last changed: 2013/05/16
       HSS version: 1.0
-      Revision: 1.54
+      Revision: 1.55
 
 ****************************************************************-->
 
@@ -1065,6 +1065,32 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 //the first one contains 2 elements and the second only 1
 //here we are selecting the first element of each collection: <em>match0</em> and <em>match3</em></span>
 <span class="selector">matches</span> <span class="splitter">/attr(name)</span><span class="filter">:first</span> { }</pre>
+	<p>The <a id="s_lvl"><strong>level splitter</strong></a> permits to split the elements matched into one or several collections depending on their current depth level relative to the root element.</p>
+<pre class="xml">&lt;planets&gt;
+   &lt;terrestrials&gt;
+	&lt;mercury /&gt;
+	&lt;venus /&gt;
+	&lt;earth /&gt;
+	&lt;mars /&gt;
+   &lt;/terrestrials&gt;
+   &lt;jovians&gt;
+	&lt;neptune /&gt;
+	&lt;uranus /&gt;
+	&lt;saturn /&gt;
+	&lt;jupiter /&gt;
+   &lt;/jovians&gt;
+   &lt;dwarves&gt;
+	&lt;pluto /&gt;
+   &lt;/dwarves&gt;
+&lt;/planets&gt;</pre>
+<pre><span class="comment">//matches the third element of each level
+//in our example it would be <em>dwarves</em> and <em>earth</em></span>
+<span class="combinator">..</span> <span class="selector">*</span><span class="splitter">/level</span><span class="filter">:nth(<span class="number">3</span>)</span> { }
+<span class="comment">//matches the third element of the collection resulting
+//from the consolidation of the levels' collections
+//in our example it would be <em>dwarves</em> (<em>earth</em> is 6th)</span>
+<span class="combinator">..</span> [<span class="selector">*</span><span class="splitter">/level</span>]<span class="filter">:nth(<span class="number">3</span>)</span> { }
+</pre>
 	<p><em>Note:</em> You can't negate a splitter.</p>
 </div>
 <div class="sub yet">
@@ -1373,7 +1399,7 @@ floor(<span class="number">346.238</span>, -2)</pre>
 </pre>
 	<p>Besides instructions, you can also use <strong>objects</strong> (<a href="http://hss.axrproject.org/@rgb">@rgb</a>, <a href="http://hss.axrproject.org/@cmyk">@cmyk</a> and <a href="http://hss.axrproject.org/@hsb">@hsb</a>) and <strong>keywords</strong> (black, white and transparent) as color values.</p>
 	</div>
-	<div class="sub yet">
+	<div class="sub comp">
 	<h4 class="title"><span class="number"><a href="#n1.6.5" id="n1.6.5">1.6.5</a></span> Property grouping</h4>
 	<p>You can group two or more properties which share the same value(s).</p>
 <pre><span class="selector">element</span>
