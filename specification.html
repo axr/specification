@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/05/16
+      Last changed: 2013/05/25
       HSS version: 1.0
-      Revision: 1.55
+      Revision: 1.56
 
 ****************************************************************-->
 
@@ -413,12 +413,12 @@
 	     <li><a href="#n1.5.3">System flags</a></li>
 	     <li><a href="#n1.5.4">The attribute filter</a></li>
 	     <li><a href="#n1.5.5">Text matching filters</a></li>
-	     <li><a href="#n1.5.6">Property filters</a></li>
+	     <li><a href="#n1.5.6">The property filter</a></li>
 	     <li><a href="#n1.5.7">Splitters</a></li>
 	     <li><a href="#n1.5.8">Collection filters</a></li>
 	     <li><a href="#n1.5.9">Custom macros</a></li>
 	     <li><a href="#n1.5.10">User flags</a></li>
-	     <li><a href="#n1.5.11">Object filter</a></li>
+	     <li><a href="#n1.5.11">The isA filter</a></li>
 	</ul>
 </li>
 <li><a href="#n1.6">Properties</a>
@@ -920,7 +920,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="comment">//this matches elements whose index is 1, 2, 3 and &#8805; 8 in the collection</span>
 <span class="filter">:nth</span>(<span class="number">1</span>, <span class="number">3</span> &amp; <span class="number">8</span>, *) { }</pre>
 </div>
-<div class="sub yet">
+<div class="sub part">
 <h4 class="title"><span class="number"><a href="#n1.5.2" id="n1.5.2">1.5.2</a></span> Hierarchy filters</h4>
 		<p>You can filter elements by their relationship with the other elements in the tree.</p>
 		<p>The <strong>parent filter</strong> matches every element that is a parent, which means that it has at least one child. If the element is an ancestor it will always also be a parent.</p>
@@ -1017,7 +1017,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="filter">:length</span>(min) { }</pre>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a href="#n1.5.6" id="n1.5.6">1.5.6</a></span> Property filters</h4>
+<h4 class="title"><span class="number"><a href="#n1.5.6" id="n1.5.6">1.5.6</a></span> The property filter</h4>
 <p>Conditions are used to test whether an element is matched based on its properties. The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. The properties are on the left side of the comparator, the values on the right.</p>
 <pre><span class="comment">//matches the elements whose title attribute's value is <em>AXR</em></span>
 <span class="selector">*</span>:(<span class="property">attr</span>.<span class="property">title</span> = "AXR") { }
@@ -1158,14 +1158,14 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 #TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
 </div>
 <div class="sub yet">
-<h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> Object filter</h4>
-<p>In HSS, elements are container objects. Furthermore, the objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axrproject.org/@container">@container</a> have additional properties: without the object filter you couldn't target them specifically.</p>
+<h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> The isA filter</h4>
+<p>In HSS, elements are container objects. Furthermore, the objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axrproject.org/@container">@container</a> have additional properties: without filtering them by their object type you couldn't target them specifically.</p>
 <pre><span class="comment">//this matches @container objects indiscriminately</span>
 <span class="selector">*</span> { }
 <span class="comment">//this matches image elements</span>
-<span class="selector">*</span><span class="filter">:@image</span> { }
+<span class="selector">*</span><span class="filter">:isA(@image)</span> { }
 <span class="comment">//this matches video elements</span>
-<span class="selector">*</span><span class="filter">:@video</span> { }</pre>
+<span class="selector">*</span><span class="filter">:isA(@video)</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
@@ -1324,17 +1324,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//which is equivalent to</span>
     <span class="property">width</span>: min(200, max(400, 30%));
 }</pre>
-	<p>The bound function has two valid syntaxes:</p>
-	<ul>
-		<li><code>bound(variable, static, variable)</code></li>
-		<li><code>bound(static, variable, static)</code></li>
-	</ul>
-	<p>The max and min functions share the same syntaxes:</p>
-	<ul>
-		<li><code>min(static, variable)</code> and <code>max(static, variable)</code></li>
-		<li><code>min(variable, static)</code> and <code>max(variable, static)</code></li>
-	</ul>
 	<p><em>Note:</em> the third argument of the bound function must always be greater than the first one.</p>
+#TODO <a href="https://github.com/AXR/Specification/issues/99">Issue 99</a>
 	<h5><a href="#n1.6.3.9" id="n1.6.3.9">The rounding functions</a></h5>
 <pre><span class="comment">//346</span>
 round(<span class="number">346.238</span>)
