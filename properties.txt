@@ -40,6 +40,7 @@
     alignX: (start) | end | left | right | center | justify | <number>;
     alignY: (baseline) | sup | sub | top | bottom | center | <number>;
     background: (no) | <object>, …;
+    border: (no) | <object>, …;
     cursor: no | (auto) | arrow | pointer | help | textX | textY | zoom | zoomIn | zoomOut | move | grab | drop;
     decoration: (no) | [overline] | [underline] | [strike] | <object>, …;
     direction: (ltr) | rtl | ttb | btt;

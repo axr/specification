@@ -63,6 +63,7 @@
     alignX: start;
     alignY: baseline;
     background: no;
+    border: no;
     cursor: auto;
     decoration: no;
     direction: inherit;
