@@ -1,6 +1,7 @@
 ﻿@root {
     background: #F;
     font: @font;
+    sandbox: yes;
     text: @text {
           direction: ltr;
           wrapDirection: ttb;
@@ -47,6 +48,7 @@
     padding: no;
     previous: auto;
     ratio; Ⓡ
+    sandbox: no;
     selectable: no;
     shape: @rectangle;
     speech: @read;

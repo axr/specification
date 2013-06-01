@@ -25,6 +25,7 @@
     on: <object>, …;
     padding: (no) | [<number>] | <object>, …;
     previous: (auto) | sel() | return;
+    sandbox: yes | (no);
     selectable: yes | (no);
     shape: <object>;
     speech: (@read) | no;
