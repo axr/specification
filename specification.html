@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/05/25
+      Last changed: 2013/06/01
       HSS version: 1.0
-      Revision: 1.56
+      Revision: 1.57
 
 ****************************************************************-->
 
@@ -719,8 +719,8 @@ A1:odd, A2:odd { }</pre>
     <span class="object">@this</span> <span class="object">@parent</span> { }
 }</pre>
 		<p>The <a href="#n1.3.7.5" id="n1.3.7.5"><strong>these object</strong></a> refers to the nearest container(s) as a whole. It is particularly useful in case the rightmost selector is unknown.</p>
-<pre><span class="comment">//to be later used as a value of <a href="http://hss.axrproject.org/@container#isA">isA</a></span>
-<span class="object">@container</span> maxHeight
+<pre><span class="comment">//to be later used by the <a href="http://hss.axrproject.org/@container#isA">isA</a> property</span>
+<span class="object">@container</span> loftiest
 {
     <span class="comment">//this sets the height of the elements matched
     //to the height of whichever is currently the tallest</span>
@@ -1165,7 +1165,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="comment">//this matches image elements</span>
 <span class="selector">*</span><span class="filter">:isA(@image)</span> { }
 <span class="comment">//this matches video elements</span>
-<span class="selector">*</span><span class="filter">:isA(@video)</span> { }</pre>
+<span class="selector">*</span><span class="filter">:isA(@video)</span> { }
+<span class="comment">//object names are also accepted</span>
+<span class="selector">*</span><span class="filter">:isA(input)</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
@@ -1231,9 +1233,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//since the property referenced is the same
     //as the one we are setting, this is equivalent</span>
     <span class="property">height</span>: ref(of <span class="selector">child1</span>);
-    <span class="comment">//using the <a href="#n1.6.3.8">min function</a>, you can prevent
+    <span class="comment">//using the <a href="#n1.6.3.8">max function</a>, you can prevent
     //the child2's height from dropping below its content's height</span>
-    <span class="property">height</span>: min(content, ref(of <span class="selector">child1</span>));
+    <span class="property">height</span>: max(content, ref(of <span class="selector">child1</span>));
 }</pre>
 	<p>As you can see, the scope of the specified selector is the scope of the element on which you are declaring the reference. To select elements outside of that scope, the <span class="object">@parent</span> or <span class="object">@root</span> objects are used.</p>
 	<p>In case you are referencing another property of the element(s) on which you are declaring the reference, a shorthand exists:</p>
@@ -1261,7 +1263,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 
     <span class="comment">//this reference won't return anything</span>
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@this</span> <span class="selector">*</span>);
-    <span class="comment">//this one returns 50</span>
+    <span class="comment">//granted that the parent elements only have these 3 children
+    //this one returns 50</span>
     <span class="property">height</span>: ref(<span class="modifier">min</span> <span class="property">height</span> of <span class="object">@this</span> <span class="selector">*</span>);
 }</pre>
 	<h5><a href="#n1.6.3.2" id="n1.6.3.2">The attribute function</a></h5>
@@ -1275,7 +1278,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="property">text</span>.<span class="property">value</span>: attr(href of <span class="object">@this</span>);
 }</pre>
 	<h5><a href="#n1.6.3.3" id="n1.6.3.3">The selector function</a></h5>
-	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere elements are accepted.</p>
+	<p>The syntax is <code>sel(<span class="selector">selector</span>)</code> and can be used anywhere selectors are accepted.</p>
 	<h4 class="subsec"><a id="n1.6.3.b">Type functions</a></h4>
 	<h5><a href="#n1.6.3.4" id="n1.6.3.4">The object function</a></h5>
 	<p>It can be used anywhere objects are accepted. Since keywords takes precedence in the event of a name clash between keywords and object names, this function permits to enforce the type of the value. It can also be used to convert a string to an object name (granted that the outputted name is valid).</p>
@@ -1295,10 +1298,10 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p>It can be used anywhere keywords are accepted. It is mainly used to convert <span class="compound-word">single-word</span> strings to keywords. It also filters what's passed to it by discarding numbers, objects and <span class="compound-word">multi-word</span> strings.</p>
 <pre><span class="selector">element</span>
 {
-    <span class="comment">//assuming we have a <em>visible</em> attribute set on the element
+    <span class="comment">//assuming we have a <em>dir</em> attribute set on the element
     //its value would be converted to a keyword
     //it doesn't ensure it will be valid on this property</span>
-    <span class="property">visible</span>: kwd(attr(visible));
+    <span class="property">direction</span>: kwd(attr(dir));
 }</pre>
 	<h5><a href="#n1.6.3.6" id="n1.6.3.6">The string function</a></h5>
 	<p><code>str()</code> can be used anywhere strings are accepted. It stringifies what's passed to it.</p>
@@ -1306,26 +1309,26 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 	<p><code>num()</code> can be used anywhere numbers are accepted. It converts strings into numbers (provided that they contain precisely one number). It also filters what's passed to it by discarding keywords and objects.</p>
 	<h4 class="subsec"><a id="n1.6.3.c">Arithmetic functions</a></h4>
 	<h5><a href="#n1.6.3.8" id="n1.6.3.8">The bounding functions</a></h5>
-	<p>Using the bounding functions you can constrain numeric values to certain limits.</p>
+	<p>The <strong>max</strong> and <strong>min</strong> functions return respectively the largest and smallest value in a given list of numbers.</p>
 <pre><span class="selector">element</span>
 {
     <span class="comment">//if 20% of the parent's innerWidth represents less than 100
     //this sets the width to 100 and 20% otherwise</span>
-    <span class="property">width</span>: min(100, 20%);
+    <span class="property">width</span>: max(100, 20%);
     <span class="comment">//similarly, if 50% of the parent's innerWidth represents 300 or more
     //this sets the width to 300 and defaults to 50% in other cases</span>
-    <span class="property">width</span>: max(300, 50%);
-    <span class="comment">//this sets the width to 300 until the maximum threshold is reached
-    //at which point it locks itself at 50% of the parent's innerWidth</span>
-    <span class="property">width</span>: max(50%, 300);
+    <span class="property">width</span>: min(300, 50%);
+}</pre>
+	<p>Using the <strong>bound</strong> function you can constrain numeric values to certain limits.</p>
+<pre><span class="selector">element</span>
+{
     <span class="comment">//this sets a lower and an upper limit of respectively
     //200 for the minimum and 400 for the maximum</span>
     <span class="property">width</span>: bound(200, 30%, 400);
     <span class="comment">//which is equivalent to</span>
-    <span class="property">width</span>: min(200, max(400, 30%));
+    <span class="property">width</span>: max(200, min(30%, 400));
 }</pre>
 	<p><em>Note:</em> the third argument of the bound function must always be greater than the first one.</p>
-#TODO <a href="https://github.com/AXR/Specification/issues/99">Issue 99</a>
 	<h5><a href="#n1.6.3.9" id="n1.6.3.9">The rounding functions</a></h5>
 <pre><span class="comment">//346</span>
 round(<span class="number">346.238</span>)
