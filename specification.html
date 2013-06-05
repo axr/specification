@@ -844,9 +844,9 @@ A1:odd, A2:odd { }</pre>
 </div>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a href="#n1.4.7" id="n1.4.7">1.4.7</a></span> Ancestor combinator</h4>
-		<p>Ancestors can be selected using the ancestor combinator <code>&lt;&lt;</code>. If the elements matched previously don't share the same ancestors, the combined collection of ancestors&#8212;and not the common ones&#8212;will be returned.</p>
+		<p>Ancestors can be selected using the ancestor combinator <code>^^</code>. If the elements matched previously don't share the same ancestors, the combined collection of ancestors&#8212;and not the common ones&#8212;will be returned.</p>
 <pre><span class="comment">//matches every ancestors of <em>important</em> elements</span>
-<span class="combinator">..</span> <span class="selector">important</span> <span class="combinator">&lt;&lt;</span> <span class="selector">*</span> { }</pre>
+<span class="combinator">..</span> <span class="selector">important</span> <span class="combinator">^^</span> <span class="selector">*</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
@@ -931,7 +931,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="comment">//this matches elements that are an ancestor of a <em>message</em> element</span>
 <span class="filter">:has</span>(<span class="combinator">..</span> <span class="selector">message</span>) { }
 <span class="comment">//this matches elements that are a descendant of a <em>message</em> element</span>
-<span class="filter">:has</span>(<span class="combinator">&lt;&lt;</span> <span class="selector">message</span>) { }
+<span class="filter">:has</span>(<span class="combinator">^^</span> <span class="selector">message</span>) { }
 <span class="comment">//this matches elements which have at least one <em>message</em> sibling</span>
 <span class="filter">:has</span>(<span class="combinator">=</span> <span class="selector">message</span>) { }
 <span class="comment">//this matches elements which have at least one <em>message</em> sibling following them</span>
