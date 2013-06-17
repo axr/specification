@@ -75,7 +75,7 @@
     kerning: (yes) | no;
     fauxBold: yes | (no);
     fauxItalic: yes | (no);
-    stretch: (no) | ultraCondensed | extraCondensed | condensed | semiCondensed | semiExpanded | expanded | extraExpanded | ultraExpanded;
+    width: ultraCondensed | extraCondensed | condensed | semiCondensed | (normal) | semiExpanded | expanded | extraExpanded | ultraExpanded;
     sizeAdjust: <number>;
 }
 
