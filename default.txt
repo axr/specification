@@ -103,8 +103,8 @@
     size: 16;
     sizeAdjust: @self.ex / @self.size;
     style: no;
-    stretch: no;
     weight: 400;
+    width: normal;
 }
 
 @read {
