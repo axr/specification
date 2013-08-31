@@ -30,6 +30,7 @@
     direction: ltr;
     draggable: no;
     effects: no;
+    float: no;
     flow: yes;
     font: inherit;
     focusable: no;
