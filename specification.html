@@ -254,7 +254,7 @@
 		content:"1." counter(section) " ";
 	}
 
-	nav ul ul > li:before
+	nav > ul > li > ul > li:before
 	{
 		counter-increment:subsection;
 		content:"1." counter(section) "." counter(subsection) " ";
@@ -1261,8 +1261,8 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this reference won't return anything</span>
     <span class="property">height</span>: ref(<span class="property">height</span> of <span class="object">@this</span> <span class="selector">*</span>);
     <span class="comment">//granted that the parent elements only have these 3 children
-    //this one returns 50</span>
-    <span class="property">height</span>: ref(<span class="modifier">min</span> <span class="property">height</span> of <span class="object">@this</span> <span class="selector">*</span>);
+    //this one returns 300</span>
+    <span class="property">height</span>: ref(<span class="modifier">sum</span> <span class="property">height</span> of <span class="object">@this</span> <span class="selector">*</span>);
 }</pre>
 	<h5><a href="#n1.6.3.2" id="n1.6.3.2">The attribute function</a></h5>
 	<p>The syntax is <code>attr(attributeName of <span class="selector">selector</span>)</code> and can be used anywhere a string is accepted. Analogous to references, the function won't return anything if the elements matched don't share the same attribute's value.</p>
