@@ -1250,8 +1250,6 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
     <span class="comment">//this sets the width of the children of each parent element
     //to the width of whichever is currently the widest child</span>
     <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="selector">*</span>);
-    <span class="comment">//which is equivalent to</span>
-    <span class="property">width</span>: ref(<span class="modifier">max</span> <span class="property">width</span> of <span class="object">@these</span>);
 }</pre>
 	<p>Normally if several elements, which don't share the same value for the referenced property, are matched by the inner selector, the reference, expecting only one value, will return nothing. Setting modifiers or using certain <a href="#n1.3.7">reference objects</a> as the selector permit to bypass this rule.</p>
 <pre><span class="selector">parent</span>
@@ -1443,7 +1441,7 @@ floor(<span class="number">346.238</span>, -2)</pre>
 	<h3 class="title"><span class="number"><a href="#n1.7" id="n1.7">1.7</a></span> Objects</h3>
 	<p>Objects have a hierarchy, in which objects can descend from others, hence inheriting all the properties defined in their <a href="#n1.3.7.6">owner</a>. This enables great flexibility and modularization of the code.</p>
 	<p>Objects can be set to be of a certain type, placing an object type immediately after the at sign, or automatically deriving it from the context. It is followed by whitespace, and optionally an object name and more optional whitespace, followed by a block. Inside the block, its properties are defined.</p>
-	<div class="sub yet">
+	<div class="sub part">
 	<h4 class="title"><span class="number"><a href="#n1.7.1" id="n1.7.1">1.7.1</a></span> Object dot notation</h4>
 	</div>
 	<div class="sub comp">
