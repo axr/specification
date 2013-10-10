@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/06/01
+      Last changed: 2013/10/10
       HSS version: 1.0
-      Revision: 1.57
+      Revision: 1.58
 
 ****************************************************************-->
 
@@ -1152,9 +1152,27 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 :::dock { }
 </pre>
 </div>
-<div class="sub part">
+<div class="sub comp">
 <h4 class="title"><span class="number"><a href="#n1.5.10" id="n1.5.10">1.5.10</a></span> User flags</h4>
-#TODO <a href="https://github.com/AXR/Specification/issues/36">Issue 36</a>
+<p>You can create or reactivate a custom flag using the <code>flag()</code> function. Once created you can deactivate it using its counterpart, <code>unflag()</code>. <code>toggleFlag()</code> conveniently combine both aforesaid functions. Finally we have the <code>takeFlag()</code> function which deactivates an existing flag to activate it on the current element. Evidently all <a href="#n1.5.3">system flags</a> are reserved names.</p>
+<pre><span class="selector">example</span>
+{
+    <span class="comment">//activates the <em>custom</em> flag if the element is clicked on</span>
+    <span class="property">on</span>: <span class="object">@click</span> { flag(custom) };
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">on</span>: <span class="object">@click</span> { <span class="property">action</span>: flag(custom of <span class="object">@this</span>); };
+    
+    <span class="comment">//if the <em>test</em> flag is currently activated on at least one of the elements
+    //matched by the selector, this will activate the flag on <em>example</em> and
+    //deactivate it on its siblings whenever a click is registered on this element</span>
+    <span class="property">on</span>: <span class="object">@click</span> { takeFlag(test) };
+    <span class="comment">//which is equivalent to</span>
+    <span class="property">on</span>: <span class="object">@click</span> { <span class="property">action</span>: takeFlag(test of *); };
+}
+<span class="selector">example<span class="flag">::custom</span></span> { }
+<span class="selector">example<span class="flag">::test</span></span> { }
+</pre>
+<p><em>Note:</em> As with macros you can use the resulting flags <em>before</em> their activating function.</p>
 </div>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> The isA filter</h4>
