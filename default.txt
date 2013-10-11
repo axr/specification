@@ -34,6 +34,7 @@
     flow: yes;
     font: inherit;
     focusable: no;
+    format; Ⓡ
     height: content;
     innerHeight; Ⓡ
     innerWidth; Ⓡ
@@ -42,7 +43,6 @@
     mask: no;
     next: auto;
     on:;
-    orientation; Ⓡ
     outerHeight; Ⓡ
     outerWidth; Ⓡ
     overflows; Ⓡ
