@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/10/10
+      Last changed: 2013/10/14
       HSS version: 1.0
-      Revision: 1.58
+      Revision: 1.59
 
 ****************************************************************-->
 
@@ -669,8 +669,20 @@ A1:odd, A2:odd { }</pre>
 <div class="sub yet">
 		<h4><span class="number"><a href="#n1.3.6" id="n1.3.6">1.3.6</a></span> Regex selector</h4>
 		<p>You can use a regular expression to select elements based on their names.</p>
-<pre><span class="comment">//matches every element in the current scope whose name starts with a number</span>
-<span class="selector">/^[0-9]/</span> { }</pre>
+<pre><span class="comment">//matches every element in the current scope whose name starts with <em>a</em></span>
+<span class="selector">/^a.*$/</span> { }
+
+<span class="comment">//matches every element in the current scope whose name starts with <em>a</em> or <em>A</em>
+//i stands for insensitive</span>
+<span class="selector">/^a.*$/i</span> { }
+
+<span class="comment">//matches every element in the current scope whose name starts with <em>fi</em> or <em>ﬁ</em>
+//l stands for ligature</span>
+<span class="selector">/^fi.*$/l</span> { }
+
+<span class="comment">//matches every element in the current scope whose name starts with <em>a</em>, <em>à</em>, <em>â</em>, etc.
+//d stands for diacritic</span>
+<span class="selector">/^a.*$/d</span> { }</pre>
 </div>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a href="#n1.3.7" id="n1.3.7">1.3.7</a></span> Reference Objects</h4>
@@ -748,7 +760,7 @@ A1:odd, A2:odd { }</pre>
 <span class="comment">//which is equivalent to</span>
 <span class="selector">note</span> { }
 <span class="selector">note</span> <span class="combinator">..</span> <span class="selector">important</span> { }</pre>
-<p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
+		<p>Keep in mind that these examples only select elements in the current scope, and therefore will select elements depending on where in the hierarchy you are using them.</p>
 <div class="sub comp">
 		<h4 class="title"><span class="number"><a href="#n1.4.1" id="n1.4.1">1.4.1</a></span> Child combinator</h4>
 		<p>Children&#8212;or more explicitly level one descendants&#8212;may be selected using the child combinator (whitespace)&#160;<span class="combinator"> </span>.</p>
@@ -776,21 +788,20 @@ A1:odd, A2:odd { }</pre>
 </div>
 <div class="sub yet">
 		<h4 class="title"><span class="number"><a href="#n1.4.5" id="n1.4.5">1.4.5</a></span> Accessing elements laid out in lines</h4>
-		<p><strong>Note:</strong> This section may be subject to change.</p>
-		<p>Containers that are in flow might be laid out in various lines and subjacent line(s) of elements. You can target them by the use of the line combinator.</p><p>It works very similarly to how the <a href="#n1.4.6">content text combinator</a> works, but the line combinator uses the vertical bar <span class="combinator">|</span> instead. Placing a pipe selects the lines of elements in a container, selecting as many as you define with the next simple selector. </p>
+		<p>Containers that are in flow might be laid out in various lines and subjacent lines of elements. You can target them by the use of the line combinator. By placing a filter or the universal selector after the pipe you can select lines of elements in a container. </p>
 <pre><span class="comment">//this will select all the lines of elements inside of the
 //document element</span>
 <span class="selector">document</span> <span class="combinator">|</span> <span class="selector">*</span> { }
 <span class="comment">//this will select only the first line</span>
-<span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> { }</pre><p>If you place more pipes, you will drill down into the secondary lines (hierarchically) that have been formed according to the layout algorithm. As before, the universal selector can be omitted between the combinators.</p>
-<pre><span class="comment">//this will select all the subjacent lines</span>
-<span class="selector">document</span> <span class="combinator">|</span> <span class="selector">*</span> <span class="combinator">|</span> <span class="selector">*</span> { }<span class="comment">
-//this is equivalent</span>
-<span class="selector">document</span> <span class="combinator">||</span> <span class="selector">*</span> { }
-<span class="comment">//this will select all the subjacent lines inside of the first
+<span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> { }</pre>
+		<p>To select elements inside the matched line(s) you have to use a second pipe, like so:</p>
+<pre><span class="comment">//this selects the last element in the first line of elements</span>
+<span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="filter">:last</span> { }</pre>
+		<p>You can drill down into the secondary lines (hierarchically) that have been formed according to the layout algorithm using the child combinator.</p>
+<pre><span class="comment">//this will select all the subjacent lines inside of the first
 //line of elements</span>
-<span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="combinator">|</span> <span class="selector">*</span> { }</pre>
-#TODO <a href="https://github.com/AXR/Specification/issues/37">37</a> and <a href="https://github.com/AXR/Specification/issues/97">97</a>
+<span class="selector">document</span> <span class="combinator">|</span> <span class="filter">:first</span> <span class="selector">*</span> { }</pre>
+#TODO <a href="https://github.com/AXR/Specification/issues/37">37</a>
 		<p>Since each line is a somewhat abstract concept - there is no element representing each line, if you create new elements in the scope of a line, only one element per line will be created, and not one per selected element, and it will be attached to the parent element. On the other hand, properties applied in the scope of the line will be applied to all elements in that line. </p><p>The <a href="#n1.3.7.4">parent object</a> will refer to the parent line, in case of a subjacent line, or the parent element, in case of a line.</p>
 </div>
 <div class="sub yet">
@@ -1154,7 +1165,7 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 </div>
 <div class="sub comp">
 <h4 class="title"><span class="number"><a href="#n1.5.10" id="n1.5.10">1.5.10</a></span> User flags</h4>
-<p>You can create or reactivate a custom flag using the <code>flag()</code> function. Once created you can deactivate it using its counterpart, <code>unflag()</code>. <code>toggleFlag()</code> conveniently combine both aforesaid functions. Finally we have the <code>takeFlag()</code> function which deactivates an existing flag to activate it on the current element. Evidently all <a href="#n1.5.3">system flags</a> are reserved names.</p>
+<p>You can create or reactivate a custom flag using the <code>flag()</code> function. Once created you can deactivate it using its counterpart, <code>unflag()</code>. <code>toggleFlag()</code> conveniently combine both aforesaid functions. Finally we have the <code>takeFlag()</code> function which deactivates an existing flag to activate it on the current element(s). Evidently all <a href="#n1.5.3">system flags</a> are reserved names.</p>
 <pre><span class="selector">example</span>
 {
     <span class="comment">//activates the <em>custom</em> flag if the element is clicked on</span>
@@ -1450,7 +1461,7 @@ floor(<span class="number">346.238</span>, -2)</pre>
 //the resulting string would be "The example"</span>
 <span class="property">property</span>: <span class="string">"The "</span> attr(attribute of <span class="selector">selector</span>);</pre>
 	</div>
-	<div class="sub yet">
+	<div class="sub comp">
 	<h4 class="title"><span class="number"><a href="#n1.6.9" id="n1.6.9">1.6.9</a></span> Custom properties</h4>
 #TODO <a href="https://github.com/AXR/Specification/issues/94">Issue 94</a>
 	</div>
