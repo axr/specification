@@ -15,7 +15,7 @@
     alignY: ref(contentAlignY of @parent);
     anchorX: no;
     anchorY: no;
-    attr: no;
+    attr: current;
     border: no;
     background: no;
     break: no;
