@@ -23,9 +23,9 @@
 
       FILE INFORMATION:
       =================
-      Last changed: 2013/10/14
+      Last changed: 2013/10/17
       HSS version: 1.0
-      Revision: 1.59
+      Revision: 1.6
 
 ****************************************************************-->
 
@@ -240,7 +240,7 @@
 		-webkit-column-gap: 1em;
 		column-count: 2;
 		column-gap: 1em;
-		height: 625px;
+		height: 610px;
 	}
 
 	nav > ul > li
@@ -418,7 +418,6 @@
 	     <li><a href="#n1.5.8">Collection filters</a></li>
 	     <li><a href="#n1.5.9">Custom macros</a></li>
 	     <li><a href="#n1.5.10">User flags</a></li>
-	     <li><a href="#n1.5.11">The isA filter</a></li>
 	</ul>
 </li>
 <li><a href="#n1.6">Properties</a>
@@ -670,19 +669,19 @@ A1:odd, A2:odd { }</pre>
 		<h4><span class="number"><a href="#n1.3.6" id="n1.3.6">1.3.6</a></span> Regex selector</h4>
 		<p>You can use a regular expression to select elements based on their names.</p>
 <pre><span class="comment">//matches every element in the current scope whose name starts with <em>a</em></span>
-<span class="selector">/^a.*$/</span> { }
+<span class="selector">/^a/</span> { }
 
 <span class="comment">//matches every element in the current scope whose name starts with <em>a</em> or <em>A</em>
 //i stands for insensitive</span>
-<span class="selector">/^a.*$/i</span> { }
+<span class="selector">/^a/i</span> { }
 
 <span class="comment">//matches every element in the current scope whose name starts with <em>fi</em> or <em>ﬁ</em>
 //l stands for ligature</span>
-<span class="selector">/^fi.*$/l</span> { }
+<span class="selector">/^fi/l</span> { }
 
 <span class="comment">//matches every element in the current scope whose name starts with <em>a</em>, <em>à</em>, <em>â</em>, etc.
 //d stands for diacritic</span>
-<span class="selector">/^a.*$/d</span> { }</pre>
+<span class="selector">/^a/d</span> { }</pre>
 </div>
 <div class="sub part">
 		<h4 class="title"><span class="number"><a href="#n1.3.7" id="n1.3.7">1.3.7</a></span> Reference Objects</h4>
@@ -1029,7 +1028,9 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <div class="sub yet">
 <h4 class="title"><span class="number"><a href="#n1.5.6" id="n1.5.6">1.5.6</a></span> The property filter</h4>
 <p>Conditions are used to test whether an element is matched based on its properties. The computed values are tested against, not the declared ones. For example if you set the height of a container to 50%, the value will be dynamically returned in points. The properties are on the left side of the comparator, the values on the right.</p>
-<pre><span class="comment">//matches the elements whose title attribute's value is <em>AXR</em></span>
+<pre><span class="comment">//matches image elements (@container has a type property)</span>
+<span class="selector">*</span><span class="filter">:(<span class="object">@image</span>)</span> { }
+<span class="comment">//matches the elements whose title attribute's value is <em>AXR</em></span>
 <span class="selector">*</span>:(<span class="property">attr</span>.<span class="property">title</span> = "AXR") { }
 <span class="comment">//matches all elements with a background</span>
 <span class="selector">*</span>:(<span class="property">background</span>) { }
@@ -1184,18 +1185,6 @@ notes note to<span class="filter">:oddChild</span> { }</pre>
 <span class="selector">example<span class="flag">::test</span></span> { }
 </pre>
 <p><em>Note:</em> As with macros you can use the resulting flags <em>before</em> their activating function.</p>
-</div>
-<div class="sub yet">
-<h4 class="title"><span class="number"><a href="#n1.5.11" id="n1.5.11">1.5.11</a></span> The isA filter</h4>
-<p>In HSS, elements are container objects. Furthermore, the objects <a href="#n1.7.5">descending</a> from <a href="http://hss.axrproject.org/@container">@container</a> have additional properties: without filtering them by their object type you couldn't target them specifically.</p>
-<pre><span class="comment">//this matches @container objects indiscriminately</span>
-<span class="selector">*</span> { }
-<span class="comment">//this matches image elements</span>
-<span class="selector">*</span><span class="filter">:isA(@image)</span> { }
-<span class="comment">//this matches video elements</span>
-<span class="selector">*</span><span class="filter">:isA(@video)</span> { }
-<span class="comment">//object names are also accepted</span>
-<span class="selector">*</span><span class="filter">:isA(input)</span> { }</pre>
 </div>
 </section>
 <section class="chapter">
@@ -1432,16 +1421,16 @@ floor(<span class="number">346.238</span>, -2)</pre>
 	</div>
 	<div class="sub yet">
 	<h4 class="title"><span class="number"><a href="#n1.6.6" id="n1.6.6">1.6.6</a></span> The value selector</h4>
-	<p>Certain properties accept multiple values, in these cases the value selector <code>[]</code> permits to select them by name or using a filter.</p>
+	<p>Certain properties accept multiple objects as values, in these cases the value selector <code>[]</code> permits to select them either by name, index or using position filters (minus their Child variants).</p>
 <pre><span class="selector">element</span> {
     <span class="comment">//supposing these container objects were defined elsewhere</span>
     <span class="property">isA</span>: objectA, objectX, objectY;
-    <span class="comment">//this would set objectY's width to 50</span>
+    <span class="comment">//this would (re)set objectY's width to 50 for this isA property</span>
     <span class="property">isA</span>[objectY].<span class="property">width</span>: <span class="number">50</span>;
     <span class="comment">//which is equivalent to</span>
-    <span class="property">isA</span>[<span class="filter">:last</span>].<span class="property">width</span>: <span class="number">50</span>;
-    <span class="comment">//and naturally, <a href="#n1.3.3">selector grouping</a> remains available</span>
-    <span class="property">isA</span>[:first, objectX].<span class="property">width</span>: <span class="number">80</span>;
+    <span class="property">isA</span>[<span class="filter">:nth(<span class="number">3</span>)</span>].<span class="property">width</span>: <span class="number">50</span>;
+    <span class="comment">//and</span>
+    <span class="property">isA</span>[<span class="number">3</span>].<span class="property">width</span>: <span class="number">50</span>;
 }</pre>
 	</div>
 	<div class="sub yet">
